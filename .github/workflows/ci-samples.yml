@@ -25,3 +25,8 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: ${{env.working-directory}}
+    - uses: actions/upload-artifact@v1
+      with:
+        name: nuget
+        path: ${{ env.working-directory }}/SimpleEndpoints/bin/Release/netstandard2.0
+      name: Upload Artifact
