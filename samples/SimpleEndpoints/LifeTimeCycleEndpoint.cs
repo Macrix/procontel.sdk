@@ -3,7 +3,7 @@ using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Services;
 using System.Threading.Tasks;
 
-namespace SingleEndpoint
+namespace SimpleEndpoints
 {
   [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
   public class LifeTimeCycleEndpoint : IEndpointLifeTimeCycle
