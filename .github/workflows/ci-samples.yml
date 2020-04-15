@@ -27,6 +27,6 @@ jobs:
       working-directory: ${{env.working-directory}}
     - uses: actions/upload-artifact@v1
       with:
-        name: nuget
+        name: artifacts
         path: ${{ env.working-directory }}/SimpleEndpoints/bin/Release/netstandard2.0
       name: Upload Artifact
