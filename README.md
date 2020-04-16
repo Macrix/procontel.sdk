@@ -30,22 +30,12 @@
 
 ## 2. Feature Comparison
 
-| Feature         | x          | y | z |
+| Feature         | ChannelEndpointBase          | Sdk 1.0  | Sdk 1.1 |
 | :-------------  |:-------------:|:---:|:------:|
-| Backend         | redis         |redis| mongo  |
-| Priorities      | ✓             |     |   ✓    |
-| Concurrency     | ✓             |  ✓  |   ✓    |
-| Delayed jobs    | ✓             |     |   ✓    |
-| Global events   | ✓             |     |        |
-| Rate Limiter    | ✓             |     |        |
-| Pause/Resume    | ✓             |     |        |
-| Sandboxed worker| ✓             |     |        |
-| Repeatable jobs | ✓             |     |   ✓    |
-| Atomic ops      | ✓             |  ✓  |        |
-| Persistence     | ✓             |  ✓  |   ✓    |
-| UI              | ✓             |     |   ✓    |
-| REST API        |               |     |   ✓    |
-| Optimized for   | Jobs / Messages | Messages | Jobs |
+| Import          | ✓             |-    | ✓  |
+| Export          | ✓             |✓     |   ✓    |
+| Status Control     | ✓             |  ✓  |   ✓    |
+| Configuration Dialog    | ✓             |   ✓  |   ✓    |
 
 <div id='id-builder-blocks'/>
 
