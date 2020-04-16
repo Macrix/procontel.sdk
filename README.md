@@ -6,17 +6,17 @@
 1. [Quick introduction](#id-quick-introduction)
 2. [Feature Comparison](#id-feature-comparison)
 3. [Builder blocks](#id-builder-blocks)
-    3.1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
-    3.2. [IHandler](#id-builder-blocks-ihandler)
+    1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+    2. [IHandler](#id-builder-blocks-ihandler)
 4. [Injected services](#id-injected-services)
-    4.1. [ILogger](#id-injected-services-ilogger)
-    4.2. [ISender](#id-injected-services-isender)
+    1. [ILogger](#id-injected-services-ilogger)
+    2. [ISender](#id-injected-services-isender)
 5. [UI Components](#id-ui-components)
-    5.1. [Configuration Dialog](#id-ui-components-configuration-dialog)
-    5.2. [Status Control](#id-ui-components-status-control)
+    1. [Configuration Dialog](#id-ui-components-configuration-dialog)
+    2. [Status Control](#id-ui-components-status-control)
 6. [Deployment](#id-deployment)
-    6.1. [Github](#id-deployment-github)
-    6.2. [GitLab](#id-deployment-gitlab)
+    1. [Github](#id-deployment-github)
+    2. [GitLab](#id-deployment-gitlab)
 
 <div id='id-quick-introduction'/>
 
@@ -51,7 +51,7 @@
 
 <div id='id-builder-blocks-ilife-time-cycle'/>
 
-### 3.1. ILifeTimeCycle
+### 1. ILifeTimeCycle
 ```csharp
  [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
   public class LifeTimeCycleEndpoint : IEndpointLifeTimeCycle
@@ -76,7 +76,7 @@
 
 <div id='id-builder-blocks-ihandler'/>
 
-### 3.2. IHandler
+### 2. IHandler
 ```csharp
 
 ```
@@ -87,14 +87,14 @@
 
 <div id='id-injected-services-ilogger'/>
 
-### 4.1. ILogger
+### 1. ILogger
 ```csharp
 
 ```
 
-<div id='id-injected-services-idender'/>
+<div id='id-injected-services-isender'/>
 
-### 4.2. ISender
+### 2. ISender
 ```csharp
 
 ```
@@ -111,14 +111,14 @@ We are able to bind and communicate user interface to hosted business logic. Sup
  
 <div id='id-ui-components-configuration-dialog'/>
  
-### 5.1. Configuration Dialog
+### 1. Configuration Dialog
 ```csharp
 
 ```
 
 <div id='id-ui-components-status-control'/>
 
-### 5.2. Status Control
+### 2. Status Control
 ```csharp
 
 ```
@@ -129,14 +129,14 @@ We are able to bind and communicate user interface to hosted business logic. Sup
 
 <div id='id-deployment-github'/>
 
-### 6.1 Github
+### 1 Github
 ```csharp
 
 ```
 
-<div id='id-deployment-gitlub'/>
+<div id='id-deployment-gitlab'/>
 
-### 6.2 GitLab
+### 2 GitLab
 ```csharp
 
 ```
