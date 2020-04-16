@@ -20,7 +20,7 @@ jobs:
         dotnet-version: 3.1.101
 
     - name: Install dependencies
-      run: dotnet restore -s https://nexus.macrix.eu/repository/nuget/ -s https://api.nuget.org/v3/index.json
+      run: dotnet restore -s https://nexus.macrix.eu/repository/nuget/ -s https://api.nuget.org/v3/index.json --force --no-cache
       working-directory: ${{env.working-directory}}
     - name: Build
       run: dotnet build --configuration Release --no-restore
