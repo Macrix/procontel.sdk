@@ -8,6 +8,8 @@
 3. [Builder blocks](#id-builder-blocks)
     1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
     2. [IHandler](#id-builder-blocks-ihandler)
+	3. [IMessageMetadataProvider](#id-builder-blocks-imessage-metadata-provider)
+	4. [ICommandHandler](#id-builder-blocks-imcommand-handler)
 4. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [ISender](#id-injected-services-isender)
@@ -53,7 +55,7 @@
 
 * ### ILifeTimeCycle
 ```csharp
- [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
+  [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
   public class LifeTimeCycleEndpoint : IEndpointLifeTimeCycle
   {
     private readonly ILogger _logger;
@@ -78,7 +80,52 @@
 
 * ### IHandler
 ```csharp
+  [EndpointMetadata(Name = "Handler", SupportedRoles = SupportedRoles.Subscriber)]
+  public class HandlerEndpoint : IHandler
+  {
+    private readonly ILogger _logger;
+    public HandlerEndpoint(ILogger logger) => _logger = logger;
 
+    public bool CanHandle(string messageId, ICorrelationContext context = null) => true;
+
+    public Task HandleAsync(string messageId, object message, ICorrelationContext context = null)
+    {
+      _logger.Information($"Received message id: {messageId}, message: {message}");
+      return Task.CompletedTask;
+    }
+  }
+```
+
+<div id='id-builder-blocks-imessage-metadata-provider'/>
+
+* ### IMessageMetadataProvider
+```csharp
+  [EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
+  public class MessageMetadataProviderEndpoint : IMessageMetadataProvider
+  {
+    public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
+    public MessageMetadataProviderEndpoint() 
+    {
+    }
+  }
+```
+
+<div id='id-builder-blocks-icommand-handler'/>
+
+* ### ICommandHandler
+```csharp
+  [EndpointMetadata(Name = "CommandHandler", SupportedRoles = SupportedRoles.None)]
+  public class CommandHandlerEndpoint : ICommandHandler
+  {
+    private readonly ILogger _logger;
+    public CommandHandlerEndpoint(ILogger logger) => _logger = logger;
+
+    public Task<object> HandleCommandAsync(object command, ICorrelationContext context = null)
+    {
+      _logger.Information($"Received command: {command}");
+      return Task.FromResult<object>("Done");
+    }
+  }
 ```
 
 <div id='id-injected-services'/>
