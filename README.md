@@ -9,7 +9,7 @@
     1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
     2. [IHandler](#id-builder-blocks-ihandler)
 	3. [IMessageMetadataProvider](#id-builder-blocks-imessage-metadata-provider)
-	4. [ICommandHandler](#id-builder-blocks-imcommand-handler)
+	4. [ICommandHandler](#id-builder-blocks-icommand-handler)
 4. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [ISender](#id-injected-services-isender)
