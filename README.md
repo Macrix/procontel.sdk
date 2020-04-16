@@ -6,16 +6,17 @@
 1. [Quick introduction](#id-quick-introduction)
 2. [Feature Comparison](#id-feature-comparison)
 3. [Builder blocks](#id-builder-blocks)
-
-  3.1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
-  3.2. [IHandler](#id-builder-blocks-ihandler)
-  
+    3.1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+    3.2. [IHandler](#id-builder-blocks-ihandler)
 4. [Injected services](#id-injected-services)
+    4.1. [ILogger](#id-injected-services-ilogger)
+    4.2. [ISender](#id-injected-services-isender)
 5. [UI Components](#id-ui-components)
+    5.1. [Configuration Dialog](#id-ui-components-configuration-dialog)
+    5.2. [Status Control](#id-ui-components-status-control)
 6. [Deployment](#id-deployment)
-
-  6.1. [Github](#id-deployment-github)
-  6.2. [GitLab](#id-deployment-gitlab)
+    6.1. [Github](#id-deployment-github)
+    6.2. [GitLab](#id-deployment-gitlab)
 
 <div id='id-quick-introduction'/>
 
