@@ -9,14 +9,16 @@
 4. [Injected services](#id-injected-services)
 5. [UI Components](#id-ui-components)
 6. [Deployment](#id-deployment)
-<div id='id-quick-introduction'/>
-## Quick introduction
 
+<div id='id-quick-introduction'/>
+
+## 1. Quick introduction
 
 `ProconTEL.Sdk` is a modern .Net Standard sdk for port your business logic in [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x of the is currently found under [`/docs`](https://macrix.eu/).
-<div id='id-feature-comparison'/>
-## Feature Comparison
 
+<div id='id-feature-comparison'/>
+
+## 2. Feature Comparison
 
 | Feature         | x          | y | z |
 | :-------------  |:-------------:|:---:|:------:|
@@ -34,11 +36,12 @@
 | UI              | ✓             |     |   ✓    |
 | REST API        |               |     |   ✓    |
 | Optimized for   | Jobs / Messages | Messages | Jobs |
+
 <div id='id-builder-blocks'/>
-## Builder blocks
 
+## 3. Builder blocks
 
-### 1. ILifeTimeCycle
+### 3.1. ILifeTimeCycle
 ```csharp
  [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
   public class LifeTimeCycleEndpoint : IEndpointLifeTimeCycle
@@ -61,26 +64,28 @@
 
 ```
 
-### 2. IHandler
+### 3.2. IHandler
 ```csharp
 
 ```
+
 <div id='id-injected-services'/>
-## Injected services
 
+## 4.Injected services
 
-### 1.ILogger
+### 4.1. ILogger
 ```csharp
 
 ```
 
-### 2. ISender
+### 4.2. ISender
 ```csharp
 
 ```
+
 <div id='id-ui-components'/>
-## UI Components
 
+## 5. UI Components
 
 We are able to bind and communicate user interface to hosted business logic. Supported fronted framework:
  - Angular
@@ -88,19 +93,20 @@ We are able to bind and communicate user interface to hosted business logic. Sup
  - Wpf
  - WinForms
  
-### 1. Configuration Dialog
+### 5.1. Configuration Dialog
 ```csharp
 
 ```
 
-### 2. Status Control
+### 5.2. Status Control
 ```csharp
 
 ```
+
 <div id='id-deployment'/>
-## Deployment
 
- 
+## 6.Deployment
+
 ### Github
 ```csharp
 
