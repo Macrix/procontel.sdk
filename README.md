@@ -6,13 +6,16 @@
 1. [Quick introduction](#id-quick-introduction)
 2. [Feature Comparison](#id-feature-comparison)
 3. [Builder blocks](#id-builder-blocks)
- 3.1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
- 3.2. [IHandler](#id-builder-blocks-ihandler)
+
+  3.1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+  3.2. [IHandler](#id-builder-blocks-ihandler)
+  
 4. [Injected services](#id-injected-services)
 5. [UI Components](#id-ui-components)
 6. [Deployment](#id-deployment)
- 6.1. [Github](#id-deployment-github)
- 6.2. [GitLab](#id-deployment-gitlab)
+
+  6.1. [Github](#id-deployment-github)
+  6.2. [GitLab](#id-deployment-gitlab)
 
 <div id='id-quick-introduction'/>
 
@@ -79,12 +82,16 @@
 
 <div id='id-injected-services'/>
 
-## 4.Injected services
+## 4. Injected services
+
+<div id='id-injected-services-ilogger'/>
 
 ### 4.1. ILogger
 ```csharp
 
 ```
+
+<div id='id-injected-services-idender'/>
 
 ### 4.2. ISender
 ```csharp
@@ -101,10 +108,14 @@ We are able to bind and communicate user interface to hosted business logic. Sup
  - Wpf
  - WinForms
  
+<div id='id-ui-components-configuration-dialog'/>
+ 
 ### 5.1. Configuration Dialog
 ```csharp
 
 ```
+
+<div id='id-ui-components-status-control'/>
 
 ### 5.2. Status Control
 ```csharp
