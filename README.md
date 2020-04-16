@@ -51,7 +51,7 @@
 
 <div id='id-builder-blocks-ilife-time-cycle'/>
 
-### 1. ILifeTimeCycle
+* ### ILifeTimeCycle
 ```csharp
  [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
   public class LifeTimeCycleEndpoint : IEndpointLifeTimeCycle
@@ -76,7 +76,7 @@
 
 <div id='id-builder-blocks-ihandler'/>
 
-### 2. IHandler
+* ### IHandler
 ```csharp
 
 ```
@@ -87,14 +87,14 @@
 
 <div id='id-injected-services-ilogger'/>
 
-### 1. ILogger
+* ### ILogger
 ```csharp
 
 ```
 
 <div id='id-injected-services-isender'/>
 
-### 2. ISender
+* ### ISender
 ```csharp
 
 ```
@@ -111,14 +111,14 @@ We are able to bind and communicate user interface to hosted business logic. Sup
  
 <div id='id-ui-components-configuration-dialog'/>
  
-### 1. Configuration Dialog
+* ### Configuration Dialog
 ```csharp
 
 ```
 
 <div id='id-ui-components-status-control'/>
 
-### 2. Status Control
+* ### Status Control
 ```csharp
 
 ```
@@ -129,14 +129,14 @@ We are able to bind and communicate user interface to hosted business logic. Sup
 
 <div id='id-deployment-github'/>
 
-### 1 Github
+* ### Github
 ```csharp
 
 ```
 
 <div id='id-deployment-gitlab'/>
 
-### 2 GitLab
+* ### GitLab
 ```csharp
 
 ```
