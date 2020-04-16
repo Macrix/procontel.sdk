@@ -88,10 +88,10 @@
 
     public bool CanHandle(string messageId, ICorrelationContext context = null) => true;
 
-    public Task HandleAsync(string messageId, object message, ICorrelationContext context = null)
+    public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context)
     {
-      _logger.Information($"Received message id: {messageId}, message: {message}");
-      return Task.CompletedTask;
+      _logger.Information($"Received id: {messageId}, message: {message}");
+      return Task.FromResult<Acknowledgement>(new Ack());
     }
   }
 ```
