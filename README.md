@@ -1,14 +1,18 @@
 # ProconTEL.Sdk
----------------
+
 
 ## Table of Contents
 
 1. [Quick introduction](#id-quick-introduction)
 2. [Feature Comparison](#id-feature-comparison)
 3. [Builder blocks](#id-builder-blocks)
+ 3.1. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+ 3.2. [IHandler](#id-builder-blocks-ihandler)
 4. [Injected services](#id-injected-services)
 5. [UI Components](#id-ui-components)
 6. [Deployment](#id-deployment)
+ 6.1. [Github](#id-deployment-github)
+ 6.2. [GitLab](#id-deployment-gitlab)
 
 <div id='id-quick-introduction'/>
 
@@ -41,6 +45,8 @@
 
 ## 3. Builder blocks
 
+<div id='id-builder-blocks-ilife-time-cycle'/>
+
 ### 3.1. ILifeTimeCycle
 ```csharp
  [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
@@ -63,6 +69,8 @@
   }
 
 ```
+
+<div id='id-builder-blocks-ihandler'/>
 
 ### 3.2. IHandler
 ```csharp
@@ -105,14 +113,18 @@ We are able to bind and communicate user interface to hosted business logic. Sup
 
 <div id='id-deployment'/>
 
-## 6.Deployment
+## 6. Deployment
 
-### Github
+<div id='id-deployment-github'/>
+
+### 6.1 Github
 ```csharp
 
 ```
 
-### Gitlab
+<div id='id-deployment-gitlub'/>
+
+### 6.2 GitLab
 ```csharp
 
 ```
