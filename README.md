@@ -55,6 +55,7 @@
 | Endpoint Content Details   | ✓             |   ✓  |   ✓    |
 | Endpoint Content Details in attribute   | -             |   -  |   ✓    |
 | Acknowledgement   | ✓             |   ✓  |   ✓    |
+| Override services implementation   | -             |   -  |   ✓    |
 <div id='id-builder-blocks'/>
 
 ## 3. Builder blocks
@@ -185,14 +186,14 @@ ProconTEL environment provide set of features available via dependency injection
 
 ```csharp
   [EndpointMetadata(Name = "Rich", SupportedRoles = SupportedRoles.Provider)]
-  public class RichEndpint
+  public class RichEndpoint
   {
     private readonly ILogger _logger;
     private readonly IMessageBus _messageBus;
     private readonly IConfigurationReader _configurationReader;
     private readonly IRuntimeContext _runtimeContext;
     
-    public RichEndpint(
+    public RichEndpoint(
       ILogger logger,
       IMessageBus messageBus,
       IConfigurationReader configurationReader,
@@ -230,7 +231,7 @@ Service to aggregate other services related with endpoint runtime.
 <div id='id-injected-services-imetadata-context'/>
 
 * ### IMetadataContext
-Service provide metadata baout running endpoint. This service is part of [IRuntimeContext](#id-injected-services-iruntime-context).
+Service provide metadata about running endpoint. This service is part of [IRuntimeContext](#id-injected-services-iruntime-context).
 
 <div id='id-injected-services-inotification-service'/>
 
