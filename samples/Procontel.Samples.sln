@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoints", "SimpleEndpoints\SimpleEndpoints.csproj", "{5C18001C-8DA4-416C-80A7-A6E853FCFF2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvancedEndpoints", "AvancedEndpoints\AvancedEndpoints.csproj", "{1FD90175-9848-4F51-AEF9-0A921B161421}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedEndpoints", "AdvancedEndpoints\AdvancedEndpoints.csproj", "{1FD90175-9848-4F51-AEF9-0A921B161421}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
