@@ -23,8 +23,16 @@ namespace AvancedEndpoints
 
     public Task InitializeAsync()
     {
-      Task.Factory.StartNew(() => SendMessages());
-      
+      Task.Factory
+        .StartNew(() => SendMessages())
+        .ContinueWith(result =>
+        {
+          if(result.Exception != null)
+          {
+            _logger.Error(result.Exception);
+          }  
+        },
+        TaskContinuationOptions.OnlyOnFaulted);
       return Task.CompletedTask;
     }
 

@@ -14,11 +14,22 @@
 	6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
 4. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
-    2. [ISender](#id-injected-services-isender)
-5. [UI Components](#id-ui-components)
+    2. [IMessageBus](#id-injected-services-imessage-bus)
+    3. [IConfigurationReader](#id-injected-services-iconfiguration-reader)
+    4. [IRuntimeContext](#id-injected-services-iruntime-context)
+    5. [IMetadataContext](#id-injected-services-imetadata-context)
+    6. [INotificationService](#id-injected-services-inotification-service)
+    7. [IMetricsService](#id-injected-services-imetrics-service)
+5. [Advanced concepts](#id-advanced-concepts)
+    1. [Supported protocols](#id-advanced-concepts-protocols)
+    2. [IMessageBus](#id-advanced-concepts-message-bus)
+6. [UI Components](#id-ui-components)
     1. [Configuration Dialog](#id-ui-components-configuration-dialog)
     2. [Status Control](#id-ui-components-status-control)
-6. [Deployment](#id-deployment)
+7. [IoC](#id-ioc)
+8. [Legacy Sdk](#id-legacy-sdk)
+9. [Testing](#id-testing)
+10. [Deployment](#id-deployment)
     1. [Github](#id-deployment-github)
     2. [GitLab](#id-deployment-gitlab)
 
@@ -170,19 +181,66 @@ Interface <b>IConfigurationCommandHandler</b> support handling messages from Con
 
 ## 4. Injected services
 
+ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in endpoint constructor. In ProconTEL naming conventions this interfaces called <b>services</b>.
+
+```csharp
+  [EndpointMetadata(Name = "Rich", SupportedRoles = SupportedRoles.Provider)]
+  public class RichEndpint
+  {
+    private readonly ILogger _logger;
+    private readonly IMessageBus _messageBus;
+    private readonly IConfigurationReader _configurationReader;
+    private readonly IRuntimeContext _runtimeContext;
+    
+    public RichEndpint(
+      ILogger logger,
+      IMessageBus messageBus,
+      IConfigurationReader configurationReader,
+      IRuntimeContext runtimeContext)
+    {
+      _logger = logger;
+      _messageBus = messageBus;
+      _configurationReader = configurationReader;
+      _runtimeContext = runtimeContext;
+    }
+  }
+
+```
+
 <div id='id-injected-services-ilogger'/>
 
 * ### ILogger
-```csharp
+Service provide logging mechanism.
 
-```
-
-<div id='id-injected-services-isender'/>
+<div id='id-injected-services-imessage-bus'/>
 
 * ### IMessageBus
-```csharp
+Service provide send and broadcast mechanism. 
 
-```
+<div id='id-injected-services-iconfiguration-reader'/>
+
+* ### IConfigurationReader
+Service provide read configuration mechanism. 
+
+<div id='id-injected-services-iruntime-context'/>
+
+* ### IRuntimeContext
+Service to aggregate other services related with endpoint runtime. 
+
+<div id='id-injected-services-imetadata-context'/>
+
+* ### IMetadataContext
+Service provide metadata baout running endpoint. This service is part of [IRuntimeContext](#id-injected-services-iruntime-context).
+
+<div id='id-injected-services-inotification-service'/>
+
+* ### INotificationService
+Service provide notification from endpoint to status control. This service is part of [IRuntimeContext](#id-injected-services-iruntime-context).
+
+<div id='id-injected-services-imetrics-service'/>
+
+* ### IMetricsService
+Feature in progress
 
 <div id='id-advanced-concepts'/>
 
@@ -213,20 +271,11 @@ Defining supported protocols can be done by creating custom attribute and markin
   }
 ```
 
-<div id='id-injected-services-isender'/>
-
-* ### IMessageBus
-```csharp
-
-```
-
 <div id='id-ui-components'/>
 
 ## 6. UI Components
 
 We are able to bind and communicate user interface to hosted business logic. Supported fronted framework:
- - Angular
- - React
  - Wpf
  - WinForms
  
@@ -248,13 +297,17 @@ We are able to bind and communicate user interface to hosted business logic. Sup
 
 ## 7. IoC
 
+<div id='id-legacy-sdk'/>
+
+## 8. Legacy Sdk
+
 <div id='id-testing'/>
 
-## 8. Testing
+## 9. Testing
 
 <div id='id-deployment'/>
 
-## 9. Deployment
+## 10. Deployment
 
 <div id='id-deployment-github'/>
 
