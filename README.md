@@ -26,7 +26,7 @@
 
 ## 1. Quick introduction
 
-`ProconTEL.Sdk` is a modern .Net Standard sdk for port your business logic in [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x of the is currently found under [`docs`](https://macrix.eu/).
+`ProconTEL.Sdk` is a modern .Net Standard SDK for porting your business logic with [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x is currently available under [`docs`](https://macrix.eu/).
 
 <div id='id-feature-comparison'/>
 
@@ -94,7 +94,7 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
 * ### IHandler
 <b>IHandler</b> is common communication interface which provide receiving data from another endpoint. We can filter incoming messages by implement method `CanHandle`. 
 Asynchronous method `HandleAsync` is responsible for processing data. <b>This execution is a blocking call (synchronous).</b> No execution will take place on the current thread until current processing returns some acknowledgement. <b>We will not process new messages until the current processing is completed.</b>
-We support few acknowledgement types : Ack, Retry, Reject. Hadnler implementation has to return acknowledgement (mandatory), but sender can ignore it (obligatory).
+We support few acknowledgement types : Ack, Retry, Reject. Handler implementation has to return acknowledgement (mandatory), but sender can ignore it (obligatory).
 ```csharp
   [EndpointMetadata(Name = "Handler", SupportedRoles = SupportedRoles.Subscriber)]
   public class HandlerEndpoint : IHandler
@@ -179,14 +179,50 @@ Interface <b>IConfigurationCommandHandler</b> support handling messages from Con
 
 <div id='id-injected-services-isender'/>
 
-* ### ISender
+* ### IMessageBus
+```csharp
+
+```
+
+<div id='id-advanced-concepts'/>
+
+## 5. Advanced concepts
+
+<div id='id-advanced-concepts-protocols'/>
+
+* ### Supported protocols
+Defining supported protocols can be done by creating custom attribute and marking endpoint with it.
+```csharp
+  public class CustomEndpointProtocol : IProtocol
+  {
+    public string Id => "Custom Endpoint Protocol";
+  }
+
+  public class CustomEndpointProtocolAttribute : ProconTel.Sdk.Communications.Attributes.SupportedProtocolAttribute
+  {
+    public CustomEndpointProtocolAttribute()
+    {
+      Name = new CustomEndpointProtocol();
+    }
+  }
+  
+  [EndpointMetadata(Name = "CustomProtocols", SupportedRoles = SupportedRoles.Both)]
+  [CustomEndpointProtocol]
+  public class CustomProtocolsEndpoint : IEndpointLifeTimeCycle, IHandler
+  {
+  }
+```
+
+<div id='id-injected-services-isender'/>
+
+* ### IMessageBus
 ```csharp
 
 ```
 
 <div id='id-ui-components'/>
 
-## 5. UI Components
+## 6. UI Components
 
 We are able to bind and communicate user interface to hosted business logic. Supported fronted framework:
  - Angular
@@ -210,15 +246,15 @@ We are able to bind and communicate user interface to hosted business logic. Sup
 
 <div id='id-ioc'/>
 
-## 6. IoC
+## 7. IoC
 
 <div id='id-testing'/>
 
-## 7. Testing
+## 8. Testing
 
 <div id='id-deployment'/>
 
-## 8. Deployment
+## 9. Deployment
 
 <div id='id-deployment-github'/>
 

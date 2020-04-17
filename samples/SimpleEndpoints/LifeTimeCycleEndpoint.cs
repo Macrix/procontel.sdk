@@ -13,13 +13,13 @@ namespace SimpleEndpoints
 
     public Task InitializeAsync()
     {
-      _logger.Information("Initialize");
+      _logger.Information("Initialized.");
       return Task.CompletedTask;
     }
 
     public Task TerminateAsync()
     {
-      _logger.Information("Terminate");
+      _logger.Information("Terminated.");
       return Task.CompletedTask;
     }
   }
