@@ -11,6 +11,7 @@
     3. [IHandler](#id-builder-blocks-ihandler)
 	4. [IMessageMetadataProvider](#id-builder-blocks-imessage-metadata-provider)
 	5. [ICommandHandler](#id-builder-blocks-icommand-handler)
+	6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
 4. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [ISender](#id-injected-services-isender)
@@ -31,7 +32,7 @@
 
 ## 2. Feature Comparison
 
-| Feature         | ChannelEndpointBase          | Sdk 1.0  | Sdk 1.1 |
+| Feature         | ChannelEndpointBase          | Sdk 0.4  | Sdk 1.1 |
 | :-------------  |:-------------:|:---:|:------:|
 | Import          | ✓             |-    | ✓  |
 | Export          | ✓             |-     |   ✓    |
@@ -39,7 +40,7 @@
 | Send Command from Status Control   | ✓             |   ✓  |   ✓    |
 | Endpoint Status Notification   | ✓             |   ✓  |   ✓    |
 | Configuration Dialog    | ✓             |   ✓  |   ✓    |
-| Send Command from Configuration Dialog   | ✓             |   -  |   ✓    |
+| Send Command from Configuration Dialog   | ✓             |   ✓  |   ✓    |
 | Endpoint Content Details   | ✓             |   ✓  |   ✓    |
 | Endpoint Content Details in attribute   | -             |   -  |   ✓    |
 | Acknowledgement   | ✓             |   ✓  |   ✓    |
@@ -140,6 +141,26 @@ Interface <b>ICommandHandler</b> support handling messages from Status Control C
     public Task<object> HandleCommandAsync(object command, ICorrelationContext context = null)
     {
       _logger.Information($"Received command: {command}");
+      return Task.FromResult<object>("Done");
+    }
+  }
+```
+
+<div id='id-builder-blocks-iconfiguration-command-handler'/>
+
+* ### IConfigurationCommandHandler
+Interface <b>IConfigurationCommandHandler</b> support handling messages from Configuration Dialog Component. Configuration Command Handler mechanism will soon be deprecated.
+```csharp
+  [Obsolete("Configuration Command Handler mechanism will soon be deprecated.")]
+  [EndpointMetadata(Name = "ConfigurationCommandHandler", SupportedRoles = SupportedRoles.None)]
+  public class ConfigurationCommandHandlerEndpoint : IConfigurationCommandHandler
+  {
+    private readonly ILogger _logger;
+    public ConfigurationCommandHandlerEndpoint(ILogger logger) => _logger = logger;
+
+    public Task<object> HandleConfigurationCommandAsync(object command, ICorrelationContext context = null)
+    {
+      _logger.Information($"Execute command {command}");
       return Task.FromResult<object>("Done");
     }
   }
