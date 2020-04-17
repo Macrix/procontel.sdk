@@ -25,7 +25,7 @@
 
 ## 1. Quick introduction
 
-`ProconTEL.Sdk` is a modern .Net Standard sdk for port your business logic in [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x of the is currently found under [`/docs`](https://macrix.eu/).
+`ProconTEL.Sdk` is a modern .Net Standard sdk for port your business logic in [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x of the is currently found under [`docs`](https://macrix.eu/).
 
 <div id='id-feature-comparison'/>
 
@@ -36,10 +36,10 @@
 | Import          | ✓             |-    | ✓  |
 | Export          | ✓             |-     |   ✓    |
 | Status Control     | ✓             |  ✓  |   ✓    |
+| Send Command from Status Control   | ✓             |   ✓  |   ✓    |
+| Endpoint Status Notification   | ✓             |   ✓  |   ✓    |
 | Configuration Dialog    | ✓             |   ✓  |   ✓    |
 | Send Command from Configuration Dialog   | ✓             |   -  |   ✓    |
-| Send Command from Status Dialog   | ✓             |   ✓  |   ✓    |
-| Endpoint Status Notification   | ✓             |   ✓  |   ✓    |
 | Endpoint Content Details   | ✓             |   ✓  |   ✓    |
 | Endpoint Content Details in attribute   | -             |   -  |   ✓    |
 | Acknowledgement   | ✓             |   ✓  |   ✓    |
@@ -54,7 +54,7 @@ use self describe property Name in <b>EndpointMetadata</b>. ProconTEL.Sdk delive
 <div id='id-builder-blocks-endpoint-metadata'/>
 
 * ### EndpointMetadata 
-This is simple example how we can decorate endpoint class
+This is simple example how we can decorate endpoint class.
 ```csharp
   [EndpointMetadata(Name = "Empty", SupportedRoles = SupportedRoles.Both)]
   public class EmptyEndpoint
@@ -92,7 +92,7 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
 
 * ### IHandler
 <b>IHandler</b> is common communication interface which provide receiving data from another endpoint. We can filter incoming messages by implement method `CanHandle`. 
-Asynchronous method `HandleAsync` is responsible for processing data. <b>This execution is a blocking call (synchronous).</b> No execution will take place on the current thread until current processing returns some acknowledgement. <b>we will not process new messages until the current processing is completed.</b>
+Asynchronous method `HandleAsync` is responsible for processing data. <b>This execution is a blocking call (synchronous).</b> No execution will take place on the current thread until current processing returns some acknowledgement. <b>We will not process new messages until the current processing is completed.</b>
 We support few acknowledgement types : Ack, Retry, Reject. Hadnler implementation has to return acknowledgement (mandatory), but sender can ignore it (obligatory).
 ```csharp
   [EndpointMetadata(Name = "Handler", SupportedRoles = SupportedRoles.Subscriber)]
@@ -114,7 +114,7 @@ We support few acknowledgement types : Ack, Retry, Reject. Hadnler implementatio
 <div id='id-builder-blocks-imessage-metadata-provider'/>
 
 * ### IMessageMetadataProvider
-Interface <b>IMessageMetadataProvider</> provide mechanism to define runtime mutable list of sending message metadata.
+Interface <b>IMessageMetadataProvider</b> provide mechanism to define runtime mutable list of sending message metadata.
 ```csharp
   [EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
   public class MessageMetadataProviderEndpoint : IMessageMetadataProvider
@@ -129,7 +129,7 @@ Interface <b>IMessageMetadataProvider</> provide mechanism to define runtime mut
 <div id='id-builder-blocks-icommand-handler'/>
 
 * ### ICommandHandler
-Interface <b>ICommandHandler</> support handling messages from Status Control Component. Processing approach is similar like in [IHandler](#id-builder-blocks-ihandler).
+Interface <b>ICommandHandler</b> support handling messages from Status Control Component. Processing approach is similar like in [IHandler](#id-builder-blocks-ihandler).
 ```csharp
   [EndpointMetadata(Name = "CommandHandler", SupportedRoles = SupportedRoles.None)]
   public class CommandHandlerEndpoint : ICommandHandler
