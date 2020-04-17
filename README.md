@@ -187,9 +187,17 @@ We are able to bind and communicate user interface to hosted business logic. Sup
 
 ```
 
+<div id='id-ioc'/>
+
+## 6. IoC
+
+<div id='id-testing'/>
+
+## 7. Testing
+
 <div id='id-deployment'/>
 
-## 6. Deployment
+## 8. Deployment
 
 <div id='id-deployment-github'/>
 
