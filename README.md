@@ -43,7 +43,7 @@
 
 ## 2. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
-| Feature         | Engine 2.x SDK | SDK 0.4<br>Current  | SDK 1.0<br>Planned | SDK Legacy 1.0<br>Planned |
+| Feature         | Engine 2.x SDK | SDK 0.4<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
 | :---  |:---:|:---:|:---:|:---:|
 | Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ |
 | Send message                                                                                           | ✓ | ✓ | ✓ | ✓ |
