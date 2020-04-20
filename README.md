@@ -318,24 +318,143 @@ Defining supported protocols can be done by creating custom attribute and markin
 
 ## 6. UI Components
 
-We are able to bind and communicate user interface to hosted business logic. Supported fronted framework:
- - Wpf
- - WinForms
- 
+We are able to bind and communicate user interface to hosted business logic.
+
 <div id='id-ui-components-configuration-dialog'/>
  
 * ### Configuration Dialog
-```csharp
+Procontel.Sdk provide few features:
+- <b>read endpoint configuration,</b>
+- <b>write endpoint configuration,</b>
+- <b>send command to deactivated endpoint (does not have full access to endpoint resource )</b>
 
+To define Configuration UI Element binding endpoint has to be decorate with attribute <b>ConfigurationDialogAttribute</b>. Windows Forms dialog type should be put as a attribute constructor parameter.
+
+```csharp
+  [ConfigurationDialog(typeof(WebHostConfigurationDialog))]
+  [EndpointMetadata(Name = "Configurable Endpoint", SupportedRoles = SupportedRoles.None)]
+  public class ConfigurableEndpoint 
+  {
+    private readonly IConfigurationReader _configurationReader;
+    public ConfigurableEndpoint(IConfigurationReader configurationReader)
+    {
+      _configurationReader = configurationReader;
+    }
+  }
+```
+
+```csharp
+  public partial class ConfigurationDialog : Form
+  {
+    private readonly IConfigurationWriter _configurationWriter;
+    private readonly IConfigurationReader _configurationReader;
+    private readonly IEndpointCommandSender _endpointCommandSender;
+
+    public ConfigurationDialog()
+    {
+      InitializeComponent();
+    }
+
+    public ConfigurationDialog(
+      IConfigurationWriter configurationWriter,
+      IConfigurationReader configurationReader,
+      IEndpointCommandSender endpointCommandSender) : this()
+    {
+      _configurationWriter = configurationWriter;
+      _configurationReader = configurationReader;
+      _endpointCommandSender = endpointCommandSender;
+      txtAdress.Text = _configurationReader.GetConfiguration();
+    }
+
+    private void SaveConfiguration_Click(object sender, EventArgs e)
+    {
+      _configurationWriter.SaveConfiguration(textBox1.Text);
+      DialogResult = DialogResult.OK;
+    }
+
+    private void SendCommandToServerEndpoint_Click(object sender, EventArgs e)
+    {
+      txtConsole.Text = "Wait ...";
+      var result = _endpointCommandSender.SendCommandToServerEndpoint(txtCommand.Text);
+      txtConsole.Text = result.ToString();
+    }
 ```
 
 <div id='id-ui-components-status-control'/>
 
 * ### Status Control
-```csharp
+Procontel.Sdk provide few features:
+- <b>send command to endpoint,</b>
+- <b>send notification from endpoint to frontend (push notification)</b>
 
+Supported fronted framework:
+ - Wpf
+ - WinForms
+
+To define Configuration UI Element binding endpoint has to be decorate with attribute <b>StatusControlAttribute</b>. User control type should be put as a attribute constructor parameter.
+
+```csharp
+  [StatusControl(typeof(WpfStatusControl), EndpointStatusControlType.Wpf)]
+  [EndpointMetadata(Name = "WpfStatus", SupportedRoles = SupportedRoles.None)]
+  public class WpfStatusEndpoint : ICommandHandler
+  {
+    private readonly ILogger _logger;
+    private readonly IRuntimeContext _runtimeContext;
+    public WpfStatusEndpoint(ILogger logger, IRuntimeContext runtimeContext)
+    {
+      _logger = logger;
+      _runtimeContext = runtimeContext;
+    }
+
+    public Task<object> HandleCommandAsync(object command, ICorrelationContext context = null)
+    {
+      _logger.Information($"Received command from status control {command}");
+      switch (command)
+      {
+        case "dowork": _logger.Information($"Let's do some work!"); break;
+        case "notify": _runtimeContext.NotificationService.NotifyUI($"Notify from { _runtimeContext.MetadataContext.Caption} ", false); break;
+        default: throw new NotSupportedException($"Command {command} is not supported.");
+      }
+      return Task.FromResult<object>("Done");
+    }
+  }
+```
+Status control has to implement interface <b>IEndpointStatusControl</b>.
+
+```csharp
+  public partial class WpfStatusControl : UserControl, IEndpointStatusControl
+  {
+    private readonly IEndpointCommandSender _sender;
+    public WpfStatusControl() => InitializeComponent();
+    public WpfStatusControl(IEndpointCommandSender sender) : this() => _sender = sender;
+
+    public void DisplayStatus(object statusInformation)
+    {
+      if (statusInformation != null)
+      {
+        txtNotifications.Text = txtNotifications.Text.Insert(0, $"{DateTime.Now.ToString("HH:mm:ss")} {statusInformation.ToString()}{Environment.NewLine}");
+      }
+    }
+
+    public void OnStatusControlHidden() { }
+    public void OnStatusControlShown() { }
+
+    private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+      txtConsole.Text = "Running...";
+      try
+      {
+        var result = _sender.SendCommandToServerEndpoint(txtCommand.Text);
+        txtConsole.Text = result.ToString();
+      }
+      catch (Exception ex)
+      {
+        txtConsole.Text = $"Something goes wrong. {ex.Message}";
+      }
+    }
 ```
 
+In order to use more sophisticated behavior we recommend use attribute <b>StatusControlProviderAttribute</b> with own implementation of <b>IEndpointStatusControlProvider</b> interface.
 <div id='id-ioc'/>
 
 ## 7. IoC
