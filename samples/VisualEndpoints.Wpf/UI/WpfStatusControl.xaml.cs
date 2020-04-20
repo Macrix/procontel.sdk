@@ -15,7 +15,7 @@ namespace VisualEndpoints.Wpf.UI
     {
       if (statusInformation != null)
       {
-        txtNotification.Text = txtNotification.Text.Insert(0, $"{DateTime.Now.ToString("HH:mm:ss")} {statusInformation.ToString()}{Environment.NewLine}");
+        txtNotifications.Text = txtNotifications.Text.Insert(0, $"{DateTime.Now.ToString("HH:mm:ss")} {statusInformation.ToString()}{Environment.NewLine}");
       }
     }
 

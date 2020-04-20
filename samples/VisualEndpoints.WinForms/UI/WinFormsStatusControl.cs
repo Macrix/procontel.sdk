@@ -15,25 +15,25 @@ namespace VisualEndpoints.WinForms.UI
     {
       if (statusInformation != null)
       {
-        //txtNotification.Text = txtNotification.Text.Insert(0, $"{DateTime.Now.ToString("HH:mm:ss")} {statusInformation.ToString()}{Environment.NewLine}");
+        txtNotifications.Text = txtNotifications.Text.Insert(0, $"{DateTime.Now.ToString("HH:mm:ss")} {statusInformation.ToString()}{Environment.NewLine}");
       }
     }
 
     public void OnStatusControlHidden() { }
     public void OnStatusControlShown() { }
 
-    //private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-    //{
-    //  txtConsole.Text = "Running...";
-    //  try
-    //  {
-    //    var result = _sender.SendCommandToServerEndpoint(txtCommand.Text);
-    //    txtConsole.Text = result.ToString();
-    //  }
-    //  catch (Exception ex)
-    //  {
-    //    txtConsole.Text = $"Something goes wrong. {ex.Message}";
-    //  }
-    //}
+    private void Button_Click(object sender, EventArgs e)
+    {
+      txtConsole.Text = "Running...";
+      try
+      {
+        var result = _sender.SendCommandToServerEndpoint(txtCommand.Text);
+        txtConsole.Text = result.ToString();
+      }
+      catch (Exception ex)
+      {
+        txtConsole.Text = $"Something goes wrong. {ex.Message}";
+      }
+    }
   }
 }
