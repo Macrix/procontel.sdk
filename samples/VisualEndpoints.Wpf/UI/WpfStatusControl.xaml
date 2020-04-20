@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="VisualEndpoints.Wpf.UI.WpfStatusControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VisualEndpoints.Wpf.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="3*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="500"/>
+    </Grid.RowDefinitions>
+    <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" >
+      <TextBox x:Name="txtCommand" Margin="5"/>
+      <Button Content="Send Command" Click="Button_Click" Margin="5"/>
+      <TextBlock Text="Available commands:"/>
+      <TextBlock Text="- dowork"/>
+      <TextBlock Text="- notify"/>
+    </StackPanel>
+    <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" >
+      <GroupBox Header="Console">
+        <TextBox x:Name="txtConsole" IsEnabled="True" Height="250"/>
+      </GroupBox>
+      <GroupBox Header="Notifications">
+        <TextBox x:Name="txtNotification" IsEnabled="True" Height="250"/>
+      </GroupBox>
+    </StackPanel>
+  </Grid>
+</UserControl>
