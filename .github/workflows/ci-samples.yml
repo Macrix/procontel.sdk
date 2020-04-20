@@ -50,5 +50,5 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: VisualEndpoints.Wpf
-        path: ${{ env.working-directory }}/bin/Release/net472.0
+        path: ${{ env.working-directory }}/bin/Release/net472
       name: Upload Artifact
