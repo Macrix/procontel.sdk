@@ -37,12 +37,12 @@
 
 ## 1. Quick introduction
 
-`ProconTEL.Sdk` is a modern .Net Standard SDK for porting your business logic with [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x is currently available under [`docs`](https://macrix.eu/).
+`ProconTEL.Sdk` is a modern .NET Standard SDK for porting your business logic with [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x is currently available under [`docs`](https://macrix.eu/).
 
 <div id='id-feature-comparison'/>
 
 ## 2. Feature Comparison
-Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features avilable in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was implemented in *Engine 2.x*.
+Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
 | Feature         | Engine 2.x SDK<br>(ChannelEndpointBase) | SDK 0.4<br>Current  | SDK 1.0<br>Planned | SDK Legacy 1.0<br>Planned |
 | :---  |:---:|:---:|:---:|:---:|
 | Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ |
@@ -103,9 +103,7 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 
 ## 3. Builder blocks
 
-To create endpoint we need to decorate C# class with the <b>EndpointMetadata</b> attribute. To keep ProconTEL  environment clear we strongly recommended 
-use self describe property Name in <b>EndpointMetadata</b>. ProconTEL.Sdk deliver builder blocks which gives developer possibilities to extend endpoint functionality. To use builder block endpoint has to implement one of interfase. This interfaces are representation of endpoint behaviors and can be mixed freely.
-<b>EndpointMetadata</b> contains property SupportedRoles which is promise of endpoint communication posobilities.
+To create endpoint we need to decorate C# class with the `EndpointMetadata` attribute. To keep ProconTEL environment clear we strongly recommended to use self describing property `Name` in attribute. `ProconTEL.Sdk` delivers builder blocks which gives developer possibilities to extend endpoint functionality. To use builder block endpoint has to implement one of interfaces. Each interface represents endpoint behavior and it can be mixed freely. `EndpointMetadata` contains property `SupportedRoles` which is promise of endpoint communication posobilities.
 
 <div id='id-builder-blocks-endpoint-metadata'/>
 
