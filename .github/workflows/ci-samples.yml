@@ -30,7 +30,7 @@ jobs:
         path: ${{ env.working-directory }}/bin/Release/netstandard2.0
       name: Upload Artifact
       
-  VisualEndpoints.Wpf:
+  WpfVisualEndpoints:
     runs-on: windows-latest
     env:
       working-directory: ./samples/VisualEndpoints.Wpf
