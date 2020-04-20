@@ -27,6 +27,9 @@ jobs:
       working-directory: ${{env.working-directory}}
     - uses: actions/upload-artifact@v1
       with:
-        name: artifacts
+        name: SimpleEndpoints
         path: ${{ env.working-directory }}/SimpleEndpoints/bin/Release/netstandard2.0
+      with:
+        name: VisualEndpoints.Wpf
+        path: ${{ env.working-directory }}/VisualEndpoints.Wpf/bin/Release/net472
       name: Upload Artifact
