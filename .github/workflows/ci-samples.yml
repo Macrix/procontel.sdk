@@ -29,6 +29,52 @@ jobs:
         name: SimpleEndpoints
         path: ${{ env.working-directory }}/bin/Release/netstandard2.0
       name: Upload Artifact
+
+  AdvancedEndpoints:
+    runs-on: windows-latest
+    env:
+      working-directory: ./samples/AdvancedEndpoints
+      
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore -s https://nexus.macrix.eu/repository/nuget/ -s https://api.nuget.org/v3/index.json --force --no-cache
+      working-directory: ${{env.working-directory}}
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ${{env.working-directory}}
+    - uses: actions/upload-artifact@v1
+      with:
+        name: AdvancedEndpoints
+        path: ${{ env.working-directory }}/bin/Release/netstandard2.0
+      name: Upload Artifact
+
+  WinFormsVisualEndpoints:
+    runs-on: windows-latest
+    env:
+      working-directory: ./samples/VisualEndpoints.WinForms
+      
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore -s https://nexus.macrix.eu/repository/nuget/ -s https://api.nuget.org/v3/index.json --force --no-cache
+      working-directory: ${{env.working-directory}}
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ${{env.working-directory}}
+    - uses: actions/upload-artifact@v1
+      with:
+        name: VisualEndpoints.WinForms
+        path: ${{ env.working-directory }}/bin/Release/net472
+      name: Upload Artifact
       
   WpfVisualEndpoints:
     runs-on: windows-latest
