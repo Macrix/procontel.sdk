@@ -1,4 +1,4 @@
-name: .NET Core
+name: ProconTEL Samples
 
 on:
   push:
@@ -7,18 +7,17 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  SimpleEndpoints:
     runs-on: windows-latest
     env:
-      working-directory: ./samples
+      working-directory: ./samples/SimpleEndpoints
       
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-
     - name: Install dependencies
       run: dotnet restore -s https://nexus.macrix.eu/repository/nuget/ -s https://api.nuget.org/v3/index.json --force --no-cache
       working-directory: ${{env.working-directory}}
@@ -28,8 +27,28 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: SimpleEndpoints
-        path: ${{ env.working-directory }}/SimpleEndpoints/bin/Release/netstandard2.0
+        path: ${{ env.working-directory }}/bin/Release/netstandard2.0
+      name: Upload Artifact
+      
+  VisualEndpoints.Wpf:
+    runs-on: windows-latest
+    env:
+      working-directory: ./samples/VisualEndpoints.Wpf
+      
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore -s https://nexus.macrix.eu/repository/nuget/ -s https://api.nuget.org/v3/index.json --force --no-cache
+      working-directory: ${{env.working-directory}}
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ${{env.working-directory}}
+    - uses: actions/upload-artifact@v1
       with:
         name: VisualEndpoints.Wpf
-        path: ${{ env.working-directory }}/VisualEndpoints.Wpf/bin/Release/net472
+        path: ${{ env.working-directory }}/bin/Release/net472.0
       name: Upload Artifact
