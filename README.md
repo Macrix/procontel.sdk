@@ -92,6 +92,7 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | ✓ | ✓ |
 | `IAuthenticationEndpoint`                                                                              | ✓ | - | ✓ | ✓ |
 | `IAuthorizationEndpoint`                                                                               | ✓ | - | ✓ | ✓ |
+| Custom queues definitions                                                                              | ✓ | - | ? | - |
 | Override services implementation                                                                       | - | - | ✓ | - |
 | Asynchronous methods (`async`)                                                                         | - | - | ✓ | - |
 | ~~After initialization method `AfterActivate()`~~                                                      | ✓ | - | - | ✓ |
