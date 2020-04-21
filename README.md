@@ -4,15 +4,16 @@
 ## Table of Contents
 
 1. [Quick introduction](#id-quick-introduction)
-2. [Feature Comparison](#id-feature-comparison)
-3. [Builder blocks](#id-builder-blocks)
+2. [Compatibility matrix](#id-compatibility-matrix)
+3. [Feature comparison](#id-feature-comparison)
+4. [Builder blocks](#id-builder-blocks)
     1. [EndpointMetadata](#id-builder-blocks-endpoint-metadata)
 	2. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
     3. [IHandler](#id-builder-blocks-ihandler)
 	4. [IMessageMetadataProvider](#id-builder-blocks-imessage-metadata-provider)
 	5. [ICommandHandler](#id-builder-blocks-icommand-handler)
 	6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
-4. [Injected services](#id-injected-services)
+5. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [IMessageBus](#id-injected-services-imessage-bus)
     3. [IConfigurationReader](#id-injected-services-iconfiguration-reader)
@@ -20,16 +21,16 @@
     5. [IMetadataContext](#id-injected-services-imetadata-context)
     6. [INotificationService](#id-injected-services-inotification-service)
     7. [IMetricsService](#id-injected-services-imetrics-service)
-5. [Advanced concepts](#id-advanced-concepts)
+6. [Advanced concepts](#id-advanced-concepts)
     1. [Supported protocols](#id-advanced-concepts-protocols)
     2. [IMessageBus](#id-advanced-concepts-message-bus)
-6. [UI Components](#id-ui-components)
+7. [UI Components](#id-ui-components)
     1. [Configuration Dialog](#id-ui-components-configuration-dialog)
     2. [Status Control](#id-ui-components-status-control)
-7. [IoC](#id-ioc)
-8. [Legacy Sdk](#id-legacy-sdk)
-9. [Testing](#id-testing)
-10. [Deployment](#id-deployment)
+8. [IoC](#id-ioc)
+9. [Legacy Sdk](#id-legacy-sdk)
+10. [Testing](#id-testing)
+11. [Deployment](#id-deployment)
     1. [Github](#id-deployment-github)
     2. [GitLab](#id-deployment-gitlab)
 
@@ -41,7 +42,15 @@
 
 <div id='id-feature-comparison'/>
 
-## 2. Feature Comparison
+## 2. Compatibility matrix
+
+| ProconTEL Engine Version | ProconTEL SDK releases  | 
+| :---:  |:---:|
+| 3.0 | 1.0 |
+
+<div id='id-feature-comparison'/>
+
+## 3. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
 | Feature         | Engine 2.x SDK | SDK 0.4<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
 | :---  |:---:|:---:|:---:|:---:|
@@ -102,7 +111,7 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 
 <div id='id-builder-blocks'/>
 
-## 3. Builder blocks
+## 4. Builder blocks
 
 To create endpoint we need to decorate C# class with the `EndpointMetadata` attribute. To keep ProconTEL environment clear we strongly recommended to use self describing property `Name` in attribute. `ProconTEL.Sdk` delivers builder blocks which gives developer possibilities to extend endpoint functionality. To use builder block endpoint has to implement one of interfaces. Each interface represents endpoint behavior and it can be mixed freely. `EndpointMetadata` contains property `SupportedRoles` which is promise of endpoint communication posobilities.
 
@@ -222,7 +231,7 @@ Interface <b>IConfigurationCommandHandler</b> support handling messages from Con
 
 <div id='id-injected-services'/>
 
-## 4. Injected services
+## 5. Injected services
 
 ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in endpoint constructor. In ProconTEL naming conventions this interfaces called <b>services</b>.
 
@@ -287,7 +296,7 @@ Feature in progress
 
 <div id='id-advanced-concepts'/>
 
-## 5. Advanced concepts
+## 6. Advanced concepts
 
 <div id='id-advanced-concepts-protocols'/>
 
@@ -316,7 +325,7 @@ Defining supported protocols can be done by creating custom attribute and markin
 
 <div id='id-ui-components'/>
 
-## 6. UI Components
+## 7. UI Components
 
 We are able to bind and communicate user interface to hosted business logic.
 
@@ -457,19 +466,19 @@ Status control has to implement interface <b>IEndpointStatusControl</b>.
 In order to use more sophisticated behavior we recommend use attribute <b>StatusControlProviderAttribute</b> with own implementation of <b>IEndpointStatusControlProvider</b> interface.
 <div id='id-ioc'/>
 
-## 7. IoC
+## 8. IoC
 
 <div id='id-legacy-sdk'/>
 
-## 8. Legacy Sdk
+## 9. Legacy Sdk
 
 <div id='id-testing'/>
 
-## 9. Testing
+## 10. Testing
 
 <div id='id-deployment'/>
 
-## 10. Deployment
+## 11. Deployment
 
 <div id='id-deployment-github'/>
 
