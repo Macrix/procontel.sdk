@@ -40,7 +40,7 @@
 
 `ProconTEL.Sdk` is a modern .NET Standard SDK for porting your business logic with [ProconTEL](http://procontel.com/) environment. The modular design and middleware oriented architecture makes the endpoint highly customizable while providing sensible default for topology, communication and extensions. Documentation for version 1.x is currently available under [`docs`](https://macrix.eu/).
 
-<div id='id-feature-comparison'/>
+<div id='id-compatibility-matrix'/>
 
 ## 2. Compatibility matrix
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
