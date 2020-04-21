@@ -46,7 +46,7 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
-| 3.0.0 | 0.4 |
+| 3.0 | 0.4 |
 
 <div id='id-feature-comparison'/>
 
