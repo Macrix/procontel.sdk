@@ -8,11 +8,13 @@
 3. [Feature comparison](#id-feature-comparison)
 4. [Builder blocks](#id-builder-blocks)
     1. [EndpointMetadata](#id-builder-blocks-endpoint-metadata)
-	2. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+	  2. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
     3. [IHandler](#id-builder-blocks-ihandler)
-	4. [IMessageMetadataProvider](#id-builder-blocks-imessage-metadata-provider)
-	5. [ICommandHandler](#id-builder-blocks-icommand-handler)
-	6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
+	  4. [IMessageMetadataProvider](#id-builder-blocks-imessage-metadata-provider)
+	  5. [ICommandHandler](#id-builder-blocks-icommand-handler)
+	  6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
+    7. [IOnlineConfigurationUpdate](#id-builder-blocks-ionline-configuration-update)
+    8. [IOnlineUpgradeLifetimeCycle](#id-builder-blocks-ionline-upgrade-life-time-cycle)
 5. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [IMessageBus](#id-injected-services-imessage-bus)
@@ -21,6 +23,7 @@
     5. [IMetadataContext](#id-injected-services-imetadata-context)
     6. [INotificationService](#id-injected-services-inotification-service)
     7. [IMetricsService](#id-injected-services-imetrics-service)
+    8. [IServiceContext](#id-injected-services-iservice-context)
 6. [Advanced concepts](#id-advanced-concepts)
     1. [Supported protocols](#id-advanced-concepts-protocols)
     2. [IMessageBus](#id-advanced-concepts-message-bus)
@@ -46,68 +49,68 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
-| 3.0 | 0.4 |
+| 3.0 | 0. |
 
 <div id='id-feature-comparison'/>
 
 ## 3. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
-| Feature         | Engine 2.x SDK | SDK 0.4<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
-| :---  |:---:|:---:|:---:|:---:|
-| Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ |
-| Send message                                                                                           | ✓ | ✓ | ✓ | ✓ |
-| Attach metadata with message when broadcast/send                                                       | ✓ | ✓ | ✓ | ✓ |
-| Handle message<br>`SubscriberStrategy.AcceptsContent()`, `SubscriberStrategy.ProcessContent()`         | ✓ | ✓ | ✓ | ✓ |
-| Handle metadata information of received message<br>`ContentInfo`                                       | ✓ | - | ✓ | ✓ |
-| Expose details of send/broadcasted messages<br>`ProviderStrategy.ProvidingContentDetails`              | ✓ | ✓ | ✓ | ✓ |
-| Expose details of send/broadcasted messages in attribute                                               | - | - | ✓ | - |
-| Handle supported protocols<br>`SubscriberStrategy.SubscribingProtocols`                                | ✓ | ✓ | ✓ | ✓ |
-| Acknowledge processed message<br>`SubscriberStrategy.AcknowledgeContent()`                             | ✓ | ✓ | ✓ | - |
-| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | - |
-| Life cycle mechanism<br>`ChannelEndpointBase.Initialize()`, `ChannelEndpointBase.Terminate()`          | ✓ | ✓ | ✓ | ✓ |
-| On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | - | ✓ | ✓ |
-| Reading endpoint configuration<br>`ChannelEndpointBase.GetConfiguration()`                             | ✓ | ✓ | ✓ | ✓ |
-| Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | - | ✓ | ✓ |
-| Logger<br>*all `Logger.Debug()`, `Logger.Error()`, etc. methods                                        | ✓ | ✓ | ✓ | ✓ |
-| Custom log source location information<br>`ILogMessageOrigin` support                                  | ✓ | - | - | - |
-| Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ |
-| Endpoint type<br>`ChannelEndpointBase.ActsAsProvider`, `ChannelEndpointBase.ActsAsSubscriber`          | ✓ | ✓ | ✓ | ✓ |
-| Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | - | ✓ | ✓ |
-| Handle stream in endpoint                                                                              | ✓ | - | ✓ | ✓ |
-| Send stream to UI status control                                                                       | ✓ | - | ✓ | ✓ |
-| Handle stream in UI status control                                                                     | ✓ | - | ✓ | ✓ |
-| Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | - | ✓ | ✓ |
-| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | - | ✓ | ✓ |
-| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | - | ✓ | ✓ |
-| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | - | ✓ | ✓ |
-| Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | ✓ | ✓ |
-| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - |
-| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | ✓ | ✓ |
-| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | ✓ | ✓ |
-| `RequestLastContent()`                                                                                 | ✓ | - | ✓ | ✓ |
-| `RequestMissedContents()`                                                                              | ✓ | - | ✓ | ✓ |
-| Configuration dialog (WinForms)                                                                        | ✓ | ✓ | ✓ | ✓ |
-| Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ |
-| Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from conf. dialog                                                            | ✓ | - | ✓ | ✓ |
-| Send files from conf. dialog                                                                           | ✓ | - | ✓ | ✓ |
-| Conf. dialog available while endpoint is active                                                        | ✓ | - | ✓ | ✓ |
-| Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ |
-| Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ |
-| Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ |
-| Send files from status control                                                                         | ✓ | - | ✓ | ✓ |
-| Access remote file system from statuc control                                                          | ✓ | - | ✓ | ✓ |
-| State manager for status control                                                                       | ✓ | - | ✓ | ✓ |
-| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | ✓ | ✓ |
-| `IAuthenticationEndpoint`                                                                              | ✓ | - | ✓ | ✓ |
-| `IAuthorizationEndpoint`                                                                               | ✓ | - | ✓ | ✓ |
-| Custom queues definitions                                                                              | ✓ | - | ? | - |
-| Override services implementation                                                                       | - | - | ✓ | - |
-| Asynchronous methods (`async`)                                                                         | - | - | ✓ | - |
-| ~~After initialization method `AfterActivate()`~~                                                      | ✓ | - | - | ✓ |
-| ~~Information about other endpoints available in channel<br>`ChannelSubscriberDetails`, `ChannelProviderDetails`, `ChannelProviderContentDetails`, `ChannelSubscriberIds`, `ChannelProviderIds`~~ | ✓ | - | - | - |
-| ~~Custom endpoint remove confirmation dialog<br>`ChannelEndpointBase.GetRemoveConfirmationDialog()`~~  | ✓ | - | - | - |
-| ~~Divide/merge configuration when endpoint is moved, split (avatar + endpoint) or merged (remove avatar and replace with endpoint from pool)~~ | ✓ | - | - | - |
+| Feature         | Engine 2.x SDK | SDK 0.4<br>  | SDK 0.5<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
+| :---  |:---:|:---:|:---:|:---:|:---:|
+| Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Send message                                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Attach metadata with message when broadcast/send                                                       | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Handle message<br>`SubscriberStrategy.AcceptsContent()`, `SubscriberStrategy.ProcessContent()`         | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Handle metadata information of received message<br>`ContentInfo`                                       | ✓ | - | **✓** | ✓ | ✓ |
+| Expose details of send/broadcasted messages<br>`ProviderStrategy.ProvidingContentDetails`              | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Expose details of send/broadcasted messages in attribute                                               | - | - | - | ✓ | - |
+| Handle supported protocols<br>`SubscriberStrategy.SubscribingProtocols`                                | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Acknowledge processed message<br>`SubscriberStrategy.AcknowledgeContent()`                             | ✓ | ✓ | ✓ | ✓ | - |
+| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | **?** | - | - |
+| Life cycle mechanism<br>`ChannelEndpointBase.Initialize()`, `ChannelEndpointBase.Terminate()`          | ✓ | ✓ | ✓ | ✓ | ✓ |
+| On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | - | **✓** | ✓ | ✓ |
+| Reading endpoint configuration<br>`ChannelEndpointBase.GetConfiguration()`                             | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | - | **--** | ✓ | ✓ |
+| Logger<br>*all `Logger.Debug()`, `Logger.Error()`, etc. methods                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Custom log source location information<br>`ILogMessageOrigin` support                                  | ✓ | - | **--** | - | - |
+| Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Endpoint type<br>`ChannelEndpointBase.ActsAsProvider`, `ChannelEndpointBase.ActsAsSubscriber`          | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | - | - | ✓ | ✓ |
+| Handle stream in endpoint                                                                              | ✓ | - | - | ✓ | ✓ |
+| Send stream to UI status control                                                                       | ✓ | - | ✓ | ✓ | - |
+| Handle stream in UI status control                                                                     | ✓ | - | - | ✓ | ✓ |
+| Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | - | - | ✓ | ✓ |
+| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | - | - | ✓ | ✓ |
+| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | - | - | ✓ | ✓ |
+| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | - | - | ✓ | ✓ |
+| Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - | ✓ | ✓ |
+| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - | - |
+| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | - | ✓ | ✓ |
+| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | - |✓ | ✓ |
+| `RequestLastContent()`                                                                                 | ✓ | - | - | ✓ | ✓ |
+| `RequestMissedContents()`                                                                              | ✓ | - | - | ✓ | ✓ |
+| Configuration dialog (WinForms)                                                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Access remote file system from conf. dialog                                                            | ✓ | - | ✓ | ✓ | ✓ |
+| Send files from conf. dialog                                                                           | ✓ | - | ✓ | ✓ | ✓ |
+| Conf. dialog available while endpoint is active                                                        | ✓ | - | ✓ | ✓ | ✓ |
+| Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Send files from status control                                                                         | ✓ | - | - | ✓ | ✓ |
+| Access remote file system from statuc control                                                          | ✓ | - | - | ✓ | ✓ |
+| State manager for status control                                                                       | ✓ | - | - | ✓ | ✓ |
+| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | ✓ | ✓ |
+| `IAuthenticationEndpoint`                                                                              | ✓ | - | - | ✓ | ✓ |
+| `IAuthorizationEndpoint`                                                                               | ✓ | - | - | ✓ | ✓ |
+| Custom queues definitions                                                                              | ✓ | - | - | ? | - |
+| Override services implementation                                                                       | - | - | - | ✓ | - |
+| Asynchronous methods (`async`)                                                                         | - | - | - | ✓ | - |
+| ~~After initialization method `AfterActivate()`~~                                                      | ✓ | - | - | - | ✓ |
+| ~~Information about other endpoints available in channel<br>`ChannelSubscriberDetails`, `ChannelProviderDetails`, `ChannelProviderContentDetails`, `ChannelSubscriberIds`, `ChannelProviderIds`~~ | ✓ | - | - | - | - |
+| ~~Custom endpoint remove confirmation dialog<br>`ChannelEndpointBase.GetRemoveConfirmationDialog()`~~  | ✓ | - | - | - | - |
+| ~~Divide/merge configuration when endpoint is moved, split (avatar + endpoint) or merged (remove avatar and replace with endpoint from pool)~~ | ✓ | - | - | - | - |
 
 <div id='id-builder-blocks'/>
 
@@ -229,6 +232,47 @@ Interface <b>IConfigurationCommandHandler</b> support handling messages from Con
   }
 ```
 
+<div id='id-builder-blocks-ionline-configuration-update'/>
+
+* ### IOnlineConfigurationUpdate
+Interface <b>IOnlineConfigurationUpdate</b> support observe configuration changed notification. To read current configuration version use <b>IConfigurationReader</b> service injection.  
+```csharp
+  [EndpointMetadata(Name = "OnlineConfigurationUpdate", SupportedRoles = SupportedRoles.None)]
+  public class OnlineConfigurationUpdateEndpoint : IOnlineConfigurationUpdate
+  {
+    private readonly ILogger _logger;
+    private readonly IConfigurationReader _configurationReader;
+    public OnlineConfigurationUpdateEndpoint(ILogger logger, IConfigurationReader configurationReader)
+    {
+      _logger = logger;
+      _configurationReader = configurationReader;
+    }
+
+    public void ConfigurationChanged() => _logger.Information($"Configuration was changed. Current values: {_configurationReader.GetConfiguration()})");
+  }
+```
+
+<div id='id-builder-blocks-ionline-upgrade-life-time-cycle'/>
+
+* ### IOnlineUpgradeLifetimeCycle
+Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plugin process and the ability to act when they occur.
+```csharp
+  [EndpointMetadata(Name = "OnlineUpgradeLifetimeCycle", SupportedRoles = SupportedRoles.None)]
+  public class OnlineUpgradeLifetimeCycleEndpoint : IOnlineUpgradeLifetimeCycle
+  {
+    private readonly ILogger _logger;
+    private readonly IRuntimeContext _runtimeContext;
+    public OnlineUpgradeLifetimeCycleEndpoint(ILogger logger, IRuntimeContext runtimeContext)
+    {
+      _logger = logger;
+      _runtimeContext = runtimeContext;
+    }
+    public bool CanUpgrade() => true;
+
+    public void UpgradeFinished() => _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
+  }
+```
+
 <div id='id-injected-services'/>
 
 ## 5. Injected services
@@ -237,23 +281,26 @@ ProconTEL environment provide set of features available via dependency injection
 
 ```csharp
   [EndpointMetadata(Name = "Rich", SupportedRoles = SupportedRoles.Provider)]
-  public class RichEndpoint
+  public class RichEndpint
   {
     private readonly ILogger _logger;
     private readonly IMessageBus _messageBus;
     private readonly IConfigurationReader _configurationReader;
     private readonly IRuntimeContext _runtimeContext;
-    
-    public RichEndpoint(
+    private readonly IServiceContext _serviceContext;
+
+    public RichEndpint(
       ILogger logger,
       IMessageBus messageBus,
       IConfigurationReader configurationReader,
-      IRuntimeContext runtimeContext)
+      IRuntimeContext runtimeContext,
+      IServiceContext serviceContext)
     {
       _logger = logger;
       _messageBus = messageBus;
       _configurationReader = configurationReader;
       _runtimeContext = runtimeContext;
+      _serviceContext = serviceContext;
     }
   }
 
@@ -293,6 +340,11 @@ Service provide notification from endpoint to status control. This service is pa
 
 * ### IMetricsService
 Feature in progress
+
+<div id='id-injected-services-iservice-context'/>
+
+* ### IServiceContext
+Service provide access to implementation of internal services from procontel engine.
 
 <div id='id-advanced-concepts'/>
 
@@ -468,6 +520,7 @@ In order to use more sophisticated behavior we recommend use attribute <b>Status
 
 ## 8. IoC
 
+ProconTEL engine offers access to implementation of internal services. Described mechanism is deliver by service <b>IServiceContext</b>.
 <div id='id-legacy-sdk'/>
 
 ## 9. Legacy Sdk
