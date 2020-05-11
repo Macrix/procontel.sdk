@@ -24,6 +24,10 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: ${{env.working-directory}}
+    - name: Push nuget
+      run: dotnet nuget push **/*.nupkg
+        --api-key ${{ secret.NUGET_DEPLOY_KEY }}
+        --source ${{ secret.NUGET_URL }}
     - uses: actions/upload-artifact@v1
       with:
         name: SimpleEndpoints

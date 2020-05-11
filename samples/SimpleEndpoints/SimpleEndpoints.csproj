@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SimpleEndpoints</PackageId>
+    <Version>0.1.0.0</Version>
+    <Authors>PCT++ Team</Authors>
+    <Owners>Macrix - Technology Group</Owners>
+    <ProjectUrl>http://macrix.eu</ProjectUrl>
+    <IconUrl>https://macrix.eu/assets/img/favicon/favicon-32x32.png</IconUrl>
+    <Copyright>Copyright (c) 2006-2020 Macrix - Technology Group</Copyright>
+    <Product>ProconTel Simple Endpoints</Product>
+    <Description>ProconTEL endpoints.</Description>
+    <PackageTags>PCT++, SDK, SAMPLE</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
