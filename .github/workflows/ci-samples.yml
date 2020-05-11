@@ -28,6 +28,7 @@ jobs:
       run: dotnet nuget push **/*.nupkg
         --api-key ${{ secret.NUGET_DEPLOY_KEY }}
         --source ${{ secret.NUGET_URL }}
+        --no-symbols true
     - uses: actions/upload-artifact@v1
       with:
         name: SimpleEndpoints
