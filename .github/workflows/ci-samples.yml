@@ -11,6 +11,7 @@ jobs:
     runs-on: windows-latest
     env:
       working-directory: ./samples/SimpleEndpoints
+      version: 1.0.${{ github.run_number }}
       
     steps:
     - uses: actions/checkout@v2
@@ -22,7 +23,7 @@ jobs:
       run: dotnet restore -s https://nexus.macrix.eu/repository/nuget/ -s https://api.nuget.org/v3/index.json --force --no-cache
       working-directory: ${{env.working-directory}}
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet publish -c Release /p:Version=${{env.version}} --no-restore
       working-directory: ${{env.working-directory}}
     - name: Push nuget
       run: dotnet nuget push **/*.nupkg

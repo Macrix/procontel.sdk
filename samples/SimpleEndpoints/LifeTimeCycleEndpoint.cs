@@ -1,6 +1,7 @@
 ﻿using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Services;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace SimpleEndpoints
@@ -13,7 +14,7 @@ namespace SimpleEndpoints
 
     public Task InitializeAsync()
     {
-      _logger.Information("Initialized.");
+      _logger.Information($"Initialized {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
       return Task.CompletedTask;
     }
 
