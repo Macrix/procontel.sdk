@@ -14,7 +14,7 @@ namespace SimpleEndpoints
 
     public Task InitializeAsync()
     {
-      _logger.Information($"Initialized {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
+      _logger.Information($"Initialized endpoint {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
       return Task.CompletedTask;
     }
 
