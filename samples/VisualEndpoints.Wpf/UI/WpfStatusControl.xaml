@@ -20,6 +20,12 @@
       <TextBlock Text="Available commands:"/>
       <TextBlock Text="- dowork"/>
       <TextBlock Text="- notify"/>
+      <TextBlock Text="Color theme:"/>
+      <ComboBox Name="cbxTheme" SelectionChanged="cbxTheme_SelectionChanged">
+        <ComboBoxItem>Dark</ComboBoxItem>
+        <ComboBoxItem>Light</ComboBoxItem>
+        <ComboBoxItem>Blue</ComboBoxItem>
+      </ComboBox>
     </StackPanel>
     <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" >
       <GroupBox Header="Console">
