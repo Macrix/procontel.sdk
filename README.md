@@ -14,7 +14,8 @@
 	  5. [ICommandHandler](#id-builder-blocks-icommand-handler)
 	  6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
     7. [IOnlineConfigurationUpdate](#id-builder-blocks-ionline-configuration-update)
-    8. [IOnlineUpgradeLifetimeCycle](#id-builder-blocks-ionline-upgrade-life-time-cycle)
+    8. [IOnlineUpgradeLifetimeCycle](#id-builder-blocks-ionline-upgrade-life-time-cycle)    
+    9. [IAvatarsInsight](#id-builder-blocks-iavatars-insight)
 5. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [IMessageBus](#id-injected-services-imessage-bus)
@@ -272,6 +273,29 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
     public void UpgradeFinished() => _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
   }
 ```
+
+<div id='id-builder-blocks-iavatars-insight'/>
+
+* ### IAvatarsInsight
+IAvatarInsight is an interface that allows to handle avatar connection and disconnection events in avatar source endpoint.
+```csharp
+  [EndpointMetadata(Name = "AvatarInsight", SupportedRoles = SupportedRoles.None)]
+  public class OnlineUpgradeLifetimeCycleEndpoint : IAvatarsInsight
+  {
+    private readonly ILogger _logger;
+    
+    public void AvatarConnected(IAvatarConfiguration avatarConfiguration)
+    {
+      _logger.Information("Some avatar have been connected successfully");
+    }
+
+    public void AvatarDisconnected(IAvatarConfiguration avatarConfiguration)
+    {
+      _logger.Information("Some avatar have been disconnected successfully");
+    }
+  }
+```
+
 
 <div id='id-injected-services'/>
 
