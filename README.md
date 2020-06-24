@@ -600,7 +600,7 @@ public partial class WpfStatusControl : UserControl, IEndpointStatusControl
 }
 ```
 
-<div id='id-ui-components-injected-services-ilocal-storage'/>
+<div id='id-ui-components-injected-services-isecurity-service'/>
 
 * ### ISecurityService
 Service provide usage of security mechanism hosted by Authorization/Authentication endpoint.
