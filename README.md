@@ -624,7 +624,7 @@ Service provide usage of security mechanism hosted by Authorization/Authenticati
       public void Login(object sender, System.Windows.RoutedEventArgs e)
       {
           var isAdministrator = false;
-          var authorized = _securityService.Authenticate(hashLoginAdpassword);
+          var authorized = _securityService.Authenticate(hashLoginAndPassword);
           if (authorized)
           {
               isAdministrator = _securityService.IsInRole("administrator");
