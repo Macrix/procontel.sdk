@@ -1,4 +1,5 @@
-﻿using ProconTel.Sdk.UI.Models;
+﻿using ProconTel.Sdk.Services;
+using ProconTel.Sdk.UI.Models;
 using ProconTel.Sdk.UI.Services;
 using System;
 using System.Drawing;
@@ -11,11 +12,13 @@ namespace VisualEndpoints.Wpf.UI
     {
         private readonly IEndpointCommandSender _sender;
         private readonly ILocalStorage _localStorage;
+        private readonly ISecurityService _securityService;
         public WpfStatusControl() => InitializeComponent();
-        public WpfStatusControl(IEndpointCommandSender sender, ILocalStorage localStorage) : this()
+        public WpfStatusControl(IEndpointCommandSender sender, ILocalStorage localStorage, ISecurityService securityService) : this()
         {
             _sender = sender;
             _localStorage = localStorage;
+            _securityService = securityService;
         }
         public void DisplayStatus(object statusInformation)
         {
@@ -25,7 +28,7 @@ namespace VisualEndpoints.Wpf.UI
             }
         }
 
-        public void OnStatusControlHidden(){}
+        public void OnStatusControlHidden() { }
 
         public void OnStatusControlShown()
         {
@@ -38,8 +41,38 @@ namespace VisualEndpoints.Wpf.UI
             txtConsole.Text = "Running...";
             try
             {
-                var result = _sender.SendCommandToServerEndpoint(txtCommand.Text);
-                txtConsole.Text = result.ToString();
+                var commands = txtCommand.Text.Split(' ');
+                switch (commands.FirstOrDefault())
+                {
+                    case "login":
+                        {
+                            _securityService.SignOut();
+                            var auth = commands[1];
+                            var token = _securityService.Authenticate(auth);
+                            if (_securityService.IsAuthorized)
+                            {
+                                txtConsole.Text = $"Login successed.";
+                            }
+                            else
+                            {
+                                txtConsole.Text = $"Login failed.";
+                            }
+                            
+                            break;
+                        }
+                    case "isinrole":
+                        {
+                            var role = commands[1];
+                            txtConsole.Text = $"Is in role {role}: { _securityService.IsInRole(role)}";
+                            break;
+                        }
+                    default:
+                        {
+                            var result = _sender.SendCommandToServerEndpoint(txtCommand.Text);
+                            txtConsole.Text = result.ToString();
+                            break;
+                        }
+                }
             }
             catch (Exception ex)
             {
