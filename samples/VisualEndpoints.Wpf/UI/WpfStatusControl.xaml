@@ -20,6 +20,8 @@
       <TextBlock Text="Available commands:"/>
       <TextBlock Text="- dowork"/>
       <TextBlock Text="- notify"/>
+      <TextBlock Text="- login"/>
+      <TextBlock Text="- isinrole"/>
       <TextBlock Text="Color theme:"/>
       <ComboBox Name="cbxTheme" SelectionChanged="cbxTheme_SelectionChanged">
         <ComboBoxItem>Dark</ComboBoxItem>

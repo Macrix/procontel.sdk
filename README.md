@@ -15,6 +15,8 @@
 	  6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
     7. [IOnlineConfigurationUpdate](#id-builder-blocks-ionline-configuration-update)
     8. [IOnlineUpgradeLifetimeCycle](#id-builder-blocks-ionline-upgrade-life-time-cycle)
+    9. [IAuthorization](#id-builder-blocks-iauthorization)
+    10. [IAuthentication](#id-builder-blocks-iauthentication)
 5. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [IMessageBus](#id-injected-services-imessage-bus)
@@ -32,6 +34,7 @@
     2. [Status Control](#id-ui-components-status-control)
 8. [Injected services for UI Components](#id-injected-services-ui-components)
     1. [ILocalStorage](#id-ui-components-injected-services-ilocal-storage)
+    2. [ISecurityService](#id-ui-components-injected-services-isecurity-service)
 9. [IoC](#id-ioc)
 10. [Legacy Sdk](#id-legacy-sdk)
 11. [Testing](#id-testing)
@@ -104,8 +107,8 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Access remote file system from statuc control                                                          | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
 | State manager for status control                                                                       | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | - | ✓ | ✓ |
-| `IAuthenticationEndpoint`                                                                              | ✓ | - | - | - | ✓ | ✓ |
-| `IAuthorizationEndpoint`                                                                               | ✓ | - | - | - | ✓ | ✓ |
+| `IAuthenticationEndpoint`                                                                              | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
+| `IAuthorizationEndpoint`                                                                               | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
 | Custom queues definitions                                                                              | ✓ | - | - | - | - | - |
 | Override services implementation                                                                       | - | - | - | - | ✓ | - |
 | Asynchronous methods (`async`)                                                                         | - | - | - | - | ✓ | - |
@@ -272,6 +275,40 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
     public bool CanUpgrade() => true;
 
     public void UpgradeFinished() => _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
+  }
+```
+
+<div id='id-builder-blocks-iauthorization'/>
+
+* ### IAuthorization
+Interface <b>IAuthorization</b> provide authorization mechanism.
+```csharp
+  [EndpointMetadata(Name = "Authorization", SupportedRoles = SupportedRoles.None)]
+  public class AuthorizationEndpoint : IAuthorizationEndpoint
+  {
+      private const string TOKEN = "secretToken";
+      private const string ROLE = "administrator";
+
+      public bool IsInRole(string authenticationToken, string roleName)
+          => authenticationToken == TOKEN && ROLE.Equals(roleName);
+  }
+```
+
+<div id='id-builder-blocks-iauthentication'/>
+
+* ### IAuthentication
+Interface <b>IAuthentication</b> provide authentication mechanism.
+```csharp
+  [EndpointMetadata(Name = "Authentication", SupportedRoles = SupportedRoles.None)]
+  public class AuthenticationEndpoint : IAuthenticationEndpoint
+  {
+      private const string TOKEN = "secretToken";
+      private const string PASSWORD = "secret";
+      public string Authenticate(string authenticationString)
+          => authenticationString == PASSWORD ? TOKEN : null;
+
+      public byte[] ExecuteCustomAuthenticationCommand(byte[] command)
+          => command;
   }
 ```
 
@@ -450,6 +487,7 @@ Procontel.Sdk provide few features:
 - <b>send command to endpoint,</b>
 - <b>send notification from endpoint to frontend (push notification)</b>
 - <b>read/write storage for current running machine</b>
+- <b>use endpoint authorization/authentication mechanism</b>
 
 Supported fronted framework:
  - Wpf
@@ -560,8 +598,39 @@ public partial class WpfStatusControl : UserControl, IEndpointStatusControl
         }
     }
 }
+```
 
+<div id='id-ui-components-injected-services-ilocal-storage'/>
 
+* ### ISecurityService
+Service provide usage of security mechanism hosted by Authorization/Authentication endpoint.
+
+```csharp
+  public partial class WpfStatusControl : UserControl, IEndpointStatusControl
+  {
+      private readonly ISecurityService _securityService;
+      public WpfStatusControl() => InitializeComponent();
+      public WpfStatusControl(ISecurityService securityService) : this() => _securityService = securityService;
+
+      public void DisplayStatus(object statusInformation) { }
+      public void OnStatusControlHidden() { }
+      public void OnStatusControlShown() { }
+
+      public void Logout(object sender, System.Windows.RoutedEventArgs e)
+      {
+          _securityService.SignOut();
+      }
+
+      public void Login(object sender, System.Windows.RoutedEventArgs e)
+      {
+          var isAdministrator = false;
+          var authorized = _securityService.Authenticate(hashLoginAdpassword);
+          if (authorized)
+          {
+              isAdministrator = _securityService.IsInRole("administrator");
+          }
+      }
+  }
 ```
 
 <div id='id-ioc'/>
