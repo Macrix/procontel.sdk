@@ -282,7 +282,7 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
 <div id='id-builder-blocks-iavatars-insight'/>
 
 * ### IAvatarsInsight
-IAvatarInsight is an interface that allows to handle avatar connection and disconnection events in avatar source endpoint.
+<b>IAvatarInsight</b> is an interface that allows to handle avatar connection and disconnection events in avatar source endpoint.
 ```csharp
   [EndpointMetadata(Name = "AvatarInsight", SupportedRoles = SupportedRoles.None)]
   public class OnlineUpgradeLifetimeCycleEndpoint : IAvatarsInsight
