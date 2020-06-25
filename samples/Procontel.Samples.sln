@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvancedEndpoints", "Advanc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualEndpoints.Wpf", "VisualEndpoints.Wpf\VisualEndpoints.Wpf.csproj", "{41E61198-84A2-4FBD-B6E1-73E4EDAB4375}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualEndpoints.WinForms", "VisualEndpoints.WinForms\VisualEndpoints.WinForms.csproj", "{B8DDB0CC-B08C-4940-B14D-AC0CDF4D4140}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualEndpoints.WinForms", "VisualEndpoints.WinForms\VisualEndpoints.WinForms.csproj", "{B8DDB0CC-B08C-4940-B14D-AC0CDF4D4140}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityEndpoints", "SecurityEndpoints\SecurityEndpoints.csproj", "{91941B9F-BFD2-46A3-B723-404253B35D92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B8DDB0CC-B08C-4940-B14D-AC0CDF4D4140}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8DDB0CC-B08C-4940-B14D-AC0CDF4D4140}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8DDB0CC-B08C-4940-B14D-AC0CDF4D4140}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91941B9F-BFD2-46A3-B723-404253B35D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91941B9F-BFD2-46A3-B723-404253B35D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91941B9F-BFD2-46A3-B723-404253B35D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91941B9F-BFD2-46A3-B723-404253B35D92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
