@@ -291,12 +291,12 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
     
     public void AvatarConnected(IAvatarConfiguration avatarConfiguration)
     {
-      _logger.Information("Some avatar have been connected successfully");
+      _logger.Information("Some avatar has been connected successfully");
     }
 
     public void AvatarDisconnected(IAvatarConfiguration avatarConfiguration)
     {
-      _logger.Information("Some avatar have been disconnected successfully");
+      _logger.Information("Some avatar has been disconnected successfully");
     }
   }
 ```
