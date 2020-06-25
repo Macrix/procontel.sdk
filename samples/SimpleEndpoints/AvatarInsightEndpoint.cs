@@ -16,14 +16,16 @@ namespace SimpleEndpoints
       Logger = logger;
     }
 
-    public async Task AvatarConnectedAsync(IAvatarConfiguration avatarConfiguration)
+    public Task AvatarConnectedAsync(IAvatarConfiguration avatarConfiguration)
     {
       Logger.Information($"Avatar has been connected");
+      return Task.CompletedTask;
     }
 
-    public async Task AvatarDisconnectedAsync(IAvatarConfiguration avatarConfiguration)
+    public Task AvatarDisconnectedAsync(IAvatarConfiguration avatarConfiguration)
     {
       Logger.Information($"Avatar has been disconnected");
+      return Task.CompletedTask;
     }
   }
 }
