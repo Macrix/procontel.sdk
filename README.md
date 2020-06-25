@@ -18,6 +18,7 @@
     9. [IAvatarsInsight](#id-builder-blocks-iavatars-insight)
     10. [IAuthorization](#id-builder-blocks-iauthorization)
     11. [IAuthentication](#id-builder-blocks-iauthentication)
+    12. [IExportable](#id-builder-blocks-iexportable)
 5. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [IMessageBus](#id-injected-services-imessage-bus)
@@ -283,20 +284,28 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
 
 * ### IAvatarsInsight
 <b>IAvatarInsight</b> is an interface that allows to handle avatar connection and disconnection events in avatar source endpoint.
+
 ```csharp
-  [EndpointMetadata(Name = "AvatarInsight", SupportedRoles = SupportedRoles.None)]
-  public class OnlineUpgradeLifetimeCycleEndpoint : IAvatarsInsight
+  [EndpointMetadata(Name = "Avatar Insight Endpoint", SupportedRoles = SupportedRoles.None)]
+  class AvatarInsightEndpoint : IAvatarsInsight
   {
-    private readonly ILogger _logger;
-    
-    public void AvatarConnected(IAvatarConfiguration avatarConfiguration)
+    private ILogger Logger;
+
+    public AvatarInsightEndpoint(ILogger logger)
     {
-      _logger.Information("Some avatar has been connected successfully");
+      Logger = logger;
     }
 
-    public void AvatarDisconnected(IAvatarConfiguration avatarConfiguration)
+    public Task AvatarConnectedAsync(IAvatarConfiguration avatarConfiguration)
     {
-      _logger.Information("Some avatar has been disconnected successfully");
+      Logger.Information($"Avatar has been connected");
+      return Task.CompletedTask;
+    }
+
+    public Task AvatarDisconnectedAsync(IAvatarConfiguration avatarConfiguration)
+    {
+      Logger.Information($"Avatar has been disconnected");
+      return Task.CompletedTask;
     }
   }
 ```
@@ -334,6 +343,28 @@ Interface <b>IAuthentication</b> provide authentication mechanism.
           => command;
   }
 ```
+
+<div id='id-builder-blocks-iexportable'/>
+
+* ### IExportable
+Interface <b>IExportable</b> is used to save some custom files in exported pex file. Method `ImportContentDirectoryAsync` should be used to recreate stored files to disk, method `ExportContentDirectoryAsync` for serialize files into byte array that will be stored in pex file. 
+
+```csharp
+  [EndpointMetadata(Name = "Exportable Endpoint", SupportedRoles = SupportedRoles.None)]
+  public class ExportableEndpoint : IExportable
+  {
+     public async Task ImportContentDirectoryAsync(byte[] directory)
+    {
+      /// Recreate files from byte array
+    }
+
+    public Task<byte[]> ExportContentDirectoryAsync()
+    {
+      /// Serialize files into byte array
+    } 
+  }
+```
+
 
 <div id='id-injected-services'/>
 
