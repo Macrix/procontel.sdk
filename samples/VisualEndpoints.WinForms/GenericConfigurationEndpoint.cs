@@ -9,15 +9,15 @@ using VisualEndpoints.WinForms.Providers;
 
 namespace VisualEndpoints.WinForms
 {
-    [EndpointMetadata(Name = "Generic Configuration Endpoint Loosely Coupled", SupportedRoles = SupportedRoles.None)]
-    [ConfigurationDialogProvider("VisualEndpoints.WinForms", "GenericConfigurationDialogProvider")]
-    public class GenericConfigurationEndpointLooselyCoupled
+    [EndpointMetadata(Name = "Generic Configuration Dialog Endpoint", SupportedRoles = SupportedRoles.None)]
+    [ConfigurationDialogProvider(typeof(GenericConfigurationDialogProvider))]
+    public class GenericConfigurationEndpoint
     {
     }
 
-    [EndpointMetadata(Name = "Generic Configuration Endpoint", SupportedRoles = SupportedRoles.None)]
-    [ConfigurationDialogProvider(typeof(GenericConfigurationDialogProvider))]
-    public class GenericConfigurationEndpoint
+    [EndpointMetadata(Name = "Generic Configuration Dialog Endpoint Loosely Coupled", SupportedRoles = SupportedRoles.None)]
+    [ConfigurationDialogProvider("VisualEndpoints.WinForms", "GenericConfigurationDialogProvider")]
+    public class GenericConfigurationEndpointLooselyCoupled
     {
     }
 }
