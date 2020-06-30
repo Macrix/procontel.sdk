@@ -19,6 +19,8 @@
     10. [IAuthorization](#id-builder-blocks-iauthorization)
     11. [IAuthentication](#id-builder-blocks-iauthentication)
     12. [IExportable](#id-builder-blocks-iexportable)
+    13. [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
+    14. [IRequestLastContent](#id-builder-blocks-irequest-last-content)
 5. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [IMessageBus](#id-injected-services-imessage-bus)
@@ -28,6 +30,7 @@
     6. [INotificationService](#id-injected-services-inotification-service)
     7. [IMetricsService](#id-injected-services-imetrics-service)
     8. [IServiceContext](#id-injected-services-iservice-context)
+    8. [IReportService](id-injected-services-ireportservice-context)    
 6. [Advanced concepts](#id-advanced-concepts)
     1. [Supported protocols](#id-advanced-concepts-protocols)
     2. [IMessageBus](#id-advanced-concepts-message-bus)
@@ -366,6 +369,56 @@ Interface <b>IExportable</b> is used to save some custom files in exported pex f
 ```
 
 
+<div id='id-builder-blocks-irequest-missed-content'/>
+
+* ### IRequestMissedContent
+In some cases endpoint can ask for messages that was delivered but not acknowledged, to handle that event <b>IRequestMissedContent</b> was introduced.
+
+```csharp
+  [EndpointMetadata(Name = "Missing Messages Endpoint", SupportedRoles = SupportedRoles.Both)]
+  public class MissingMessagesEndpoint : IRequestMissedContent
+  {
+    private readonly ILogger _logger;
+
+    public MissingMessagesEndpoint(ILogger logger)
+    {
+      _logger = logger;
+    }
+
+    public Task ProcessMissedContentsRequestAsync(string subscriberId, IEnumerable<string> contentIds, DateTime? startingDateTime)
+    {
+      _logger.Information("SubscribedId endpoint asked for messages with contentsIds sent from startingDateTime up to now");
+      return Task.CompletedTask;
+    }
+  }
+
+```
+
+<div id='id-builder-blocks-irequest-last-content'/>
+
+* ### IRequestLastContent
+In some cases endpoint can ask for last sent messages in channel, to handle that event <b>IRequestLastContent</b> was introduced.
+
+```csharp
+  [EndpointMetadata(Name = "Last Messages Endpoint", SupportedRoles = SupportedRoles.Both)]
+  public class LastMessagesEndpoint : IRequestLastContent
+  {
+    private readonly ILogger _logger;
+
+    public LastMessagesEndpoint(ILogger logger)
+    {
+      _logger = logger;
+    }
+
+    public Task OnRequestLastContentReceivedAsync(string requestingEndpointId, string providerId, params string[] contentIds)
+    {
+         _logger.Information("requestingEndpointId endpoint asked for messages with contentsIds sent by providerId");    
+        return Task.CompletedTask;
+    }
+  }
+```
+
+
 <div id='id-injected-services'/>
 
 ## 5. Injected services
@@ -438,6 +491,12 @@ Feature in progress
 
 * ### IServiceContext
 Service provide access to implementation of internal services from procontel engine.
+
+<div id='id-injected-services-ireportservice-context'/>
+
+* ### IReportService
+Service to inform about warnings in runtime.
+
 
 <div id='id-advanced-concepts'/>
 
