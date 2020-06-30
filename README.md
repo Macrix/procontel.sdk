@@ -96,7 +96,7 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | - | **PREVIEW** |✓ | ✓ |
 | Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | - | **PREVIEW** |✓ | ✓ |
 | Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - |✓ | ✓ |
-| Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`     | ✓ | - | - | - | - |
+| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - | - |
 | Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | **PREVIEW** | ✓ | ✓ |
 | Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | **PREVIEW**| ✓ | ✓ |
 | `RequestLastContent()`                                                                                 | ✓ | - | **PREVIEW** |✓ | ✓ |
