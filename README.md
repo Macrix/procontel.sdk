@@ -56,7 +56,8 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
-| 3.0 | 0. |
+| 3.0.2 | 0.5.0 |
+| 3.0.3 | 0.6.0 |
 
 <div id='id-feature-comparison'/>
 
@@ -91,13 +92,13 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | - | - | **PREVIEW** |✓ | ✓ |
 | Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | - | - | **PREVIEW** |✓ | ✓ |
 | Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - | **PREVIEW** |✓ | ✓ |
-| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - | - | - |
-| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | - | - | ✓ | ✓ |
-| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | - | - | ✓ | ✓ |
+| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | **??** | - | - |
+| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
+| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | - | **PREVIEW**| ✓ | ✓ |
 | `RequestLastContent()`                                                                                 | ✓ | - | - | **PREVIEW** |✓ | ✓ |
 | `RequestMissedContents()`                                                                              | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
 | Configuration dialog (WinForms)                                                                        | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Configuration dialog provider (WinForms)                                                                        | - | - | - | **PREVIEW** | ✓ | ✓ |
+| Configuration dialog provider (WinForms)                                                               | - | - | - | **PREVIEW** | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Access remote file system from conf. dialog                                                            | ✓ | - | ✓ | ✓ | ✓ | ✓ |
@@ -106,8 +107,8 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Send files from status control                                                                         | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
-| Access remote file system from statuc control                                                          | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
+| Send files from status control                                                                         | ✓ | - | - | - | ✓ | ✓ |
+| Access remote file system from statuc control                                                          | ✓ | - | - | - | ✓ | ✓ |
 | State manager for status control                                                                       | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | - | ✓ | ✓ |
 | `IAuthenticationEndpoint`                                                                              | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
