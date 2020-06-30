@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProconTel.Sdk.Attributes;
+using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Services;
 
 namespace SimpleEndpoints

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="ProconTel.Sdk" Version="0.6.0-preview3" />
+	<PackageReference Include="ProconTel.Sdk" Version="0.6.0" />
   </ItemGroup>
 
 </Project>
