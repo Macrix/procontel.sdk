@@ -30,22 +30,22 @@
     6. [INotificationService](#id-injected-services-inotification-service)
     7. [IMetricsService](#id-injected-services-imetrics-service)
     8. [IServiceContext](#id-injected-services-iservice-context)
-    8. [IReportService](id-injected-services-ireportservice-context)    
+    9. [IReportService](id-injected-services-ireportservice-context)    
 6. [Advanced concepts](#id-advanced-concepts)
-    1. [Supported protocols](#id-advanced-concepts-protocols)
-    2. [IMessageBus](#id-advanced-concepts-message-bus)
+    * [Supported protocols](#id-advanced-concepts-protocols)
+    * [IMessageBus](#id-advanced-concepts-message-bus)
 7. [UI Components](#id-ui-components)
-    1. [Configuration Dialog](#id-ui-components-configuration-dialog)
-    2. [Status Control](#id-ui-components-status-control)
+    * [Configuration Dialog](#id-ui-components-configuration-dialog)
+    * [Status Control](#id-ui-components-status-control)
 8. [Injected services for UI Components](#id-injected-services-ui-components)
-    1. [ILocalStorage](#id-ui-components-injected-services-ilocal-storage)
-    2. [ISecurityService](#id-ui-components-injected-services-isecurity-service)
+    * [ILocalStorage](#id-ui-components-injected-services-ilocal-storage)
+    * [ISecurityService](#id-ui-components-injected-services-isecurity-service)
 9. [IoC](#id-ioc)
 10. [Legacy Sdk](#id-legacy-sdk)
 11. [Testing](#id-testing)
 12. [Deployment](#id-deployment)
-    1. [Github](#id-deployment-github)
-    2. [GitLab](#id-deployment-gitlab)
+    * [Github](#id-deployment-github)
+    * [GitLab](#id-deployment-gitlab)
 
 <div id='id-quick-introduction'/>
 
@@ -59,7 +59,8 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
-| 3.0 | 0. |
+| 3.0.2 | 0.5.0 |
+| 3.0.3 | 0.6.0 |
 
 <div id='id-feature-comparison'/>
 
@@ -89,17 +90,18 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Handle stream in endpoint                                                                              | ✓ | - | - |- | ✓ | ✓ |
 | Send stream to UI status control                                                                       | ✓ | - | ✓ |✓ | ✓ | - |
 | Handle stream in UI status control                                                                     | ✓ | - | - | - | ✓ | ✓ |
-| Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | - | - | - | ✓ | ✓ |
-| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | - | - | - |✓ | ✓ |
-| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | - | - | **IN PROGRESS** |✓ | ✓ |
-| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | - | - | **IN PROGRESS** |✓ | ✓ |
-| Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - | **IN PROGRESS** |✓ | ✓ |
-| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - | - | - |
-| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | - | - | ✓ | ✓ |
-| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | - | - | ✓ | ✓ |
-| `RequestLastContent()`                                                                                 | ✓ | - | - | **IN PROGRESS** |✓ | ✓ |
-| `RequestMissedContents()`                                                                              | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
+| Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
+| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | - | - | **PREVIEW** |✓ | ✓ |
+| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | - | - | **PREVIEW** |✓ | ✓ |
+| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | - | - | **PREVIEW** |✓ | ✓ |
+| Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - | **PREVIEW** |✓ | ✓ |
+| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | **??** | - | - |
+| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
+| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | - | **PREVIEW**| ✓ | ✓ |
+| `RequestLastContent()`                                                                                 | ✓ | - | - | **PREVIEW** |✓ | ✓ |
+| `RequestMissedContents()`                                                                              | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
 | Configuration dialog (WinForms)                                                                        | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Configuration dialog provider (WinForms)                                                               | - | - | - | **PREVIEW** | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Access remote file system from conf. dialog                                                            | ✓ | - | ✓ | ✓ | ✓ | ✓ |
@@ -108,12 +110,12 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Send files from status control                                                                         | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
-| Access remote file system from statuc control                                                          | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
-| State manager for status control                                                                       | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
+| Send files from status control                                                                         | ✓ | - | - | - | ✓ | ✓ |
+| Access remote file system from statuc control                                                          | ✓ | - | - | - | ✓ | ✓ |
+| State manager for status control                                                                       | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | - | ✓ | ✓ |
-| `IAuthenticationEndpoint`                                                                              | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
-| `IAuthorizationEndpoint`                                                                               | ✓ | - | - | **IN PROGRESS** | ✓ | ✓ |
+| `IAuthenticationEndpoint`                                                                              | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
+| `IAuthorizationEndpoint`                                                                               | ✓ | - | - | **PREVIEW** | ✓ | ✓ |
 | Custom queues definitions                                                                              | ✓ | - | - | - | - | - |
 | Override services implementation                                                                       | - | - | - | - | ✓ | - |
 | Asynchronous methods (`async`)                                                                         | - | - | - | - | ✓ | - |
@@ -592,6 +594,7 @@ To define Configuration UI Element binding endpoint has to be decorate with attr
       txtConsole.Text = result.ToString();
     }
 ```
+In order to use more sophisticated behavior we recommend use attribute <b>ConfigurationDialogProviderAttribute</b> with own implementation of <b>IEndpointConfigurationDialogProvider</b> interface.
 
 <div id='id-ui-components-status-control'/>
 
