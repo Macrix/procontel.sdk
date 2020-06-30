@@ -67,7 +67,7 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 ## 3. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
 
-| Feature         | Engine 2.x SDK | SDK 0.5<br>  | SDK 0.6<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
+| Feature         | Engine 2.x SDK | SDK 0.6<br>  | SDK 0.7<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
 | :---  |:---:|:---:|:---:|:---:|:---:|
 | Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ | ✓ | 
 | Send message                                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ | 
@@ -91,18 +91,18 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Handle stream in endpoint                                                                              | ✓ | - |- | ✓ | ✓ |
 | Send stream to UI status control                                                                       | ✓ | ✓ |✓ | ✓ | - |
 | Handle stream in UI status control                                                                     | ✓ | - | - | ✓ | ✓ |
-| Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | - | **PREVIEW** | ✓ | ✓ |
-| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | - | **PREVIEW** |✓ | ✓ |
-| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | - | **PREVIEW** |✓ | ✓ |
-| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | - | **PREVIEW** |✓ | ✓ |
+| Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | ✓ | ✓ |✓ | ✓ |
+| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | ✓ | ✓ |✓ | ✓ |
+| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | ✓ | ✓ |✓ | ✓ |
 | Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - |✓ | ✓ |
 | ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - | - |
-| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | - | **PREVIEW** | ✓ | ✓ |
-| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | - | **PREVIEW**| ✓ | ✓ |
-| `RequestLastContent()`                                                                                 | ✓ | - | **PREVIEW** |✓ | ✓ |
-| `RequestMissedContents()`                                                                              | ✓ | - | **PREVIEW** | ✓ | ✓ |
+| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | ✓ | ✓| ✓ | ✓ |
+| `RequestLastContent()`                                                                                 | ✓ | ✓ | ✓ |✓ | ✓ |
+| `RequestMissedContents()`                                                                              | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Configuration dialog (WinForms)                                                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Configuration dialog provider (WinForms)                                                               | - | - | **PREVIEW** | ✓ | ✓ |
+| Configuration dialog provider (WinForms)                                                               | - | ✓ | ✓ | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -113,10 +113,10 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send files from status control                                                                         | ✓ | - | - | ✓ | ✓ |
 | Access remote file system from statuc control                                                          | ✓ | - | - | ✓ | ✓ |
-| State manager for status control                                                                       | ✓ | - | **PREVIEW** | ✓ | ✓ |
+| State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | ✓ | ✓ |
-| `IAuthenticationEndpoint`                                                                              | ✓ | - | **PREVIEW** | ✓ | ✓ |
-| `IAuthorizationEndpoint`                                                                               | ✓ | - | **PREVIEW** | ✓ | ✓ |
+| `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `IAuthorizationEndpoint`                                                                               | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom queues definitions                                                                              | ✓ | - | - | - | - |
 | Override services implementation                                                                       | - | - | - | ✓ | - |
 | Asynchronous methods (`async`)                                                                         | - | - | - | ✓ | - |
