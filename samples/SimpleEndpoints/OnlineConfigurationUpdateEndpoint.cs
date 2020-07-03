@@ -18,6 +18,10 @@ namespace SimpleEndpoints
       _configurationReader = configurationReader;
     }
 
-    public void ConfigurationChanged() => _logger.Information($"Configuration was changed. Current values: {_configurationReader.GetConfiguration()})");
+    public Task ConfigurationChangedAsync()
+    {
+      _logger.Information($"Configuration was changed. Current values: {_configurationReader.GetConfiguration()})");
+      return Task.CompletedTask;
+    }
   }
 }

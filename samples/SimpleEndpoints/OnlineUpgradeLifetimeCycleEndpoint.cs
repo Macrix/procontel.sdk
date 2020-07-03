@@ -17,8 +17,13 @@ namespace SimpleEndpoints
       _logger = logger;
       _runtimeContext = runtimeContext;
     }
-    public bool CanUpgrade() => true;
 
-    public void UpgradeFinished() => _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
+    public Task AfterUpgradeAsync()
+    {
+      _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
+      return Task.CompletedTask;
+    }
+
+    public Task<bool> CanUpgradeAsync() => Task.FromResult(true);
   }
 }

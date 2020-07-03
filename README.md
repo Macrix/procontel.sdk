@@ -78,11 +78,11 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Expose details of send/broadcasted messages in attribute                                               | - | - | - | ✓ | - |
 | Handle supported protocols<br>`SubscriberStrategy.SubscribingProtocols`                                | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Acknowledge processed message<br>`SubscriberStrategy.AcknowledgeContent()`                             | ✓ | ✓ | ✓ | ✓ | - |
-| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | - | - |
+| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | - | ✓ |
 | Life cycle mechanism<br>`ChannelEndpointBase.Initialize()`, `ChannelEndpointBase.Terminate()`          | ✓ | ✓ | ✓ | ✓ | ✓ |
-| On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | ✓ | ✓ | ✓ | ✓ |
+| On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | - | **PREVIEW** | ✓ | ✓ |
 | Reading endpoint configuration<br>`ChannelEndpointBase.GetConfiguration()`                             | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | - |- | ✓ | ✓ |
+| Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | - | **PREVIEW** | ✓ | ✓ |
 | Logger<br>*all `Logger.Debug()`, `Logger.Error()`, etc. methods                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom log source location information<br>`ILogMessageOrigin` support                                  | ✓ | - |- | - | - |
 | Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -261,7 +261,11 @@ Interface <b>IOnlineConfigurationUpdate</b> support observe configuration change
       _configurationReader = configurationReader;
     }
 
-    public void ConfigurationChanged() => _logger.Information($"Configuration was changed. Current values: {_configurationReader.GetConfiguration()})");
+    public Task ConfigurationChangedAsync()
+    {
+      _logger.Information($"Configuration was changed. Current values: {_configurationReader.GetConfiguration()})");
+      return Task.CompletedTask;
+    }
   }
 ```
 
@@ -280,9 +284,13 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
       _logger = logger;
       _runtimeContext = runtimeContext;
     }
-    public bool CanUpgrade() => true;
+    public Task AfterUpgradeAsync()
+    {
+      _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
+      return Task.CompletedTask;
+    }
 
-    public void UpgradeFinished() => _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
+    public Task<bool> CanUpgradeAsync() => Task.FromResult(true);
   }
 ```
 

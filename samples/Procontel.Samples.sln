@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualEndpoints.Wpf", "Visu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualEndpoints.WinForms", "VisualEndpoints.WinForms\VisualEndpoints.WinForms.csproj", "{B8DDB0CC-B08C-4940-B14D-AC0CDF4D4140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityEndpoints", "SecurityEndpoints\SecurityEndpoints.csproj", "{91941B9F-BFD2-46A3-B723-404253B35D92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityEndpoints", "SecurityEndpoints\SecurityEndpoints.csproj", "{91941B9F-BFD2-46A3-B723-404253B35D92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9664CDD-BFCB-4050-91CF-679F4C8E6C86}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
