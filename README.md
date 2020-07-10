@@ -16,11 +16,12 @@
     7. [IOnlineConfigurationUpdate](#id-builder-blocks-ionline-configuration-update)
     8. [IOnlineUpgradeLifetimeCycle](#id-builder-blocks-ionline-upgrade-life-time-cycle)    
     9. [IAvatarsInsight](#id-builder-blocks-iavatars-insight)
-    10. [IAuthorization](#id-builder-blocks-iauthorization)
-    11. [IAuthentication](#id-builder-blocks-iauthentication)
-    12. [IExportable](#id-builder-blocks-iexportable)
-    13. [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
-    14. [IRequestLastContent](#id-builder-blocks-irequest-last-content)
+    10. [IFileHandler](#id-builder-blocks-ifilehandler)
+    11. [IAuthorization](#id-builder-blocks-iauthorization)
+    12. [IAuthentication](#id-builder-blocks-iauthentication)
+    13. [IExportable](#id-builder-blocks-iexportable)
+    14. [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
+    15. [IRequestLastContent](#id-builder-blocks-irequest-last-content)
 5. [Injected services](#id-injected-services)
     1. [ILogger](#id-injected-services-ilogger)
     2. [IMessageBus](#id-injected-services-imessage-bus)
@@ -30,7 +31,8 @@
     6. [INotificationService](#id-injected-services-inotification-service)
     7. [IMetricsService](#id-injected-services-imetrics-service)
     8. [IServiceContext](#id-injected-services-iservice-context)
-    9. [IReportService](id-injected-services-ireportservice-context)    
+    9. [IReportService](id-injected-services-ireportservice-context)
+    10. [IFileUploaderService](id-injected-services-ifileuploaderservice)
 6. [Advanced concepts](#id-advanced-concepts)
     * [Supported protocols](#id-advanced-concepts-protocols)
     * [IMessageBus](#id-advanced-concepts-message-bus)
@@ -61,6 +63,7 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 | :---:  |:---:|
 | 3.0.2 | 0.5.0 |
 | 3.0.3 | 0.6.0 |
+| 3.0.4 | 0.7.0 |
 
 <div id='id-feature-comparison'/>
 
@@ -106,12 +109,12 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Send files from conf. dialog                                                                           | ✓ | ✓ | **PREVIEW** | ✓ | ✓ |
 | Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Send files from status control                                                                         | ✓ | - | - | ✓ | ✓ |
+| Send files from status control                                                                         | ✓ | - | **PREVIEW** | ✓ | ✓ |
 | Access remote file system from statuc control                                                          | ✓ | - | - | ✓ | ✓ |
 | State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | ✓ | ✓ |
@@ -324,6 +327,28 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
   }
 ```
 
+<div id='id-builder-blocks-ifilehandler'/>
+
+* ### IFileHandler
+Interface <b>IFileHandler</b> allows handling of uploaded files from client to server backend.
+```csharp
+  [EndpointMetadata(Name = "FileReceiver", SupportedRoles = SupportedRoles.None)]
+  public class FileReceiverEndpoint : IFileHandler
+  {
+    private readonly ILogger _logger;
+
+    public FileReceiverEndpoint(ILogger logger)
+    {
+      _logger = logger;
+    }
+
+    public Task<object> HandleFileAsync(IUploadedFiles uploadedFiles)
+    {
+      _logger.Information($"Execute {nameof(HandleFileAsync)}. Uploaded files: {String.Join(",", uploadedFiles.TransferedFiles)}.");
+      return Task.FromResult(new object());
+    }
+```
+
 <div id='id-builder-blocks-iauthorization'/>
 
 * ### IAuthorization
@@ -511,6 +536,10 @@ Service provide access to implementation of internal services from procontel eng
 * ### IReportService
 Service to inform about warnings in runtime.
 
+<div id='id-injected-services-ifileuploaderservice'/>
+
+* ### IFileUploaderService
+Service providing functionality of uploading files to endpoint backend server from client (configuration or status control).
 
 <div id='id-advanced-concepts'/>
 
