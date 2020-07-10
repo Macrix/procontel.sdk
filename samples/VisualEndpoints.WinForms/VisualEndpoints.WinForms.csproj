@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
-    <PackageReference Include="ProconTel.Sdk.UI" Version="0.7.0-preview3" />
+    <PackageReference Include="ProconTel.Sdk.UI" Version="0.7.0" />
   </ItemGroup>
 
 </Project>
