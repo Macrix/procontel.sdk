@@ -17,7 +17,6 @@ namespace VisualEndpoints.WinForms.UI
     public FileUploadConfigurationDialog(IFileUploaderService fileTransfer)
       : this()
     {
-
       _fileTransfer = fileTransfer;
     }
 
