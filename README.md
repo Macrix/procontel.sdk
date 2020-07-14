@@ -32,7 +32,6 @@
     7. [IMetricsService](#id-injected-services-imetrics-service)
     8. [IServiceContext](#id-injected-services-iservice-context)
     9. [IReportService](id-injected-services-ireportservice-context)
-    10. [IFileUploaderService](id-injected-services-ifileuploaderservice)
 6. [Advanced concepts](#id-advanced-concepts)
     * [Supported protocols](#id-advanced-concepts-protocols)
     * [IMessageBus](#id-advanced-concepts-message-bus)
@@ -40,8 +39,10 @@
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
 8. [Injected services for UI Components](#id-injected-services-ui-components)
+    * [IConfigurationWriter](#id-ui-components-injected-services-iconfiguration-writer)
     * [ILocalStorage](#id-ui-components-injected-services-ilocal-storage)
     * [ISecurityService](#id-ui-components-injected-services-isecurity-service)
+    * [IFileUploaderService](#id-ui-components-injected-services-ifileuploaderservice)
 9. [IoC](#id-ioc)
 10. [Legacy Sdk](#id-legacy-sdk)
 11. [Testing](#id-testing)
@@ -536,11 +537,6 @@ Service provide access to implementation of internal services from procontel eng
 * ### IReportService
 Service to inform about warnings in runtime.
 
-<div id='id-injected-services-ifileuploaderservice'/>
-
-* ### IFileUploaderService
-Service providing functionality of uploading files to endpoint backend server from client (configuration or status control).
-
 <div id='id-advanced-concepts'/>
 
 ## 6. Advanced concepts
@@ -579,10 +575,11 @@ We are able to bind and communicate user interface to hosted business logic.
 <div id='id-ui-components-configuration-dialog'/>
  
 * ### Configuration Dialog
-Procontel.Sdk provide few features:
+ProconTEL.Sdk provide few features:
 - <b>read endpoint configuration,</b>
 - <b>write endpoint configuration,</b>
 - <b>send command to deactivated endpoint (does not have full access to endpoint resource )</b>
+- <b>upload file from configuration dialog to endpoint</b>
 
 To define Configuration UI Element binding endpoint has to be decorate with attribute <b>ConfigurationDialogAttribute</b>. Windows Forms dialog type should be put as a attribute constructor parameter.
 
@@ -645,6 +642,7 @@ Procontel.Sdk provide few features:
 - <b>send notification from endpoint to frontend (push notification)</b>
 - <b>read/write storage for current running machine</b>
 - <b>use endpoint authorization/authentication mechanism</b>
+- <b>send files from status control to endpoint</b>
 
 Supported fronted framework:
  - Wpf
@@ -721,6 +719,38 @@ In order to use more sophisticated behavior we recommend use attribute <b>Status
 
 ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in control or provider constructor. In ProconTEL naming conventions this interfaces called <b>services</b>.
 
+<div id='id-ui-components-injected-services-iconfiguration-writer'/>
+
+* ### IConfigurationWriter
+Service providing possibility to store endpoint configuration. <b>Available only in confguration dialog.</b>
+
+```csharp
+public partial class ConfigurationDialog : Form
+{
+  private readonly IConfigurationReader _configurationReader;
+  private readonly IConfigurationWriter _configurationWriter;
+
+  public ConfigurationDialog()
+  {
+    InitializeComponent();
+  }
+
+  public ConfigurationDialog(IConfigurationReader configurationReader, IConfigurationWriter configurationWriter)
+    : this()
+  {
+    _configurationWriter = configurationWriter;
+    _configurationReader = configurationReader;
+    txtAdress.Text = _configurationReader.GetConfiguration();
+  }
+
+  private void SaveConfiguration_Click(object sender, EventArgs e)
+  {
+    _configurationWriter.SaveConfiguration(textBox1.Text);
+    DialogResult = DialogResult.OK;
+  }
+}
+```
+
 <div id='id-ui-components-injected-services-ilocal-storage'/>
 
 * ### ILocalStorage
@@ -787,6 +817,39 @@ Service provide usage of security mechanism hosted by Authorization/Authenticati
               isAdministrator = _securityService.IsInRole("administrator");
           }
       }
+  }
+```
+
+<div id='id-ui-components-injected-services-ifileuploaderservice'/>
+
+### IFileUploaderService
+Service providing functionality of uploading files to endpoint backend server from client (configuration dialog or status control).
+
+```csharp
+  public partial class FileUploadConfigurationDialog : Form
+  {
+    private readonly IFileUploaderService _fileTransfer;
+
+    public FileUploadConfigurationDialog()
+    {
+      InitializeComponent();
+    }
+
+    public FileUploadConfigurationDialog(IFileUploaderService fileTransfer) : this()
+    {
+      _fileTransfer = fileTransfer;
+    }
+
+    private async void btnUpload_Click(object sender, EventArgs e)
+    {
+      var result = openFileDialog1.ShowDialog();
+      if(result == DialogResult.OK)
+      {
+        await _fileTransfer.UploadFilesAsync(new[] { new FileDescriptor() { Location = openFileDialog1.FileName } });
+
+      }
+      DialogResult = DialogResult.OK;
+    }
   }
 ```
 
