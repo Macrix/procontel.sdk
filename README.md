@@ -83,9 +83,9 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Acknowledge processed message<br>`SubscriberStrategy.AcknowledgeContent()`                             | ✓ | ✓ | ✓ | ✓ | - |
 | Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | - | ✓ |
 | Life cycle mechanism<br>`ChannelEndpointBase.Initialize()`, `ChannelEndpointBase.Terminate()`          | ✓ | ✓ | ✓ | ✓ | ✓ |
-| On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | - | **PREVIEW** | ✓ | ✓ |
+| On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | - | ✓ | ✓ | ✓ |
 | Reading endpoint configuration<br>`ChannelEndpointBase.GetConfiguration()`                             | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | - | **PREVIEW** | ✓ | ✓ |
+| Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | - | ✓ | ✓ | ✓ |
 | Logger<br>*all `Logger.Debug()`, `Logger.Error()`, etc. methods                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom log source location information<br>`ILogMessageOrigin` support                                  | ✓ | - |- | - | - |
 | Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -109,12 +109,12 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Send files from conf. dialog                                                                           | ✓ | ✓ | **PREVIEW** | ✓ | ✓ |
+| Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Send files from status control                                                                         | ✓ | - | **PREVIEW** | ✓ | ✓ |
+| Send files from status control                                                                         | ✓ | - | ✓ | ✓ | ✓ |
 | Access remote file system from statuc control                                                          | ✓ | - | - | ✓ | ✓ |
 | State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | ✓ | ✓ |
