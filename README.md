@@ -71,7 +71,7 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 ## 3. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
 
-| Feature         | Engine 2.x SDK | SDK 0.6<br>  | SDK 0.7<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
+| Feature         | Engine 2.x SDK | SDK 0.7<br>  | SDK 0.8<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
 | :---  |:---:|:---:|:---:|:---:|:---:|
 | Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ | ✓ | 
 | Send message                                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ | 
@@ -109,14 +109,14 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Configuration dialog provider (WinForms)                                                               | - | ✓ | ✓ | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Access remote file system from conf. dialog                                                            | ✓ | ✓ | *In progress* | ✓ | ✓ |
 | Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send files from status control                                                                         | ✓ | - | ✓ | ✓ | ✓ |
-| Access remote file system from statuc control                                                          | ✓ | - | - | ✓ | ✓ |
+| Access remote file system from status control                                                          | ✓ | - | *In progress* | ✓ | ✓ |
 | State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | - | ✓ | ✓ |
 | `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | ✓ | ✓ |
