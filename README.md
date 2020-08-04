@@ -852,6 +852,60 @@ Service providing functionality of uploading files to endpoint backend server fr
     }
   }
 ```
+<div id= 'id-ui-components-injected-services-IVirtualFileSystem'/>
+
+### IVirtualFileSystem
+
+Service provides information about the roots, folders and files available on the server (configuration or status control dialog).
+
+
+```csharp
+
+  public interface IVirtualFileSystem
+  {
+    /// Returns name of referencing file system.
+    Task<string> GetFileSystemNameAsync();
+    /// Returns an array of roots existing in referencing file 
+    Task<IRootInfo[]> GetRootsAsync();
+    /// Returns an array of directories existing in referencing file system.
+    Task<IVirtualDirectoryInfo[]> GetDirectoriesAsync(IVirtualDirectoryInfo parent);
+    /// Returns an array of files existing in referencing file system.
+    Task<IVirtualFileInfo[]> GetFilesAsync(IVirtualDirectoryInfo parent, 
+    string pattern);
+    /// Returns whether a file under specified path exists.
+    Task<bool> FileExistsAsync(string path);
+    /// Returns whether a directory under specified path exists.
+    Task<bool> DirectoryExistsAsync(string path);
+    /// Creates directory.
+    Task<bool> CreateDirectoryAsync(string path);
+  }
+
+```
+
+```csharp
+  public partial class VirtualFileSystemStatusControl : UserControl, IEndpointStatusControl
+  {
+    private readonly IVirtualFileSystem _virtualFileSystem;
+    public VirtualFileSystemStatusControl()
+    {
+      InitializeComponent();
+    }
+    public VirtualFileSystemStatusControl(IVirtualFileSystem virtualFileSystem, IRootInfo[] rootInfo) : this()
+    {
+      _virtualFileSystem = virtualFileSystem;
+    }
+    public void OnStatusControlHidden(){}
+
+    public void OnStatusControlShown(){}
+
+    public async void DisplayStatus(object statusInformation)
+    {
+      string filePath = @"C:\testDirectory\test.txt";
+      string directoryPath = @"c:\testDirectory";
+      var roots = await _virtualFileSystem.GetRootsAsync();
+    }
+  }
+```
 
 <div id='id-ioc'/>
 
