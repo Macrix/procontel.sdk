@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{53FB6487-CD8D-4D6A-9FFA-233BB55EA166}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ColaAutomat</RootNamespace>
+    <AssemblyName>ColaAutomat</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ProconTel.CommunicationCenter.Common, Version=2.9.4.3, Culture=neutral, PublicKeyToken=43b2a5dae6e35ee1, processorArchitecture=MSIL" />
+    <Reference Include="ProconTel.CommunicationCenter.Components, Version=2.9.4.3, Culture=neutral, PublicKeyToken=43b2a5dae6e35ee1, processorArchitecture=MSIL" />
+    <Reference Include="ProconTel.CommunicationCenter.Kernel, Version=2.9.4.3, Culture=neutral, PublicKeyToken=43b2a5dae6e35ee1, processorArchitecture=MSIL" />
+    <Reference Include="ProconTel.Components, Version=2.9.4.3, Culture=neutral, PublicKeyToken=43b2a5dae6e35ee1, processorArchitecture=MSIL" />
+    <Reference Include="ProconTel.Logging, Version=2.9.4.3, Culture=neutral, PublicKeyToken=43b2a5dae6e35ee1, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Central\Provider.cs" />
+    <Compile Include="Central\State.cs" />
+    <Compile Include="Central\StatusControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Central\StatusControl.Designer.cs">
+      <DependentUpon>StatusControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Central\Subscriber.cs" />
+    <Compile Include="Common\RefillAcknowledge.cs" />
+    <Compile Include="Common\RefillRequest.cs" />
+    <Compile Include="Delivery\Endpoint.cs" />
+    <Compile Include="Delivery\Provider.cs" />
+    <Compile Include="Delivery\State.cs" />
+    <Compile Include="Delivery\StatusControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Delivery\StatusControl.Designer.cs">
+      <DependentUpon>StatusControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Delivery\Subscriber.cs" />
+    <Compile Include="Vending\Actions.cs" />
+    <Compile Include="Vending\Endpoint.cs" />
+    <Compile Include="Vending\Provider.cs" />
+    <Compile Include="Vending\State.cs" />
+    <Compile Include="Vending\StatusControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Vending\StatusControl.Designer.cs">
+      <DependentUpon>StatusControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vending\Subscriber.cs" />
+    <Compile Include="Central\Endpoint.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Central\StatusControl.resx">
+      <DependentUpon>StatusControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Delivery\StatusControl.resx">
+      <DependentUpon>StatusControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vending\StatusControl.resx">
+      <DependentUpon>StatusControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
