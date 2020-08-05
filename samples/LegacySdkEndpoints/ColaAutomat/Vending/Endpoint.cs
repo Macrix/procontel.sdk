@@ -1,5 +1,10 @@
 ﻿using ColaAutomat.Common;
-using ProconTel.CommunicationCenter.Kernel;
+using ProconTel.Sdk.Attributes;
+using ProconTel.Sdk.Legacy;
+using ProconTel.Sdk.Services;
+using ProconTel.Sdk.StandardEndpoints;
+using ProconTel.Sdk.UI.Attributes;
+using ProconTel.Sdk.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +13,16 @@ using System.Threading.Tasks;
 
 namespace ColaAutomat.Vending
 {
-  [Endpoint(Name = "Vending Machine", SupportedRoles = SupportedRoles.Both)]
+  [EndpointMetadata(Name = "Vending Machine", SupportedRoles = SupportedRoles.Both)]
+  [StatusControl(typeof(StatusControl), EndpointStatusControlType.WinForms)]
   public class Endpoint : ChannelEndpointBase
   {
+    public Endpoint(IMessageBus messageBus, ILogger logger, IRuntimeContext runtimeContext, IConfigurationReader configurationReader,
+      INotificationService notificationService, IReportService reportService)
+      : base(messageBus, logger, runtimeContext, configurationReader, notificationService, reportService)
+    {
+    }
+
     public State State { get; private set; }
 
     public override void Initialize()
@@ -39,12 +51,6 @@ namespace ColaAutomat.Vending
 
     public override void Terminate() { }
 
-    public override bool HasStatusControl(IEndpointStatusController context) { return true; }
-
-    public override IEndpointStatusControlProvider GetStatusControl(IEndpointStatusController context)
-    {
-      return new DefaultWinFormsStatusControlProvider(new StatusControl { Context = context });
-    }
     public override object ExecuteCommandFromStatusControl(object command)
     {
       switch (command)

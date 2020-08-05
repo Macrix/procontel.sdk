@@ -1,5 +1,9 @@
 ﻿using ColaAutomat.Common;
-using ProconTel.CommunicationCenter.Kernel;
+using ProconTel.Sdk.Attributes;
+using ProconTel.Sdk.Legacy;
+using ProconTel.Sdk.Services;
+using ProconTel.Sdk.UI.Attributes;
+using ProconTel.Sdk.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +12,16 @@ using System.Threading.Tasks;
 
 namespace ColaAutomat.Delivery
 {
-  [Endpoint(Name = "Delivery Service", SupportedRoles = SupportedRoles.Subscriber)]
+  [EndpointMetadata(Name = "Delivery Service", SupportedRoles = SupportedRoles.Subscriber)]
+  [StatusControl(typeof(StatusControl), EndpointStatusControlType.WinForms)]
   public class Endpoint : ChannelEndpointBase
   {
+    public Endpoint(IMessageBus messageBus, ILogger logger, IRuntimeContext runtimeContext, IConfigurationReader configurationReader,
+      INotificationService notificationService, IReportService reportService)
+      : base(messageBus, logger, runtimeContext, configurationReader, notificationService, reportService)
+    {
+    }
+
     internal State State { get; private set; }
 
     public override void Initialize() 
@@ -44,12 +55,5 @@ namespace ColaAutomat.Delivery
     }
 
     public override void Terminate() { }
-
-    public override bool HasStatusControl(IEndpointStatusController context) { return true; }
-
-    public override IEndpointStatusControlProvider GetStatusControl(IEndpointStatusController context)
-    {
-      return new DefaultWinFormsStatusControlProvider(new StatusControl { Context = context });
-    }
   }
 }

@@ -7,9 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ProconTel.CommunicationCenter.Kernel;
+using ProconTel.Sdk.Legacy;
 using ColaAutomat.Common;
 using System.Net.NetworkInformation;
+using ProconTel.Sdk.UI.Models;
 
 namespace ColaAutomat.Central
 {
@@ -20,7 +21,6 @@ namespace ColaAutomat.Central
       InitializeComponent();
     }
 
-    public IEndpointStatusController Context { get; internal set; }
     public List<Vending.State> Transactions { get; }
 
     public void DisplayStatus(object statusInformation)

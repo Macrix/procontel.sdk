@@ -7,20 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ProconTel.CommunicationCenter.Kernel;
+using ProconTel.Sdk.Legacy;
 using System.Security.Cryptography;
 using ColaAutomat.Common;
+using ProconTel.Sdk.UI.Models;
+using ProconTel.Sdk.UI.Services;
 
 namespace ColaAutomat.Vending
 {
   public partial class StatusControl : UserControl, IEndpointStatusControl
   {
-    public StatusControl()
+    private readonly IEndpointCommandSender _sender;
+    public StatusControl(IEndpointCommandSender sender)
     {
       InitializeComponent();
-    }
 
-    public IEndpointStatusController Context { get; internal set; }
+      _sender = sender;
+    }
 
     public void DisplayStatus(object statusInformation)
     {
@@ -66,12 +69,12 @@ namespace ColaAutomat.Vending
       {
         return;
       }
-      DisplayStatus(Context.SendCommandToServerEndpoint(action));
+      DisplayStatus(_sender.SendCommandToServerEndpoint(action));
     }
 
     private void Auffuellen_Click(object sender, EventArgs e)
     {
-      DisplayStatus(Context.SendCommandToServerEndpoint(Actions.Refill));
+      DisplayStatus(_sender.SendCommandToServerEndpoint(Actions.Refill));
     }
   }
 }

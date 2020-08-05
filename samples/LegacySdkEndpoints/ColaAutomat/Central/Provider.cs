@@ -1,4 +1,4 @@
-﻿using ProconTel.CommunicationCenter.Kernel;
+﻿using ProconTel.Sdk.Legacy;
 using System;
 using System.Collections.Generic;
 using System.Linq;

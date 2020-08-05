@@ -1,5 +1,7 @@
 ﻿using ColaAutomat.Common;
-using ProconTel.CommunicationCenter.Kernel;
+using ProconTel.Sdk.Communications;
+using ProconTel.Sdk.Legacy;
+using ProconTel.Sdk.StandardEndpoints;
 using System;
 using System.Collections.Generic;
 using System.Linq;
