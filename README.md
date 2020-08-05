@@ -39,11 +39,13 @@
 7. [UI Components](#id-ui-components)
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
+    * [Custom Menu Items](#id-ui-custom-menu-items)
 8. [Injected services for UI Components](#id-injected-services-ui-components)
     * [IConfigurationWriter](#id-ui-components-injected-services-iconfiguration-writer)
     * [ILocalStorage](#id-ui-components-injected-services-ilocal-storage)
     * [ISecurityService](#id-ui-components-injected-services-isecurity-service)
     * [IFileUploaderService](#id-ui-components-injected-services-ifileuploaderservice)
+    * [IVirtualFileSystem](#id-ui-components-injected-services-ivirtualfilesystem)
 9. [IoC](#id-ioc)
 10. [Legacy Sdk](#id-legacy-sdk)
 11. [Testing](#id-testing)
@@ -714,6 +716,54 @@ Status control has to implement interface <b>IEndpointStatusControl</b>.
 
 In order to use more sophisticated behavior we recommend use attribute <b>StatusControlProviderAttribute</b> with own implementation of <b>IEndpointStatusControlProvider</b> interface.
 
+<div id='id-ui-custom-menu-items' />
+
+* ### Custom Menu Items
+Procontel.Sdk provide feature for endpoint to have own custom menu item, with own icon and list of children item.
+
+Supported fronted framework:
+ - Wpf
+ - WinForms
+
+To define Custom Menu Items binding endpoint has to be decorate with attribute <b>MenuItemAttribute</b>. Children items action type should be put as a attribute constructor parameter.
+
+```csharp
+[EndpointMetadata(Name = "Custom Menu Items", SupportedRoles = SupportedRoles.Both)]
+[MenuItem("1", "Items")]
+[MenuItem("2", "1", "MenuItem1", typeof(MenuItemAction))]
+[MenuItem("3", "1", "MenuItem2", typeof(MenuItemAction))]
+public class MenuItemsEndpoint
+{
+  public MenuItemsEndpoint()
+  {
+  }
+}
+
+```
+
+Item action has to implement interface <b>IMenuItemAction</b>.
+
+```csharp
+public class MenuItemAction : IMenuItemAction
+{
+  private readonly IConfigurationReader reader;
+  private readonly IConfigurationWriter writer;
+  private readonly IEndpointCommandSender sender;
+
+  public MenuItemAction(IConfigurationReader reader, IConfigurationWriter writer,IEndpointCommandSender sender)
+  {
+    this.reader = reader;
+    this.writer = writer;
+    this.sender = sender;
+  }
+  public Task ExecuteAsync()
+  {
+    new MyDialog(writer, reader).ShowDialog();
+
+    return Task.CompletedTask;
+  }
+}
+```
 <div id='id-injected-services-ui-components' />
 
 ## 8. Injected services for ui components
@@ -853,7 +903,7 @@ Service providing functionality of uploading files to endpoint backend server fr
     }
   }
 ```
-<div id= 'id-ui-components-injected-services-IVirtualFileSystem'/>
+<div id='id-ui-components-injected-services-ivirtualfilesystem'/>
 
 ### IVirtualFileSystem
 
