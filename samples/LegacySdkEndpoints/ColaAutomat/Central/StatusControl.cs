@@ -23,20 +23,23 @@ namespace ColaAutomat.Central
 
     public List<Vending.State> Transactions { get; }
 
-    public void DisplayStatus(object statusInformation)
+    public Task DisplayStatusAsync(object statusInformation)
     {
       if (statusInformation is Central.State)
       {
         dataGridViewTransactions.DataSource = (statusInformation as Central.State).Transactions;
       }
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlHidden()
+    public Task OnStatusControlHiddenAsync()
     {
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlShown()
+    public Task OnStatusControlShownAsync()
     {
+      return Task.CompletedTask;
     }
   }
 }

@@ -25,7 +25,7 @@ namespace ColaAutomat.Vending
       _sender = sender;
     }
 
-    public void DisplayStatus(object statusInformation)
+    public Task DisplayStatusAsync(object statusInformation)
     {
       if (statusInformation is State)
       {
@@ -39,14 +39,17 @@ namespace ColaAutomat.Vending
         WasserInfo.Text = state.NoWaterBottles.ToString();
         Wasser.Enabled = 0 < state.NoWaterBottles;
       }
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlHidden()
+    public Task OnStatusControlHiddenAsync()
     {
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlShown()
+    public Task OnStatusControlShownAsync()
     {
+      return Task.CompletedTask;
     }
 
     private void Kaufen_Click(object sender, EventArgs e)
@@ -69,12 +72,12 @@ namespace ColaAutomat.Vending
       {
         return;
       }
-      DisplayStatus(_sender.SendCommandToServerEndpoint(action));
+      DisplayStatusAsync(_sender.SendCommandToServerEndpoint(action));
     }
 
     private void Auffuellen_Click(object sender, EventArgs e)
     {
-      DisplayStatus(_sender.SendCommandToServerEndpoint(Actions.Refill));
+      DisplayStatusAsync(_sender.SendCommandToServerEndpoint(Actions.Refill));
     }
   }
 }

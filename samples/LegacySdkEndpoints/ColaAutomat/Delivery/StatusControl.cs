@@ -20,20 +20,23 @@ namespace ColaAutomat.Delivery
       InitializeComponent();
     }
 
-    public void DisplayStatus(object statusInformation)
+    public Task DisplayStatusAsync(object statusInformation)
     {
       if (statusInformation is Delivery.State)
       {
         dataGridViewRefill.DataSource = (statusInformation as Delivery.State).Orders;
       }
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlHidden()
+    public Task OnStatusControlHiddenAsync()
     {
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlShown()
+    public Task OnStatusControlShownAsync()
     {
+      return Task.CompletedTask;
     }
 
         private void label1_Click(object sender, EventArgs e)
