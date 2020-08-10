@@ -32,10 +32,10 @@
     6. [INotificationService](#id-injected-services-inotification-service)
     7. [IMetricsService](#id-injected-services-imetrics-service)
     8. [IServiceContext](#id-injected-services-iservice-context)
-    9. [IReportService](id-injected-services-ireportservice-context)
+    9. [IReportService](#id-injected-services-ireportservice-context)
+    10. [IStreamingService](#id-injected-services-istreamingservice-context)
 6. [Advanced concepts](#id-advanced-concepts)
     * [Supported protocols](#id-advanced-concepts-protocols)
-    * [IMessageBus](#id-advanced-concepts-message-bus)
 7. [UI Components](#id-ui-components)
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
@@ -46,12 +46,15 @@
     * [ISecurityService](#id-ui-components-injected-services-isecurity-service)
     * [IFileUploaderService](#id-ui-components-injected-services-ifileuploaderservice)
     * [IVirtualFileSystem](#id-ui-components-injected-services-ivirtualfilesystem)
+    * [Streaming](#id-ui-components-injected-istreamingservice)
 9. [IoC](#id-ioc)
 10. [Legacy Sdk](#id-legacy-sdk)
 11. [Testing](#id-testing)
 12. [Deployment](#id-deployment)
     * [Github](#id-deployment-github)
     * [GitLab](#id-deployment-gitlab)
+
+
 
 <div id='id-quick-introduction'/>
 
@@ -65,9 +68,10 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
-| 3.0.2 | 0.5.0 |
-| 3.0.3 | 0.6.0 |
+| 3.0.5 | 0.8.0 |
 | 3.0.4 | 0.7.0 |
+| 3.0.3 | 0.6.0 |
+| 3.0.2 | 0.5.0 |
 
 <div id='id-feature-comparison'/>
 
@@ -540,6 +544,64 @@ Service provide access to implementation of internal services from procontel eng
 * ### IReportService
 Service to inform about warnings in runtime.
 
+<div id='id-injected-services-istreamingservice-context'/>
+
+* ### IStreamingService
+Service provides access to stream with given id. The service can be pass through  constructor in endpoint and in status control (implementing `IEndpointStatusControl` interface). This service is marked as obsolete and is strongly recommended to not use it in new projects.
+
+The stream can be send by corresponding version of `IMessageBus` methods `Send` and `Broadcast`. In case of communication between two endpoints:
+```csharp
+ _messageBus.Send("receiverId", "messageId", "message body", 
+        streamInstance, StreamCallbackDelegate, new ExampleProtocol(), null);
+  /// or
+ _messageBus.Broadcast("messageId", "message body", streamInstance, StreamCallbackDelegate, new ExampleProtocol(), null);       
+```
+ The stream passed to the method is not send itself, but the stream is registered and stored in procontel backend and available for everybody that know a stream id. The received message object should be cast to IStreamDescriptor to recognise whether the message contains stream or no:
+ ```csharp
+public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context = null)
+  {
+    if (message is IStreamDescriptor descriptor)
+    {
+      // get stream using IStreamingService instance and a stream id
+      _stream = _streamingService.GetStream(descriptor.StreamId);
+    }
+    return Task.FromResult(new Acknowledgement());
+  }
+ ```   
+
+In case of send stream between endpoint and UI status control can be used method `NotifyUI` from `INotificationService`:
+```csharp
+_notificationService.NotifyUI($"status information message body", streamInstance, StreamCallbackDelegate);
+``` 
+then `DisplayStatusAsync` from `IEndpointStatusControl` will be called with `IStreamDescriptor` as parameter:
+ ```csharp 
+public async Task DisplayStatusAsync(object statusInformation)
+{
+  if (statusInformation is IStreamDescriptor descriptor)
+  {
+    // get stream using IStreamingService instance and a stream id
+    _stream = _streamingService.GetStream(descriptor.StreamId);
+  }   
+  return Task.FromResult(new Acknowledgement());
+}
+ ```
+ Original message body can be obtained by accessing to `Data` property of `IStreamDescriptor<T>` and it's necessary to use a reflection:
+ ```csharp
+ public async Task DisplayStatusAsync(object statusInformation)
+{
+  if (statusInformation != null)
+  {
+    var statusInformation = statusInformation.GetType();
+    if (type.IsGenericType)
+    {
+      var originalMessageBody = type.GetProperty(nameof(StreamDescriptor<object>.Data))?.GetValue(statusInformation);
+    }
+  }
+  return Task.FromResult(new Acknowledgement());
+}
+ ```
+
+
 <div id='id-advanced-concepts'/>
 
 ## 6. Advanced concepts
@@ -764,6 +826,8 @@ public class MenuItemAction : IMenuItemAction
   }
 }
 ```
+
+
 <div id='id-injected-services-ui-components' />
 
 ## 8. Injected services for ui components
@@ -957,6 +1021,13 @@ Service provides information about the roots, folders and files available on the
     }
   }
 ```
+
+
+
+<div id='id-ui-components-injected-istreamingservice'/>
+
+* ### Streaming
+See [IStreamingService](#id-injected-services-istreamingservice-context)
 
 <div id='id-ioc'/>
 
