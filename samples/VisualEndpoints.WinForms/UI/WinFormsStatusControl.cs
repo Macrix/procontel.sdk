@@ -1,6 +1,7 @@
 ﻿using ProconTel.Sdk.UI.Models;
 using ProconTel.Sdk.UI.Services;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VisualEndpoints.WinForms.UI
@@ -11,16 +12,23 @@ namespace VisualEndpoints.WinForms.UI
     public WinFormsStatusControl() => InitializeComponent();
     public WinFormsStatusControl(IEndpointCommandSender sender) : this() => _sender = sender;
 
-    public void DisplayStatus(object statusInformation)
+    public Task DisplayStatusAsync(object statusInformation)
     {
       if (statusInformation != null)
       {
         txtNotifications.Text = txtNotifications.Text.Insert(0, $"{DateTime.Now.ToString("HH:mm:ss")} {statusInformation.ToString()}{Environment.NewLine}");
       }
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlHidden() { }
-    public void OnStatusControlShown() { }
+    public Task OnStatusControlHiddenAsync()
+    {
+      return Task.CompletedTask;
+    }
+    public Task OnStatusControlShownAsync()
+    {
+      return Task.CompletedTask;
+    }
 
     private void Button_Click(object sender, EventArgs e)
     {

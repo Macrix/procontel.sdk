@@ -25,12 +25,14 @@ namespace UI.WinForms.NewSdk.Tests.StatusControls
     {
       _virtualFileSystem = virtualFileSystem;
     }
-    public void OnStatusControlHidden()
+    public Task OnStatusControlHiddenAsync()
     {
+      return Task.CompletedTask;
     }
 
-    public void OnStatusControlShown()
+    public Task OnStatusControlShownAsync()
     {
+      return Task.CompletedTask;
     }
 
     public async void fillGetRootsGrid(IRootInfo[] roots, string directoryPath, string filePath)
@@ -102,7 +104,7 @@ namespace UI.WinForms.NewSdk.Tests.StatusControls
       }   
     }
 
-    public async void DisplayStatus(object statusInformation)
+    public async Task DisplayStatusAsync(object statusInformation)
     {
       string filePath = @"C:\testDirectory\test.txt";
       string directoryPath = @"c:\testDirectory";

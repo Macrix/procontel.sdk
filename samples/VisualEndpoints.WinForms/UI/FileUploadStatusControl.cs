@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ProconTel.Sdk.UI.Models;
 using ProconTel.Sdk.UI.Services;
@@ -18,11 +19,20 @@ namespace VisualEndpoints.WinForms.UI
       _fileTransfer = fileTransfer;
     }
 
-    public void DisplayStatus(object statusInformation) { }
+    public Task DisplayStatusAsync(object statusInformation)
+    {
+      return Task.CompletedTask;
+    }
 
-    public void OnStatusControlHidden() { }
+    public Task OnStatusControlHiddenAsync()
+    {
+      return Task.CompletedTask;
+    }
      
-    public void OnStatusControlShown() { }
+    public Task OnStatusControlShownAsync()
+    {
+      return Task.CompletedTask;
+    }
   
     private async void btnUpload_Click(object sender, EventArgs e)
     {

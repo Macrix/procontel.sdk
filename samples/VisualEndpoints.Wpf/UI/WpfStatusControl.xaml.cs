@@ -4,6 +4,7 @@ using ProconTel.Sdk.UI.Services;
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace VisualEndpoints.Wpf.UI
@@ -20,20 +21,25 @@ namespace VisualEndpoints.Wpf.UI
             _localStorage = localStorage;
             _securityService = securityService;
         }
-        public void DisplayStatus(object statusInformation)
+        public Task DisplayStatusAsync(object statusInformation)
         {
             if (statusInformation != null)
             {
                 txtNotifications.Text = txtNotifications.Text.Insert(0, $"{DateTime.Now.ToString("HH:mm:ss")} {statusInformation.ToString()}{Environment.NewLine}");
             }
+            return Task.CompletedTask;
         }
 
-        public void OnStatusControlHidden() { }
+        public Task OnStatusControlHiddenAsync()
+        {
+          return Task.CompletedTask;
+        }
 
-        public void OnStatusControlShown()
+        public Task OnStatusControlShownAsync()
         {
             var theme = _localStorage.ReadValue<object>("theme");
             cbxTheme.SelectedItem = cbxTheme.Items.OfType<ComboBoxItem>().SingleOrDefault(x => x.Content.Equals(theme));
+            return Task.CompletedTask;
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
