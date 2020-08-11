@@ -78,7 +78,7 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 ## 3. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
 
-| Feature         | Engine 2.x SDK | SDK 0.8<br>  | SDK 0.9<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 1.0<br>*Planned* |
+| Feature         | Engine 2.x SDK | SDK 0.8<br>  | SDK 0.9<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 0.9<br>*Current* |
 | :---  |:---:|:---:|:---:|:---:|:---:|
 | Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ | ✓ | 
 | Send message                                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ | 
@@ -89,7 +89,7 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Expose details of send/broadcasted messages in attribute                                               | - | - | - | ✓ | - |
 | Handle supported protocols<br>`SubscriberStrategy.SubscribingProtocols`                                | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Acknowledge processed message<br>`SubscriberStrategy.AcknowledgeContent()`                             | ✓ | ✓ | ✓ | ✓ | - |
-| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | - | ✓ |
+| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | - | - |
 | Life cycle mechanism<br>`ChannelEndpointBase.Initialize()`, `ChannelEndpointBase.Terminate()`          | ✓ | ✓ | ✓ | ✓ | ✓ |
 | On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Reading endpoint configuration<br>`ChannelEndpointBase.GetConfiguration()`                             | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -98,15 +98,15 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Custom log source location information<br>`ILogMessageOrigin` support                                  | ✓ | - |- | - | - |
 | Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Endpoint type<br>`ChannelEndpointBase.ActsAsProvider`, `ChannelEndpointBase.ActsAsSubscriber`          | ✓ | ✓ | ✓ | ✓ |✓ |
-| Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | - | **In progress** | ✓ | ✓ |
-| Handle stream in endpoint                                                                              | ✓ | - | **In progress** | ✓ | ✓ |
+| Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | - | **In progress** | ✓ | - |
+| Handle stream in endpoint                                                                              | ✓ | - | **In progress** | ✓ | - |
 | Send stream to UI status control                                                                       | ✓ | - | **In progress** | ✓ | - |
-| Handle stream in UI status control                                                                     | ✓ | - | **In progress** | ✓ | ✓ |
+| Handle stream in UI status control                                                                     | ✓ | - | **In progress** | ✓ | - |
 | Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | ✓ | ✓ |✓ | ✓ |
-| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | ✓ | ✓ |✓ | ✓ |
-| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | ✓ | ✓ |✓ | ✓ |
-| Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - |✓ | ✓ |
+| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`               | ✓ | - | - | ✓ | - |
 | ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - | - |
 | Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | ✓ | ✓| ✓ | ✓ |
@@ -116,18 +116,18 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Configuration dialog provider (WinForms)                                                               | - | ✓ | ✓ | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from conf. dialog                                                            | ✓ | ✓ | **In progress** | ✓ | ✓ |
+| Access remote file system from conf. dialog                                                            | ✓ | ✓ | **In progress** | ✓ | - |
 | Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send files from status control                                                                         | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from status control                                                          | ✓ | - | **In progress** | ✓ | ✓ |
+| Access remote file system from status control                                                          | ✓ | - | **In progress** | ✓ | - |
 | State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | **In progress** | ✓ | ✓ |
-| `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `IAuthorizationEndpoint`                                                                               | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | **In progress** | ✓ | - |
+| `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | ✓ | - |
+| `IAuthorizationEndpoint`                                                                               | ✓ | ✓ | ✓ | ✓ | - |
 | Custom queues definitions                                                                              | ✓ | - | - | - | - |
 | Override services implementation                                                                       | - | - | - | ✓ | - |
 | Asynchronous methods (`async`)                                                                         | - | - | - | ✓ | - |
@@ -873,30 +873,29 @@ Service provide read/write storage for current running machine.
 
 ```csharp
 public partial class WpfStatusControl : UserControl, IEndpointStatusControl
+{
+    private readonly ILocalStorage _localStorage;
+    public WpfStatusControl() => InitializeComponent();
+    public WpfStatusControl(ILocalStorage localStorage) : this()
     {
-        private readonly ILocalStorage _localStorage;
-        public WpfStatusControl() => InitializeComponent();
-        public WpfStatusControl(ILocalStorage localStorage) : this()
+        _localStorage = localStorage;
+    }
+
+    public void DisplayStatus(object statusInformation){}
+
+    public void OnStatusControlHidden(){}
+
+    public void OnStatusControlShown()
+    {
+        var theme = _localStorage.ReadValue<object>("theme");
+        cbxTheme.SelectedItem = cbxTheme.Items.OfType<ComboBoxItem>().SingleOrDefault(x => x.Content.Equals(theme));
+    }
+
+    private void cbxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (cbxTheme.SelectedItem is ComboBoxItem item)
         {
-            _localStorage = localStorage;
-        }
-
-        public void DisplayStatus(object statusInformation){}
-
-        public void OnStatusControlHidden(){}
-
-        public void OnStatusControlShown()
-        {
-            var theme = _localStorage.ReadValue<object>("theme");
-            cbxTheme.SelectedItem = cbxTheme.Items.OfType<ComboBoxItem>().SingleOrDefault(x => x.Content.Equals(theme));
-        }
-
-        private void cbxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxTheme.SelectedItem is ComboBoxItem item)
-            {
-                _localStorage.WriteValue("theme", item.Content);
-            }
+            _localStorage.WriteValue("theme", item.Content);
         }
     }
 }
@@ -908,31 +907,31 @@ public partial class WpfStatusControl : UserControl, IEndpointStatusControl
 Service provide usage of security mechanism hosted by Authorization/Authentication endpoint.
 
 ```csharp
-  public partial class WpfStatusControl : UserControl, IEndpointStatusControl
-  {
-      private readonly ISecurityService _securityService;
-      public WpfStatusControl() => InitializeComponent();
-      public WpfStatusControl(ISecurityService securityService) : this() => _securityService = securityService;
+public partial class WpfStatusControl : UserControl, IEndpointStatusControl
+{
+    private readonly ISecurityService _securityService;
+    public WpfStatusControl() => InitializeComponent();
+    public WpfStatusControl(ISecurityService securityService) : this() => _securityService = securityService;
 
-      public void DisplayStatus(object statusInformation) { }
-      public void OnStatusControlHidden() { }
-      public void OnStatusControlShown() { }
+    public void DisplayStatus(object statusInformation) { }
+    public void OnStatusControlHidden() { }
+    public void OnStatusControlShown() { }
 
-      public void Logout(object sender, System.Windows.RoutedEventArgs e)
-      {
-          _securityService.SignOut();
-      }
+    public void Logout(object sender, System.Windows.RoutedEventArgs e)
+    {
+        _securityService.SignOut();
+    }
 
-      public void Login(object sender, System.Windows.RoutedEventArgs e)
-      {
-          var isAdministrator = false;
-          var authorized = _securityService.Authenticate(hashLoginAndPassword);
-          if (authorized)
-          {
-              isAdministrator = _securityService.IsInRole("administrator");
-          }
-      }
-  }
+    public void Login(object sender, System.Windows.RoutedEventArgs e)
+    {
+        var isAdministrator = false;
+        var authorized = _securityService.Authenticate(hashLoginAndPassword);
+        if (authorized)
+        {
+            isAdministrator = _securityService.IsInRole("administrator");
+        }
+    }
+}
 ```
 
 <div id='id-ui-components-injected-services-ifileuploaderservice'/>
@@ -941,31 +940,31 @@ Service provide usage of security mechanism hosted by Authorization/Authenticati
 Service providing functionality of uploading files to endpoint backend server from client (configuration dialog or status control).
 
 ```csharp
-  public partial class FileUploadConfigurationDialog : Form
+public partial class FileUploadConfigurationDialog : Form
+{
+  private readonly IFileUploaderService _fileTransfer;
+
+  public FileUploadConfigurationDialog()
   {
-    private readonly IFileUploaderService _fileTransfer;
-
-    public FileUploadConfigurationDialog()
-    {
-      InitializeComponent();
-    }
-
-    public FileUploadConfigurationDialog(IFileUploaderService fileTransfer) : this()
-    {
-      _fileTransfer = fileTransfer;
-    }
-
-    private async void btnUpload_Click(object sender, EventArgs e)
-    {
-      var result = openFileDialog1.ShowDialog();
-      if(result == DialogResult.OK)
-      {
-        await _fileTransfer.UploadFilesAsync(new[] { new FileDescriptor() { Location = openFileDialog1.FileName } });
-
-      }
-      DialogResult = DialogResult.OK;
-    }
+    InitializeComponent();
   }
+
+  public FileUploadConfigurationDialog(IFileUploaderService fileTransfer) : this()
+  {
+    _fileTransfer = fileTransfer;
+  }
+
+  private async void btnUpload_Click(object sender, EventArgs e)
+  {
+    var result = openFileDialog1.ShowDialog();
+    if(result == DialogResult.OK)
+    {
+      await _fileTransfer.UploadFilesAsync(new[] { new FileDescriptor() { Location = openFileDialog1.FileName } });
+
+    }
+    DialogResult = DialogResult.OK;
+  }
+}
 ```
 <div id='id-ui-components-injected-services-ivirtualfilesystem'/>
 
@@ -975,51 +974,50 @@ Service provides information about the roots, folders and files available on the
 
 
 ```csharp
-
-  public interface IVirtualFileSystem
-  {
-    /// Returns name of referencing file system.
-    Task<string> GetFileSystemNameAsync();
-    /// Returns an array of roots existing in referencing file 
-    Task<IRootInfo[]> GetRootsAsync();
-    /// Returns an array of directories existing in referencing file system.
-    Task<IVirtualDirectoryInfo[]> GetDirectoriesAsync(IVirtualDirectoryInfo parent);
-    /// Returns an array of files existing in referencing file system.
-    Task<IVirtualFileInfo[]> GetFilesAsync(IVirtualDirectoryInfo parent, 
-    string pattern);
-    /// Returns whether a file under specified path exists.
-    Task<bool> FileExistsAsync(string path);
-    /// Returns whether a directory under specified path exists.
-    Task<bool> DirectoryExistsAsync(string path);
-    /// Creates directory.
-    Task<bool> CreateDirectoryAsync(string path);
-  }
+public interface IVirtualFileSystem
+{
+  /// Returns name of referencing file system.
+  Task<string> GetFileSystemNameAsync();
+  /// Returns an array of roots existing in referencing file 
+  Task<IRootInfo[]> GetRootsAsync();
+  /// Returns an array of directories existing in referencing file system.
+  Task<IVirtualDirectoryInfo[]> GetDirectoriesAsync(IVirtualDirectoryInfo parent);
+  /// Returns an array of files existing in referencing file system.
+  Task<IVirtualFileInfo[]> GetFilesAsync(IVirtualDirectoryInfo parent, 
+  string pattern);
+  /// Returns whether a file under specified path exists.
+  Task<bool> FileExistsAsync(string path);
+  /// Returns whether a directory under specified path exists.
+  Task<bool> DirectoryExistsAsync(string path);
+  /// Creates directory.
+  Task<bool> CreateDirectoryAsync(string path);
+}
 
 ```
 
 ```csharp
-  public partial class VirtualFileSystemStatusControl : UserControl, IEndpointStatusControl
+public partial class VirtualFileSystemStatusControl : UserControl, IEndpointStatusControl
+{
+  private readonly IVirtualFileSystem _virtualFileSystem;
+  public VirtualFileSystemStatusControl()
   {
-    private readonly IVirtualFileSystem _virtualFileSystem;
-    public VirtualFileSystemStatusControl()
-    {
-      InitializeComponent();
-    }
-    public VirtualFileSystemStatusControl(IVirtualFileSystem virtualFileSystem, IRootInfo[] rootInfo) : this()
-    {
-      _virtualFileSystem = virtualFileSystem;
-    }
-    public void OnStatusControlHidden(){}
-
-    public void OnStatusControlShown(){}
-
-    public async void DisplayStatus(object statusInformation)
-    {
-      string filePath = @"C:\testDirectory\test.txt";
-      string directoryPath = @"c:\testDirectory";
-      var roots = await _virtualFileSystem.GetRootsAsync();
-    }
+    InitializeComponent();
   }
+  public VirtualFileSystemStatusControl(IVirtualFileSystem virtualFileSystem, IRootInfo[] rootInfo) : this()
+  {
+    _virtualFileSystem = virtualFileSystem;
+  }
+  public void OnStatusControlHidden(){}
+
+  public void OnStatusControlShown(){}
+
+  public async void DisplayStatus(object statusInformation)
+  {
+    string filePath = @"C:\testDirectory\test.txt";
+    string directoryPath = @"c:\testDirectory";
+    var roots = await _virtualFileSystem.GetRootsAsync();
+  }
+}
 ```
 
 
@@ -1037,6 +1035,64 @@ ProconTEL engine offers access to implementation of internal services. Described
 <div id='id-legacy-sdk'/>
 
 ## 10. Legacy Sdk
+
+For those who are familiar with previous ProconTEL SDK it's obvious that new SDK is breaking the compatibility. However, in order to make the migration less painfull we created _Legacy SDK_ which is build on new SDK, but preserves the old SDK conventions, names, classes (at least to some degree).
+
+In order to migrate to Legacy SDK perform following steps:
+* remove all existing ProconTEL reference
+* install ProconTEL Legacy SDK nuget package
+* replace:
+  - `Endpoint` attribute with `EndpointMetadata` and add `using ProconTel.Sdk.Attributes;`, 
+  - `using ProconTel.CommunicationCenter.Kernel;` with `using ProconTel.Sdk.Legacy;`
+* generate `ctor` and pass all necessary parameters to base `ctor`, add `using ProconTel.Sdk.Services;` example
+  ```csharp
+  using ProconTel.Sdk.Services;
+
+  public Endpoint(IMessageBus messageBus, ILogger logger, IRuntimeContext runtimeContext, IConfigurationReader configurationReader, 
+    INotificationService notificationService, IReportService reportService)
+    : base(messageBus, logger, runtimeContext, configurationReader, notificationService, reportService)
+  {
+  }
+  ```
+
+* add status control to endpoints:
+  - add `using ProconTel.Sdk.UI.Attributes;` and `using ProconTel.Sdk.UI.Models;`
+  - add `StatusControl` attribute to endpoints, example 
+    ```csharp
+    [StatusControl(typeof(StatusControl), EndpointStatusControlType.WinForms)]
+    ```
+  - remove `HasStatusControl` and `GetStatusControl` methods in status control class
+  - add `using ProconTel.Sdk.UI.Models;`
+  - remove `IEndpointStatusController Context` property
+  - extend `ctor` with new parameter `IEndpointCommandSender`, example
+    ```csharp
+    private readonly IEndpointCommandSender _sender;
+    public StatusControl(IEndpointCommandSender sender)
+    {
+      InitializeComponent();
+      _sender = sender;
+    }
+    ```
+  - replace `IEndpointStatusControl` methods with async version, example
+    ```csharp
+    public Task OnStatusControlHiddenAsync()
+    {
+      return Task.CompletedTask;
+    }
+    ```
+
+* add configuration control to endpoints:
+  - add `using ProconTel.Sdk.UI.Services;` and `using ProconTel.Sdk.UI.Models;`
+  - add `ConfigurationDialog` attribute to endpoints, example
+    ```csharp 
+    [ConfigurationDialog(typeof(ConfigurationControl))]
+    ```
+  - remove `HasConfigurationControl` and `GetConfigurationControl` methods
+
+* use new `_sender` variable instead of `Context` 
+* when using `XmlProtocol` or `BinaryProtocol` install ProconTEL StandardEndpoints SDK nuget package
+* add reference to `using ProconTel.Sdk.StandardEndpoints;` where it's necessar
+
 
 <div id='id-testing'/>
 
