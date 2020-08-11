@@ -917,6 +917,61 @@ ProconTEL engine offers access to implementation of internal services. Described
 
 ## 10. Legacy Sdk
 
+Migration to Legacy SDK:
+* remove all existing ProconTEL reference
+* install ProconTEL Legacy SDK nuget package
+* replace:
+  - `Endpoint` attribute with `EndpointMetadata` and add `using ProconTel.Sdk.Attributes;`, 
+  - `using ProconTel.CommunicationCenter.Kernel;` with `using ProconTel.Sdk.Legacy;`
+* generate `ctor` and pass all necessary parameters to base `ctor`, add `using ProconTel.Sdk.Services;` example
+  ```
+  using ProconTel.Sdk.Services;
+
+  public Endpoint(IMessageBus messageBus, ILogger logger, IRuntimeContext runtimeContext, IConfigurationReader configurationReader, 
+    INotificationService notificationService, IReportService reportService)
+    : base(messageBus, logger, runtimeContext, configurationReader, notificationService, reportService)
+  {
+  }
+  ```
+
+* add status control to endpoints:
+  - add `using ProconTel.Sdk.UI.Attributes;` and `using ProconTel.Sdk.UI.Models;`
+  - add `StatusControl` attribute to endpoints, example 
+    ```
+    [StatusControl(typeof(StatusControl), EndpointStatusControlType.WinForms)]
+    ```
+  - remove `HasStatusControl` and `GetStatusControl` methods in status control class
+  - add `using ProconTel.Sdk.UI.Models;`
+  - remove `IEndpointStatusController Context` property
+  - extend `ctor` with new parameter `IEndpointCommandSender`, example
+    ```
+    private readonly IEndpointCommandSender _sender;
+    public StatusControl(IEndpointCommandSender sender)
+    {
+      InitializeComponent();
+      _sender = sender;
+    }
+    ```
+  - Replace `IEndpointStatusControl` methods with async version, example
+    ```
+        public Task OnStatusControlHiddenAsync()
+        {
+          return Task.CompletedTask;
+        }
+    ```
+
+* add configuration control to endpoints:
+  - add `using ProconTel.Sdk.UI.Services;` and `using ProconTel.Sdk.UI.Models;`
+  - add `ConfigurationDialog` attribute to endpoints, example
+    ``` 
+    [ConfigurationDialog(typeof(ConfigurationControl))]
+    ```
+  - remove `HasConfigurationControl` and `GetConfigurationControl` methods
+
+* use new `_sender` variable instead of `Context` 
+* when using `XmlProtocol` or `BinaryProtocol` install ProconTEL StandardEndpoints SDK nuget package
+* add reference to `using ProconTel.Sdk.StandardEndpoints;` where it's necessar
+
 <div id='id-testing'/>
 
 ## 11. Testing
