@@ -759,30 +759,29 @@ Service provide read/write storage for current running machine.
 
 ```csharp
 public partial class WpfStatusControl : UserControl, IEndpointStatusControl
+{
+    private readonly ILocalStorage _localStorage;
+    public WpfStatusControl() => InitializeComponent();
+    public WpfStatusControl(ILocalStorage localStorage) : this()
     {
-        private readonly ILocalStorage _localStorage;
-        public WpfStatusControl() => InitializeComponent();
-        public WpfStatusControl(ILocalStorage localStorage) : this()
+        _localStorage = localStorage;
+    }
+
+    public void DisplayStatus(object statusInformation){}
+
+    public void OnStatusControlHidden(){}
+
+    public void OnStatusControlShown()
+    {
+        var theme = _localStorage.ReadValue<object>("theme");
+        cbxTheme.SelectedItem = cbxTheme.Items.OfType<ComboBoxItem>().SingleOrDefault(x => x.Content.Equals(theme));
+    }
+
+    private void cbxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (cbxTheme.SelectedItem is ComboBoxItem item)
         {
-            _localStorage = localStorage;
-        }
-
-        public void DisplayStatus(object statusInformation){}
-
-        public void OnStatusControlHidden(){}
-
-        public void OnStatusControlShown()
-        {
-            var theme = _localStorage.ReadValue<object>("theme");
-            cbxTheme.SelectedItem = cbxTheme.Items.OfType<ComboBoxItem>().SingleOrDefault(x => x.Content.Equals(theme));
-        }
-
-        private void cbxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxTheme.SelectedItem is ComboBoxItem item)
-            {
-                _localStorage.WriteValue("theme", item.Content);
-            }
+            _localStorage.WriteValue("theme", item.Content);
         }
     }
 }
@@ -794,31 +793,31 @@ public partial class WpfStatusControl : UserControl, IEndpointStatusControl
 Service provide usage of security mechanism hosted by Authorization/Authentication endpoint.
 
 ```csharp
-  public partial class WpfStatusControl : UserControl, IEndpointStatusControl
-  {
-      private readonly ISecurityService _securityService;
-      public WpfStatusControl() => InitializeComponent();
-      public WpfStatusControl(ISecurityService securityService) : this() => _securityService = securityService;
+public partial class WpfStatusControl : UserControl, IEndpointStatusControl
+{
+    private readonly ISecurityService _securityService;
+    public WpfStatusControl() => InitializeComponent();
+    public WpfStatusControl(ISecurityService securityService) : this() => _securityService = securityService;
 
-      public void DisplayStatus(object statusInformation) { }
-      public void OnStatusControlHidden() { }
-      public void OnStatusControlShown() { }
+    public void DisplayStatus(object statusInformation) { }
+    public void OnStatusControlHidden() { }
+    public void OnStatusControlShown() { }
 
-      public void Logout(object sender, System.Windows.RoutedEventArgs e)
-      {
-          _securityService.SignOut();
-      }
+    public void Logout(object sender, System.Windows.RoutedEventArgs e)
+    {
+        _securityService.SignOut();
+    }
 
-      public void Login(object sender, System.Windows.RoutedEventArgs e)
-      {
-          var isAdministrator = false;
-          var authorized = _securityService.Authenticate(hashLoginAndPassword);
-          if (authorized)
-          {
-              isAdministrator = _securityService.IsInRole("administrator");
-          }
-      }
-  }
+    public void Login(object sender, System.Windows.RoutedEventArgs e)
+    {
+        var isAdministrator = false;
+        var authorized = _securityService.Authenticate(hashLoginAndPassword);
+        if (authorized)
+        {
+            isAdministrator = _securityService.IsInRole("administrator");
+        }
+    }
+}
 ```
 
 <div id='id-ui-components-injected-services-ifileuploaderservice'/>
@@ -827,31 +826,31 @@ Service provide usage of security mechanism hosted by Authorization/Authenticati
 Service providing functionality of uploading files to endpoint backend server from client (configuration dialog or status control).
 
 ```csharp
-  public partial class FileUploadConfigurationDialog : Form
+public partial class FileUploadConfigurationDialog : Form
+{
+  private readonly IFileUploaderService _fileTransfer;
+
+  public FileUploadConfigurationDialog()
   {
-    private readonly IFileUploaderService _fileTransfer;
-
-    public FileUploadConfigurationDialog()
-    {
-      InitializeComponent();
-    }
-
-    public FileUploadConfigurationDialog(IFileUploaderService fileTransfer) : this()
-    {
-      _fileTransfer = fileTransfer;
-    }
-
-    private async void btnUpload_Click(object sender, EventArgs e)
-    {
-      var result = openFileDialog1.ShowDialog();
-      if(result == DialogResult.OK)
-      {
-        await _fileTransfer.UploadFilesAsync(new[] { new FileDescriptor() { Location = openFileDialog1.FileName } });
-
-      }
-      DialogResult = DialogResult.OK;
-    }
+    InitializeComponent();
   }
+
+  public FileUploadConfigurationDialog(IFileUploaderService fileTransfer) : this()
+  {
+    _fileTransfer = fileTransfer;
+  }
+
+  private async void btnUpload_Click(object sender, EventArgs e)
+  {
+    var result = openFileDialog1.ShowDialog();
+    if(result == DialogResult.OK)
+    {
+      await _fileTransfer.UploadFilesAsync(new[] { new FileDescriptor() { Location = openFileDialog1.FileName } });
+
+    }
+    DialogResult = DialogResult.OK;
+  }
+}
 ```
 <div id= 'id-ui-components-injected-services-IVirtualFileSystem'/>
 
@@ -861,51 +860,50 @@ Service provides information about the roots, folders and files available on the
 
 
 ```csharp
-
-  public interface IVirtualFileSystem
-  {
-    /// Returns name of referencing file system.
-    Task<string> GetFileSystemNameAsync();
-    /// Returns an array of roots existing in referencing file 
-    Task<IRootInfo[]> GetRootsAsync();
-    /// Returns an array of directories existing in referencing file system.
-    Task<IVirtualDirectoryInfo[]> GetDirectoriesAsync(IVirtualDirectoryInfo parent);
-    /// Returns an array of files existing in referencing file system.
-    Task<IVirtualFileInfo[]> GetFilesAsync(IVirtualDirectoryInfo parent, 
-    string pattern);
-    /// Returns whether a file under specified path exists.
-    Task<bool> FileExistsAsync(string path);
-    /// Returns whether a directory under specified path exists.
-    Task<bool> DirectoryExistsAsync(string path);
-    /// Creates directory.
-    Task<bool> CreateDirectoryAsync(string path);
-  }
+public interface IVirtualFileSystem
+{
+  /// Returns name of referencing file system.
+  Task<string> GetFileSystemNameAsync();
+  /// Returns an array of roots existing in referencing file 
+  Task<IRootInfo[]> GetRootsAsync();
+  /// Returns an array of directories existing in referencing file system.
+  Task<IVirtualDirectoryInfo[]> GetDirectoriesAsync(IVirtualDirectoryInfo parent);
+  /// Returns an array of files existing in referencing file system.
+  Task<IVirtualFileInfo[]> GetFilesAsync(IVirtualDirectoryInfo parent, 
+  string pattern);
+  /// Returns whether a file under specified path exists.
+  Task<bool> FileExistsAsync(string path);
+  /// Returns whether a directory under specified path exists.
+  Task<bool> DirectoryExistsAsync(string path);
+  /// Creates directory.
+  Task<bool> CreateDirectoryAsync(string path);
+}
 
 ```
 
 ```csharp
-  public partial class VirtualFileSystemStatusControl : UserControl, IEndpointStatusControl
+public partial class VirtualFileSystemStatusControl : UserControl, IEndpointStatusControl
+{
+  private readonly IVirtualFileSystem _virtualFileSystem;
+  public VirtualFileSystemStatusControl()
   {
-    private readonly IVirtualFileSystem _virtualFileSystem;
-    public VirtualFileSystemStatusControl()
-    {
-      InitializeComponent();
-    }
-    public VirtualFileSystemStatusControl(IVirtualFileSystem virtualFileSystem, IRootInfo[] rootInfo) : this()
-    {
-      _virtualFileSystem = virtualFileSystem;
-    }
-    public void OnStatusControlHidden(){}
-
-    public void OnStatusControlShown(){}
-
-    public async void DisplayStatus(object statusInformation)
-    {
-      string filePath = @"C:\testDirectory\test.txt";
-      string directoryPath = @"c:\testDirectory";
-      var roots = await _virtualFileSystem.GetRootsAsync();
-    }
+    InitializeComponent();
   }
+  public VirtualFileSystemStatusControl(IVirtualFileSystem virtualFileSystem, IRootInfo[] rootInfo) : this()
+  {
+    _virtualFileSystem = virtualFileSystem;
+  }
+  public void OnStatusControlHidden(){}
+
+  public void OnStatusControlShown(){}
+
+  public async void DisplayStatus(object statusInformation)
+  {
+    string filePath = @"C:\testDirectory\test.txt";
+    string directoryPath = @"c:\testDirectory";
+    var roots = await _virtualFileSystem.GetRootsAsync();
+  }
+}
 ```
 
 <div id='id-ioc'/>
@@ -917,14 +915,16 @@ ProconTEL engine offers access to implementation of internal services. Described
 
 ## 10. Legacy Sdk
 
-Migration to Legacy SDK:
+For those who are familiar with previous ProconTEL SDK it's obvious that new SDK is breaking the compatibility. However, in order to make the migration less painfull we created _Legacy SDK_ which is build on new SDK, but preserves the old SDK conventions, names, classes (at least to some degree).
+
+In order to migrate to Legacy SDK perform following steps:
 * remove all existing ProconTEL reference
 * install ProconTEL Legacy SDK nuget package
 * replace:
   - `Endpoint` attribute with `EndpointMetadata` and add `using ProconTel.Sdk.Attributes;`, 
   - `using ProconTel.CommunicationCenter.Kernel;` with `using ProconTel.Sdk.Legacy;`
 * generate `ctor` and pass all necessary parameters to base `ctor`, add `using ProconTel.Sdk.Services;` example
-  ```
+  ```csharp
   using ProconTel.Sdk.Services;
 
   public Endpoint(IMessageBus messageBus, ILogger logger, IRuntimeContext runtimeContext, IConfigurationReader configurationReader, 
@@ -937,14 +937,14 @@ Migration to Legacy SDK:
 * add status control to endpoints:
   - add `using ProconTel.Sdk.UI.Attributes;` and `using ProconTel.Sdk.UI.Models;`
   - add `StatusControl` attribute to endpoints, example 
-    ```
+    ```csharp
     [StatusControl(typeof(StatusControl), EndpointStatusControlType.WinForms)]
     ```
   - remove `HasStatusControl` and `GetStatusControl` methods in status control class
   - add `using ProconTel.Sdk.UI.Models;`
   - remove `IEndpointStatusController Context` property
   - extend `ctor` with new parameter `IEndpointCommandSender`, example
-    ```
+    ```csharp
     private readonly IEndpointCommandSender _sender;
     public StatusControl(IEndpointCommandSender sender)
     {
@@ -952,18 +952,18 @@ Migration to Legacy SDK:
       _sender = sender;
     }
     ```
-  - Replace `IEndpointStatusControl` methods with async version, example
-    ```
-        public Task OnStatusControlHiddenAsync()
-        {
-          return Task.CompletedTask;
-        }
+  - replace `IEndpointStatusControl` methods with async version, example
+    ```csharp
+    public Task OnStatusControlHiddenAsync()
+    {
+      return Task.CompletedTask;
+    }
     ```
 
 * add configuration control to endpoints:
   - add `using ProconTel.Sdk.UI.Services;` and `using ProconTel.Sdk.UI.Models;`
   - add `ConfigurationDialog` attribute to endpoints, example
-    ``` 
+    ```csharp 
     [ConfigurationDialog(typeof(ConfigurationControl))]
     ```
   - remove `HasConfigurationControl` and `GetConfigurationControl` methods
@@ -971,6 +971,7 @@ Migration to Legacy SDK:
 * use new `_sender` variable instead of `Context` 
 * when using `XmlProtocol` or `BinaryProtocol` install ProconTEL StandardEndpoints SDK nuget package
 * add reference to `using ProconTel.Sdk.StandardEndpoints;` where it's necessar
+
 
 <div id='id-testing'/>
 
