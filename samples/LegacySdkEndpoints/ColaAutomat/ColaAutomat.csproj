@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>ProconTel.Sample.ColaAutomat</PackageId>
+    <Version>1.0</Version>
+    <Authors>Markus Schubert</Authors>
+    <Owners>Macrix - Technology Group</Owners>
+    <ProjectUrl>http://macrix.eu</ProjectUrl>
+    <IconUrl>https://macrix.eu/assets/img/favicon/favicon-32x32.png</IconUrl>
+    <Copyright>Copyright (c) 2006-2020 Macrix - Technology Group</Copyright>
+    <Product>ProconTel ColaAutomat Sample</Product>
+    <Description>ProconTEL sample showcase of Cola Vending Machine project.</Description>
+    <PackageTags>PCT++ SDK Legacy </PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputPath>bin\$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ProconTel.Sdk.Legacy" Version="0.9.0-preview6" />
+    <PackageReference Include="ProconTel.Sdk.StandardEndpoints" Version="0.9.0-preview6" />
+  </ItemGroup>
+
+</Project>
