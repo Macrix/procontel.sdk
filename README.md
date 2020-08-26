@@ -68,6 +68,8 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
+| 3.0.7 | 0.10.0 |
+| 3.0.6 | 0.9.0 |
 | 3.0.5 | 0.8.0 |
 | 3.0.4 | 0.7.0 |
 | 3.0.3 | 0.6.0 |
@@ -78,7 +80,7 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 ## 3. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
 
-| Feature         | Engine 2.x SDK | SDK 0.8<br>  | SDK 0.9<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 0.9<br>*Current* |
+| Feature         | Engine 2.x SDK | SDK 0.8<br>  | SDK 0.10<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 0.10<br>*Current* |
 | :---  |:---:|:---:|:---:|:---:|:---:|
 | Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ | ✓ | 
 | Send message                                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ | 
@@ -98,10 +100,10 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Custom log source location information<br>`ILogMessageOrigin` support                                  | ✓ | - |- | - | - |
 | Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Endpoint type<br>`ChannelEndpointBase.ActsAsProvider`, `ChannelEndpointBase.ActsAsSubscriber`          | ✓ | ✓ | ✓ | ✓ |✓ |
-| Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | - | **In progress** | ✓ | - |
-| Handle stream in endpoint                                                                              | ✓ | - | **In progress** | ✓ | - |
-| Send stream to UI status control                                                                       | ✓ | - | **In progress** | ✓ | - |
-| Handle stream in UI status control                                                                     | ✓ | - | **In progress** | ✓ | - |
+| Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | - | ✓ | ✓ | - |
+| Handle stream in endpoint                                                                              | ✓ | - | ✓ | ✓ | - |
+| Send stream to UI status control                                                                       | ✓ | - | ✓ | ✓ | - |
+| Handle stream in UI status control                                                                     | ✓ | - | ✓ | ✓ | - |
 | Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -116,16 +118,16 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Configuration dialog provider (WinForms)                                                               | - | ✓ | ✓ | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from conf. dialog                                                            | ✓ | ✓ | **In progress** | ✓ | - |
+| Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | ✓ | - |
 | Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Send files from status control                                                                         | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from status control                                                          | ✓ | - | **In progress** | ✓ | - |
+| Access remote file system from status control                                                          | ✓ | - | ✓ | ✓ | - |
 | State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | **In progress** | ✓ | - |
+| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | - | ✓ | ✓ | - |
 | `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | ✓ | - |
 | `IAuthorizationEndpoint`                                                                               | ✓ | ✓ | ✓ | ✓ | - |
 | Custom queues definitions                                                                              | ✓ | - | - | - | - |
