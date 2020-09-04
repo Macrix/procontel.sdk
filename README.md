@@ -91,15 +91,15 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Expose details of send/broadcasted messages<br>`ProviderStrategy.ProvidingContentDetails`              | ✓ | ✓ | ✓ | ✓ |
 | Handle supported protocols<br>`SubscriberStrategy.SubscribingProtocols`                                | ✓ | ✓ | ✓ | ✓ |
 | Acknowledge processed message<br>`SubscriberStrategy.AcknowledgeContent()`                             | ✓ | ✓ | ✓ | - |
-| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | - |
+| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | ✓ |
 | Life cycle mechanism<br>`ChannelEndpointBase.Initialize()`, `ChannelEndpointBase.Terminate()`          | ✓ | ✓ | ✓ | ✓ |
 | On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | ✓ | ✓ | ✓ |
 | Reading endpoint configuration<br>`ChannelEndpointBase.GetConfiguration()`                             | ✓ | ✓ | ✓ | ✓ |
 | Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | ✓ | ✓ | ✓ |
 | Logger<br>*all `Logger.Debug()`, `Logger.Error()`, etc. methods                                        | ✓ | ✓ | ✓ | ✓ |
-| Custom log source location information<br>`ILogMessageOrigin` support                                  | ✓ | - | - | - |
+| ~~Custom log source location information<br>`ILogMessageOrigin` support~~                              | ✓ | - | - | - |
 | Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ |
-| Endpoint type<br>`ChannelEndpointBase.ActsAsProvider`, `ChannelEndpointBase.ActsAsSubscriber`          | ✓ | ✓ | ✓ |✓ |
+| Endpoint type<br>`ChannelEndpointBase.ActsAsProvider`, `ChannelEndpointBase.ActsAsSubscriber`          | ✓ | ✓ | ✓ | ✓ |
 | Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | ✓ | ✓ | - |
 | Handle stream in endpoint                                                                              | ✓ | ✓ | ✓ | - |
 | Send stream to UI status control                                                                       | ✓ | ✓ | ✓ | - |
@@ -118,16 +118,16 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Configuration dialog provider (WinForms)                                                               | - | ✓ | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | - |
+| Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | (planned) |
 | Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ |
 | Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ |
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ |
 | Send files from status control                                                                         | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from status control                                                          | ✓ | ✓ | ✓ | - |
+| Access remote file system from status control                                                          | ✓ | ✓ | ✓ | (planned) |
 | State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ |
-| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | ✓ | ✓ | - |
+| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | ✓ | ✓ | (planned) |
 | `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | - |
 | `IAuthorizationEndpoint`                                                                               | ✓ | ✓ | ✓ | - |
 | After initialization method `AfterActivate()`                                                          | ✓ | - | - | ✓ |
