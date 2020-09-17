@@ -1,0 +1,5 @@
+Issues released in version: [3.0.8.0]
+[PCT-680][Description]: BKS | ProconTEL Training for developers | get confidence in the usage of ProconTEL
+[PCT-644][Description]: System Administrator | [Part 1] have a persistent channel basic functionality | ensure that messages do not get lost while an endpoint is shut down
+[PCT-75][Description]: Developer | using HMI Solution with Angular as well (like WPF example of Piotr) | Use newest Technologies for visualization
+
