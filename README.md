@@ -69,7 +69,8 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
-| 3.0.8 | 0.10.0 |
+| 3.0.9 | 1.0.0 |
+| 3.0.8 | 0.11.0 |
 | 3.0.7 | 0.10.0 |
 | 3.0.6 | 0.9.0 |
 | 3.0.5 | 0.8.0 |
@@ -82,7 +83,7 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 ## 3. Feature Comparison
 Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
 
-| Feature         | Engine 2.x SDK | SDK 0.11<br>*Current*  | SDK 1.0<br>*Planned* | SDK Legacy 0.11<br>*Current* |
+| Feature         | Engine 2.x SDK | SDK 1.0<br>*Current*  | SDK 1.1<br>*Planned* | SDK Legacy 1.0<br>*Current* |
 | :---  |:---:|:---:|:---:|:---:|
 | Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ | 
 | Send message                                                                                           | ✓ | ✓ | ✓ | ✓ | 
@@ -548,6 +549,24 @@ Feature in progress
 
 * ### IServiceContext
 Service provide access to implementation of internal services from procontel engine.
+```csharp
+  [EndpointMetadata(Name = "IoC", SupportedRoles = SupportedRoles.Provider)]
+  public class IoCEndpoint : IEndpointLifeTimeCycle
+  {
+    private readonly Func<string, ILogger> _loggerFactory;
+    private readonly IServiceContext _serviceContext;
+
+    public IoCEndpoint(IServiceContext serviceContext)
+    {
+      _serviceContext = serviceContext;
+      _loggerFactory = _serviceContext.Resolve<Func<string, ILogger>>();
+      _loggerFactory("Custom Origin").Information("Invoke constructor for endpoint IoC");
+    }
+
+    public Task InitializeAsync() => Task.CompletedTask;
+
+    public Task TerminateAsync() => Task.CompletedTask; 
+```
 
 <div id='id-injected-services-ireportservice-context'/>
 
