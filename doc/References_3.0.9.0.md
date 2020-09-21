@@ -1,6 +1,8 @@
 # References:
 ### Name: Autofac.dll 
 ### Name: Castle.Core.dll 
+### Name: Common.Logging.Core.dll 
+### Name: Common.Logging.dll 
 ### Name: DevExpress.CodeParser.v15.1.dll 
 ### Name: DevExpress.Data.v15.1.dll 
 ### Name: DevExpress.Design.v15.1.dll 
@@ -20,6 +22,17 @@
 ### Name: ICSharpCode.SharpZipLib.dll 
 ### Name: log4net.dll 
 ### Name: Microsoft.Bcl.AsyncInterfaces.dll 
+### Name: Microsoft.Data.SqlClient.dll 
+### Name: Microsoft.Data.SqlClient.SNI.x64.dll 
+### Name: Microsoft.Data.SqlClient.SNI.x86.dll 
+### Name: Microsoft.Extensions.Logging.Abstractions.dll 
+### Name: Microsoft.Identity.Client.dll 
+### Name: Microsoft.IdentityModel.JsonWebTokens.dll 
+### Name: Microsoft.IdentityModel.Logging.dll 
+### Name: Microsoft.IdentityModel.Protocols.dll 
+### Name: Microsoft.IdentityModel.Protocols.OpenIdConnect.dll 
+### Name: Microsoft.IdentityModel.Tokens.dll 
+### Name: Newtonsoft.Json.dll 
 ### Name: Npgsql.dll 
 ### Name: PostSharp.dll 
 ### Name: ProconTel.Aspects.dll 
@@ -55,8 +68,11 @@
 ### Name: ProconTel.Sdk.UI.dll 
 ### Name: ProconTel.Security.dll 
 ### Name: ProconTel.Streaming.dll 
+### Name: Quartz.dll 
 ### Name: System.Buffers.dll 
 ### Name: System.Data.SQLite.dll 
+### Name: System.Diagnostics.DiagnosticSource.dll 
+### Name: System.IdentityModel.Tokens.Jwt.dll 
 ### Name: System.Memory.dll 
 ### Name: System.Numerics.Vectors.dll 
 ### Name: System.Runtime.CompilerServices.Unsafe.dll 
@@ -78,6 +94,7 @@
 ### Name: DevExpress.XtraPrinting.v15.1.resources.dll 
 ### Name: DevExpress.XtraTreeList.v15.1.resources.dll 
 ### Name: DevExpress.XtraVerticalGrid.v15.1.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
 ### Name: DevExpress.Data.v15.1.resources.dll 
 ### Name: DevExpress.Office.v15.1.Core.resources.dll 
 ### Name: DevExpress.PivotGrid.v15.1.Core.resources.dll 
@@ -92,6 +109,9 @@
 ### Name: DevExpress.XtraPrinting.v15.1.resources.dll 
 ### Name: DevExpress.XtraTreeList.v15.1.resources.dll 
 ### Name: DevExpress.XtraVerticalGrid.v15.1.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
 ### Name: DevExpress.Data.v15.1.resources.dll 
 ### Name: DevExpress.Office.v15.1.Core.resources.dll 
 ### Name: DevExpress.PivotGrid.v15.1.Core.resources.dll 
@@ -106,6 +126,9 @@
 ### Name: DevExpress.XtraPrinting.v15.1.resources.dll 
 ### Name: DevExpress.XtraTreeList.v15.1.resources.dll 
 ### Name: DevExpress.XtraVerticalGrid.v15.1.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
 ### Name: DevExpress.Data.v15.1.resources.dll 
 ### Name: DevExpress.Office.v15.1.Core.resources.dll 
 ### Name: DevExpress.PivotGrid.v15.1.Core.resources.dll 
@@ -120,4 +143,7 @@
 ### Name: DevExpress.XtraPrinting.v15.1.resources.dll 
 ### Name: DevExpress.XtraTreeList.v15.1.resources.dll 
 ### Name: DevExpress.XtraVerticalGrid.v15.1.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
+### Name: Microsoft.Data.SqlClient.resources.dll 
 
