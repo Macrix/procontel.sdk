@@ -120,16 +120,16 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 | Configuration dialog provider (WinForms)                                                               | - | ✓ | ✓ | ✓ |
 | Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ |
 | Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | (planned) |
+| Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | ✓ |
 | Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ |
 | Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ |
 | Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ |
 | Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ |
 | Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ |
 | Send files from status control                                                                         | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from status control                                                          | ✓ | ✓ | ✓ | (planned) |
+| Access remote file system from status control                                                          | ✓ | ✓ | ✓ | ✓ |
 | State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ |
-| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | ✓ | ✓ | (planned) |
+| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | ✓ | ✓ | ✓ |
 | `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | - |
 | `IAuthorizationEndpoint`                                                                               | ✓ | ✓ | ✓ | - |
 | After initialization method `AfterActivate()`                                                          | ✓ | - | - | ✓ |
@@ -1065,6 +1065,8 @@ ProconTEL engine offers access to implementation of internal services. Described
 
 ## 11. Legacy Sdk
 
+### Migration
+
 For those who are familiar with previous ProconTEL SDK it's obvious that new SDK is breaking the compatibility. However, in order to make the migration less painfull we created _Legacy SDK_ which is build on new SDK, but preserves the old SDK conventions, names, classes (at least to some degree).
 
 In order to migrate to Legacy SDK perform following steps:
@@ -1122,6 +1124,8 @@ In order to migrate to Legacy SDK perform following steps:
 * when using `XmlProtocol` or `BinaryProtocol` install ProconTEL StandardEndpoints SDK nuget package
 * add reference to `using ProconTel.Sdk.StandardEndpoints;` where it's necessar
 
+### Features
+All features from Sdk which requires using attributes (i.e. Custom Menu Items) or can be used only in ui context (i.e. IVirtualFileSystem, ) are available for Sdk Legacy too.  
 
 <div id='id-testing'/>
 
