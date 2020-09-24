@@ -37,6 +37,7 @@
     10. [IStreamingService](#id-injected-services-istreamingservice-context)
 7. [Advanced concepts](#id-advanced-concepts)
     * [Supported protocols](#id-advanced-concepts-protocols)
+    * [Persistence messages](#id-advanced-concepts-persistence-messages)
 8. [UI Components](#id-ui-components)
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
@@ -657,6 +658,28 @@ Defining supported protocols can be done by creating custom attribute and markin
   [CustomEndpointProtocol]
   public class CustomProtocolsEndpoint : IEndpointLifeTimeCycle, IHandler
   {
+  }
+```
+
+<div id='id-advanced-concepts-persistence-messages'/>
+
+* ### Persistence messages
+Defining rules for persistence messages can be done by marking endpoint with `PersistMessage` attribute. `PersistMessage` attribute parameters (QueueSize and Retention) are used to define messege retention policy.
+```csharp
+  [PersistMessage("message", QueueSize = 100, Retention ="0.00:10:10")]
+  [EndpointMetadata(Name = "PersistenceMessage", SupportedRoles = SupportedRoles.Both)]
+  public class PersistenceMessageEndpoint : IHandler
+  {
+    private readonly ILogger _logger;
+    public PersistenceMessageEndpoint(ILogger logger) => _logger = logger;
+
+    public bool CanHandle(string messageId, ICorrelationContext context = null) => true;
+
+    public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context = null)
+    {
+      _logger.Information($"Received id: {messageId}, message: {message}");
+      return Task.FromResult<Acknowledgement>(new Ack());
+    }
   }
 ```
 
