@@ -37,7 +37,7 @@
     10. [IStreamingService](#id-injected-services-istreamingservice-context)
 7. [Advanced concepts](#id-advanced-concepts)
     * [Supported protocols](#id-advanced-concepts-protocols)
-    * [Persistence messages](#id-advanced-concepts-persistence-messages)
+    * [Persistent messages](#id-advanced-concepts-persistent-messages)
 8. [UI Components](#id-ui-components)
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
@@ -661,17 +661,17 @@ Defining supported protocols can be done by creating custom attribute and markin
   }
 ```
 
-<div id='id-advanced-concepts-persistence-messages'/>
+<div id='id-advanced-concepts-persistent-messages'/>
 
-* ### Persistence messages
-Defining rules for persistence messages can be done by marking endpoint with `PersistMessage` attribute. `PersistMessage` attribute parameters (QueueSize and Retention) are used to define messege retention policy.
+* ### Persistent messages
+Defining rules for persistent messages can be done by marking endpoint with `PersistMessage` attribute. `PersistMessage` attribute parameters (QueueSize and Retention) are used to define messege retention policy.
 ```csharp
   [PersistMessage("message", QueueSize = 100, Retention ="0.00:10:10")]
-  [EndpointMetadata(Name = "PersistenceMessage", SupportedRoles = SupportedRoles.Both)]
-  public class PersistenceMessageEndpoint : IHandler
+  [EndpointMetadata(Name = "PersistentMessage", SupportedRoles = SupportedRoles.Both)]
+  public class PersistentMessageEndpoint : IHandler
   {
     private readonly ILogger _logger;
-    public PersistenceMessageEndpoint(ILogger logger) => _logger = logger;
+    public PersistentMessageEndpoint(ILogger logger) => _logger = logger;
 
     public bool CanHandle(string messageId, ICorrelationContext context = null) => true;
 

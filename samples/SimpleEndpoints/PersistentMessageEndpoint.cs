@@ -11,11 +11,11 @@ using ProconTel.Sdk.Services;
 namespace SimpleEndpoints
 {
   [PersistMessage("message", QueueSize = 100, Retention ="0.00:10:10")]
-  [EndpointMetadata(Name = "PersistenceMessage", SupportedRoles = SupportedRoles.Both)]
-  public class PersistenceMessageEndpoint : IHandler
+  [EndpointMetadata(Name = "PersistentMessage", SupportedRoles = SupportedRoles.Both)]
+  public class PersistentMessageEndpoint : IHandler
   {
     private readonly ILogger _logger;
-    public PersistenceMessageEndpoint(ILogger logger) => _logger = logger;
+    public PersistentMessageEndpoint(ILogger logger) => _logger = logger;
 
     public bool CanHandle(string messageId, ICorrelationContext context = null) => true;
 
