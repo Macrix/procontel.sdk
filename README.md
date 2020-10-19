@@ -9,50 +9,54 @@
 3. [Feature comparison](#id-feature-comparison)
 4. [Additional features](#id-additional-features-blocks)
 5. [Builder blocks](#id-builder-blocks)
-    1. [EndpointMetadata](#id-builder-blocks-endpoint-metadata)
-	  2. [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
-    3. [IHandler](#id-builder-blocks-ihandler)
-	  4. [IMessageMetadataProvider](#id-builder-blocks-imessage-metadata-provider)
-	  5. [ICommandHandler](#id-builder-blocks-icommand-handler)
-	  6. [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
-    7. [IOnlineConfigurationUpdate](#id-builder-blocks-ionline-configuration-update)
-    8. [IOnlineUpgradeLifetimeCycle](#id-builder-blocks-ionline-upgrade-life-time-cycle)    
-    9. [IAvatarsInsight](#id-builder-blocks-iavatars-insight)
-    10. [IFileHandler](#id-builder-blocks-ifilehandler)
-    11. [IAuthorization](#id-builder-blocks-iauthorization)
-    12. [IAuthentication](#id-builder-blocks-iauthentication)
-    13. [IExportable](#id-builder-blocks-iexportable)
-    14. [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
-    15. [IRequestLastContent](#id-builder-blocks-irequest-last-content)
+	  * [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+    * [IHandler](#id-builder-blocks-ihandler)
+    * [ICommandHandler](#id-builder-blocks-icommand-handler)
+    * [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
+    * [IOnlineConfigurationUpdate](#id-builder-blocks-ionline-configuration-update)
+    * [IOnlineUpgradeLifetimeCycle](#id-builder-blocks-ionline-upgrade-life-time-cycle)    
+    * [IAvatarsInsight](#id-builder-blocks-iavatars-insight)
+    * [IFileHandler](#id-builder-blocks-ifilehandler)
+    * [IAuthorization](#id-builder-blocks-iauthorization)
+    * [IAuthentication](#id-builder-blocks-iauthentication)
+    * [IExportable](#id-builder-blocks-iexportable)
+    * [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
+    * [IRequestLastContent](#id-builder-blocks-irequest-last-content)
 6. [Injected services](#id-injected-services)
-    1. [ILogger](#id-injected-services-ilogger)
-    2. [IMessageBus](#id-injected-services-imessage-bus)
-    3. [IConfigurationReader](#id-injected-services-iconfiguration-reader)
-    4. [IRuntimeContext](#id-injected-services-iruntime-context)
-    5. [IMetadataContext](#id-injected-services-imetadata-context)
-    6. [INotificationService](#id-injected-services-inotification-service)
-    7. [IMetricsService](#id-injected-services-imetrics-service)
-    8. [IServiceContext](#id-injected-services-iservice-context)
-    9. [IReportService](#id-injected-services-ireportservice-context)
-    10. [IStreamingService](#id-injected-services-istreamingservice-context)
-7. [Advanced concepts](#id-advanced-concepts)
+    * [ILogger](#id-injected-services-ilogger)
+    * [IMessageBus](#id-injected-services-imessage-bus)
+    * [IConfigurationReader](#id-injected-services-iconfiguration-reader)
+    * [IRuntimeContext](#id-injected-services-iruntime-context)
+    * [IMetadataContext](#id-injected-services-imetadata-context)
+    * [INotificationService](#id-injected-services-inotification-service)
+    * [IMetricsService](#id-injected-services-imetrics-service)
+    * [IServiceContext](#id-injected-services-iservice-context)
+    * [IReportService](#id-injected-services-ireportservice-context)
+    * [IStreamingService](#id-injected-services-istreamingservice-context)
+7. [Providers](#id-providers)
+	  * [IMessageMetadataProvider](#id-providers-imessage-metadata-provider)
+8. [Attributes](#id-attributes)
+	  * [EndpointMetadata Attribute](#id-attributes-endpoint-metadata)
+    * [MessageMetadata Attribute](#id-attributes-message-metadata)
+    * [MessageMetadataProvider Attribute](#id-attributes-message-metadata-provider)
+9. [Advanced concepts](#id-advanced-concepts)
     * [Supported protocols](#id-advanced-concepts-protocols)
     * [Persistent messages](#id-advanced-concepts-persistent-messages)
-8. [UI Components](#id-ui-components)
+10. [UI Components](#id-ui-components)
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
     * [Custom Menu Items](#id-ui-custom-menu-items)
-9. [Injected services for UI Components](#id-injected-services-ui-components)
+11. [Injected services for UI Components](#id-injected-services-ui-components)
     * [IConfigurationWriter](#id-ui-components-injected-services-iconfiguration-writer)
     * [ILocalStorage](#id-ui-components-injected-services-ilocal-storage)
     * [ISecurityService](#id-ui-components-injected-services-isecurity-service)
     * [IFileUploaderService](#id-ui-components-injected-services-ifileuploaderservice)
     * [IVirtualFileSystem](#id-ui-components-injected-services-ivirtualfilesystem)
     * [Streaming](#id-ui-components-injected-istreamingservice)
-10. [IoC](#id-ioc)
-11. [Legacy Sdk](#id-legacy-sdk)
-12. [Testing](#id-testing)
-13. [Deployment](#id-deployment)
+12. [IoC](#id-ioc)
+13. [Legacy Sdk](#id-legacy-sdk)
+14. [Testing](#id-testing)
+15. [Deployment](#id-deployment)
     * [Github](#id-deployment-github)
     * [GitLab](#id-deployment-gitlab)
 
@@ -156,17 +160,6 @@ Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares i
 
 To create endpoint we need to decorate C# class with the `EndpointMetadata` attribute. To keep ProconTEL environment clear we strongly recommended to use self describing property `Name` in attribute. `ProconTEL.Sdk` delivers builder blocks which gives developer possibilities to extend endpoint functionality. To use builder block endpoint has to implement one of interfaces. Each interface represents endpoint behavior and it can be mixed freely. `EndpointMetadata` contains property `SupportedRoles` which is promise of endpoint communication posobilities.
 
-<div id='id-builder-blocks-endpoint-metadata'/>
-
-* ### EndpointMetadata 
-This is simple example how we can decorate endpoint class.
-```csharp
-  [EndpointMetadata(Name = "Empty", SupportedRoles = SupportedRoles.Both)]
-  public class EmptyEndpoint
-  {
-  }
-```
-
 <div id='id-builder-blocks-ilife-time-cycle'/>
 
 * ### ILifeTimeCycle
@@ -212,21 +205,6 @@ We support few acknowledgement types : Ack, Retry, Reject. Handler implementatio
     {
       _logger.Information($"Received id: {messageId}, message: {message}");
       return Task.FromResult<Acknowledgement>(new Ack());
-    }
-  }
-```
-
-<div id='id-builder-blocks-imessage-metadata-provider'/>
-
-* ### IMessageMetadataProvider
-Interface <b>IMessageMetadataProvider</b> provide mechanism to define runtime mutable list of sending message metadata.
-```csharp
-  [EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
-  public class MessageMetadataProviderEndpoint : IMessageMetadataProvider
-  {
-    public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
-    public MessageMetadataProviderEndpoint() 
-    {
     }
   }
 ```
@@ -633,10 +611,72 @@ public async Task DisplayStatusAsync(object statusInformation)
 }
  ```
 
+<div id='id-providers'/>
+
+## 7. Providers
+
+<div id='id-providers-imessage-metadata-provider'/>
+
+* ### IMessageMetadataProvider
+Interface <b>IMessageMetadataProvider</b> provide mechanism to define runtime mutable list of sending message metadata.
+```csharp
+  public class MessageMetadataProviderEndpoint : IMessageMetadataProvider
+  {
+    public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
+    public MessageMetadataProviderEndpoint() 
+    {
+    }
+  }
+```
+
+
+<div id='id-attributes'/>
+
+## 8. Attributes
+
+<div id='id-attributes-endpoint-metadata'/>
+
+* ### EndpointMetadata Attribute 
+This is simple example how we can decorate endpoint class.
+```csharp
+  [EndpointMetadataAttribute(Name = "Empty", SupportedRoles = SupportedRoles.Both)]
+  public class EmptyEndpoint
+  {
+  }
+```
+
+<div id='id-attributes-message-metadata' />
+
+* ### MessageMetadata Attribute 
+This is simple example how we can decorate endpoint class as provider message with id `message_id`.
+```csharp
+  [MessageMetadata("message_id", "message_caption")]
+  [EndpointMetadataAttribute(Name = "Empty", SupportedRoles = SupportedRoles.Both)]
+  public class EmptyEndpoint
+  {
+  }
+```
+
+<div id='id-attributes-message-metadata-provider' />
+
+* ### MessageMetadataProvider Attribute 
+This is simple example how we can decorate endpoint class.
+```csharp
+  public class MessageMetadataProvider : IMessageMetadataProvider
+  {
+    public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
+  }
+
+  [MessageMetadataProviderAttribute(typeof(MessageMetadataProvider))]
+  [EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
+  public class MessageMetadataProviderEndpoint
+  {
+  }
+```
 
 <div id='id-advanced-concepts'/>
 
-## 7. Advanced concepts
+## 9. Advanced concepts
 
 <div id='id-advanced-concepts-protocols'/>
 
@@ -687,7 +727,7 @@ Defining rules for persistent messages can be done by marking endpoint with `Per
 
 <div id='id-ui-components'/>
 
-## 8. UI Components
+## 10. UI Components
 
 We are able to bind and communicate user interface to hosted business logic.
 
@@ -865,12 +905,16 @@ public class MenuItemAction : IMenuItemAction
   private readonly IConfigurationReader reader;
   private readonly IConfigurationWriter writer;
   private readonly IEndpointCommandSender sender;
+  private readonly IMetadataContext metadataContext;
+  private readonly IMenuItemCommand command;
 
-  public MenuItemAction(IConfigurationReader reader, IConfigurationWriter writer,IEndpointCommandSender sender)
+  public MenuItemAction(IConfigurationReader reader, IConfigurationWriter writer, IEndpointCommandSender sender, IMetadataContext metadataContext, IMenuItemCommand command)
   {
     this.reader = reader;
     this.writer = writer;
     this.sender = sender;
+    this.metadataContext = metadataContext;
+    this.command = command;
   }
   public Task ExecuteAsync()
   {
@@ -884,7 +928,7 @@ public class MenuItemAction : IMenuItemAction
 
 <div id='id-injected-services-ui-components' />
 
-## 9. Injected services for ui components
+## 11. Injected services for ui components
 
 ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in control or provider constructor. In ProconTEL naming conventions this interfaces called <b>services</b>.
 
@@ -1083,12 +1127,12 @@ See [IStreamingService](#id-injected-services-istreamingservice-context)
 
 <div id='id-ioc'/>
 
-## 10. IoC
+## 12. IoC
 
 ProconTEL engine offers access to implementation of internal services. Described mechanism is deliver by service <b>IServiceContext</b>.
 <div id='id-legacy-sdk'/>
 
-## 11. Legacy Sdk
+## 13. Legacy Sdk
 
 ### Migration
 
@@ -1154,11 +1198,11 @@ All features from Sdk which requires using attributes (i.e. Custom Menu Items) o
 
 <div id='id-testing'/>
 
-## 12. Testing
+## 14. Testing
 
 <div id='id-deployment'/>
 
-## 13. Deployment
+## 15. Deployment
 
 <div id='id-deployment-github'/>
 

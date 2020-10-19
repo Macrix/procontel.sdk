@@ -1,19 +1,23 @@
-﻿using ProconTel.Sdk.Attributes;
-using ProconTel.Sdk.Builders;
-using ProconTel.Sdk.Messages;
-using ProconTel.Sdk.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ProconTel.Sdk.Attributes;
+using ProconTel.Sdk.Messages;
+using ProconTel.Sdk.Providers;
 
 namespace SimpleEndpoints
 {
-  [EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
-  public class MessageMetadataProviderEndpoint : IMessageMetadataProvider
+  public class MessageMetadataProvider : IMessageMetadataProvider
   {
-    public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
-    public MessageMetadataProviderEndpoint()
+    public MessageMetadataProvider()
     {
+
     }
+    public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
+  }
+
+  [MessageMetadataProviderAttribute(typeof(MessageMetadataProvider))]
+  [EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
+  public class MessageMetadataProviderEndpoint
+  {
   }
 }
