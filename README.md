@@ -666,7 +666,8 @@ Defining supported protocols can be done by creating custom attribute and markin
 <div id='id-advanced-concepts-persistent-messages'/>
 
 * ### Persistent messages
-Defining rules for persistent messages can be done by marking endpoint with `PersistMessage` attribute. `PersistMessage` attribute parameters (`QueueSize` and `Retention`) are used to define messege retention policy. Where `QueueSize` defines maximum number of stored messages in given type and `Retention` defines how long message can be stored.
+To persist messages which are sent to an endpoint the `PersistMessage` attribute has to be set during implementation of an endpoint. The parameters of `PersistMessage` attribute are `QueueSize` and `Retention`. They are used to configure the message retention policy of an persisted endpoint. `Queuesize` defines the maximum number of messages that get stored in the database of an persisted endpoint. `Retention` defines how long messages of an perstited endpoint are stored. The format is `D.HH:MM:SS`
+
 ```csharp
   [PersistMessage("message", QueueSize = 100, Retention ="0.00:10:10")]
   [EndpointMetadata(Name = "PersistentMessage", SupportedRoles = SupportedRoles.Both)]
