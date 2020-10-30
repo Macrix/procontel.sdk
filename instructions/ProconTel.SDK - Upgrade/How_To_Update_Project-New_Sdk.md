@@ -8,7 +8,7 @@
 The same like it was before. Search for directory and click upgrade.
 ```
 
-![ProconTEL Updater](./asserts/PtelUpdater.PNG)
+![ProconTEL Updater](./asserts/PtelUpdater.png)
 
 
 - Update ProconTEL.Sdk
