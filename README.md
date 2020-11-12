@@ -9,7 +9,7 @@
 3. [Feature comparison](#id-feature-comparison)
 4. [Additional features](#id-additional-features-blocks)
 5. [Builder blocks](#id-builder-blocks)
-	  * [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+	* [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
     * [IHandler](#id-builder-blocks-ihandler)
     * [ICommandHandler](#id-builder-blocks-icommand-handler)
     * [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
@@ -54,9 +54,10 @@
     * [IVirtualFileSystem](#id-ui-components-injected-services-ivirtualfilesystem)
     * [Streaming](#id-ui-components-injected-istreamingservice)
 12. [IoC](#id-ioc)
-13. [Legacy Sdk](#id-legacy-sdk)
-14. [Testing](#id-testing)
-15. [Deployment](#id-deployment)
+13. [Middlewares](#id-middlewares)
+14. [Legacy Sdk](#id-legacy-sdk)
+15. [Testing](#id-testing)
+16. [Deployment](#id-deployment)
     * [Github](#id-deployment-github)
     * [GitLab](#id-deployment-gitlab)
 
@@ -74,6 +75,9 @@
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL Engine* version | *ProconTEL SDK* version  | 
 | :---:  |:---:|
+| 3.0.13 | 1.0.2 |
+| 3.0.12.2 | 1.0.1 |
+| 3.0.12.1 | 1.0.1 |
 | 3.0.12 | 1.0.1 |
 | 3.0.11 | 1.0.1 |
 | 3.0.10.1 | 1.0.0 |
@@ -1133,9 +1137,16 @@ See [IStreamingService](#id-injected-services-istreamingservice-context)
 ## 12. IoC
 
 ProconTEL engine offers access to implementation of internal services. Described mechanism is deliver by service <b>IServiceContext</b>.
+
+<div id='id-middlewares'/>
+
+## 13. Middlewares
+
+ProconTEL engine offers dynamic configuration for input messages pipeline. Described mechanism is deliver in InitializeAsync method as parameter <b>IMiddlewareBuilder</b>.
+
 <div id='id-legacy-sdk'/>
 
-## 13. Legacy Sdk
+## 14. Legacy Sdk
 
 ### Migration
 
@@ -1201,11 +1212,11 @@ All features from Sdk which requires using attributes (i.e. Custom Menu Items) o
 
 <div id='id-testing'/>
 
-## 14. Testing
+## 15. Testing
 
 <div id='id-deployment'/>
 
-## 15. Deployment
+## 16. Deployment
 
 <div id='id-deployment-github'/>
 
