@@ -743,7 +743,8 @@ We are able to bind and communicate user interface to hosted business logic.
 * ### Configuration Dialog
 ProconTEL.Sdk provide few features:
 - <b>read endpoint configuration,</b>
-- <b>write endpoint configuration,</b>
+- <b>write endpoint configuration, </b></br>
+  <i>add line ```DialogResult = DialogResult.OK;```to commit configuration changes</i>
 - <b>send command to deactivated endpoint (does not have full access to endpoint resource )</b>
 - <b>upload file from configuration dialog to endpoint</b>
 
