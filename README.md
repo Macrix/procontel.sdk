@@ -169,7 +169,7 @@ To create endpoint we need to decorate C# class with the `EndpointMetadata` attr
 <div id='id-builder-blocks-ilife-time-cycle'/>
 
 * ### ILifeTimeCycle
-A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface <b>ILifeTimeCycle</b> that provide visibility into these key life moments and the ability to act when they occur.
+A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface `ILifeTimeCycle` that provide visibility into these key life moments and the ability to act when they occur. It also allows customization of default ProconTEL input pipeline for receiving messages. For more information see [Middlewares](#id-middlewares).
 ```csharp
   [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
   public class LifeTimeCycleEndpoint : IEndpointLifeTimeCycle
@@ -177,7 +177,7 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
     private readonly ILogger _logger;
     public LifeTimeCycleEndpoint(ILogger logger) => _logger = logger;
 
-    public Task InitializeAsync()
+    public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       _logger.Information("Initialize");
       return Task.CompletedTask;
@@ -1127,11 +1127,11 @@ public partial class VirtualFileSystemStatusControl : UserControl, IEndpointStat
 ```
 
 
-
 <div id='id-ui-components-injected-istreamingservice'/>
 
 * ### Streaming
 See [IStreamingService](#id-injected-services-istreamingservice-context)
+
 
 <div id='id-ioc'/>
 
@@ -1139,11 +1139,91 @@ See [IStreamingService](#id-injected-services-istreamingservice-context)
 
 ProconTEL engine offers access to implementation of internal services. Described mechanism is deliver by service <b>IServiceContext</b>.
 
+
 <div id='id-middlewares'/>
 
 ## 13. Middlewares
 
-ProconTEL engine offers dynamic configuration for input messages pipeline. Described mechanism is deliver in InitializeAsync method as parameter <b>IMiddlewareBuilder</b>.
+ProconTEL engine offers dynamic configuration for input messages pipeline. Described mechanism is deliver in `IEndpointLifeTimeCycle.InitializeAsync(IMiddlewareBuilder)` method parameter. `IMiddlewareBuilder` allows registration of custom middlewares inside ProconTEL messages pipeline. It is possible to combine it with already exisiting ProconTEL built-in middlewares or completly replace ProconTEL built-in functionality. Complete list of possible registration options is shown below.
+
+```csharp
+  public interface IMiddlewareBuilder
+  {
+    IMiddlewareBuilder UseMiddleware(Func<IMiddlewareRequest, Func<Task>, Task> middleware);
+    IMiddlewareBuilder UseMiddleware(Type middleware);
+    IMiddlewareBuilder UseMiddleware<TMiddleware>();
+    bool HasMiddlewares { get; }
+    MiddlewareRequestDelegate Build();
+    void Reset();
+
+    IMiddlewareBuilder UseDefaultDeserializeMetadataMiddleware();
+    IMiddlewareBuilder UseDefaultDeserializeMiddleware();
+    IMiddlewareBuilder UseDefaultProcessMiddleware();
+    IMiddlewareBuilder UseDefaultAcknowledgementMiddleware();
+  }
+```
+
+### Example: adding interceptor middleware
+
+Below example shows how to add additional middleware into existing in ProconTEL. Notice, method `next()` is necessary in each middleware. In code example you see additional logging added before and after message will be processed in `IHandler.HandleAsync()` method.
+
+```csharp
+public async Task InitializeAsync(IMiddlewareBuilder builder)
+{
+  builder.UseDefaultDeserializeMiddleware();
+  builder.UseDefaultDeserializeMetadataMiddleware();
+  builder.UseMiddleware(async (request, next) =>
+  {
+    _logger.Information($"Before processing message {request.Content.ContentId} by endpoint.");
+    await next();
+  });
+  builder.UseDefaultProcessMiddleware();
+  builder.UseMiddleware(async (request, next) =>
+  {
+    _logger.Information($"After processing message {request.Content.ContentId} by endpoint.");
+    await next();
+  });
+  builder.UseDefaultAcknowledgementMiddleware();
+
+  return;
+}
+```
+
+### Example: replace ProconTEL built-in middlewares
+
+Below example shows how to completely replace ProconTEL built-in middlewares. Notice, that still method `next()` is necessary. Code example, stores all incoming messages into database and because there is no other middleware registered, handling will be finished.
+
+```csharp
+public async Task InitializeAsync(IMiddlewareBuilder builder)
+{
+  builder.UseMiddleware(async (request, next) =>
+  {
+    try
+    {
+      var entity = new MessageEntity()
+      {
+        MessageId = request.Content.ContentId,
+        Content = request.Content.SerializedContent,
+        ProtocolId = request.Content.ProtocolId,
+        Metadata = request.Content.SerializedMetadata,
+      };
+      await _databaseService.StoreAsync(entity);
+    }
+    catch (Exception ex)
+    {
+      _logger.Error($"Unable to store message with ID {request.Content.ContentId} in database.", ex);
+    }
+    await next();
+  });
+
+  _databaseService.Connect();
+  if (!_databaseService.IsStorageTableAvailable())
+    throw new Exception("Database table is not available.");
+
+  return;
+}
+```
+
 
 <div id='id-legacy-sdk'/>
 
