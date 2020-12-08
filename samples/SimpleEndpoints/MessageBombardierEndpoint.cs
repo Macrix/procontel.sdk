@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Communications;
+using ProconTel.Sdk.Communications.Middlewares;
 using ProconTel.Sdk.Services;
 
 namespace SimpleEndpoints
@@ -21,7 +22,7 @@ namespace SimpleEndpoints
       _messageBus = messageBus;
     }
 
-    public Task InitializeAsync()
+    public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       Task.Factory
         .StartNew(SendMessages)

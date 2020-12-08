@@ -5,6 +5,7 @@ using ProconTel.Sdk.Communications.Attributes;
 using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
 using System.Threading.Tasks;
+using ProconTel.Sdk.Communications.Middlewares;
 
 namespace AvancedEndpoints
 {
@@ -21,7 +22,7 @@ namespace AvancedEndpoints
       _messageBus = messageBus;
     }
 
-    public Task InitializeAsync()
+    public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       Task.Factory
         .StartNew(() => SendMessages())

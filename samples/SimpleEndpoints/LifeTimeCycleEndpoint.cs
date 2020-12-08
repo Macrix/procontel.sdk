@@ -3,6 +3,7 @@ using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Services;
 using System.Reflection;
 using System.Threading.Tasks;
+using ProconTel.Sdk.Communications.Middlewares;
 
 namespace SimpleEndpoints
 {
@@ -12,7 +13,7 @@ namespace SimpleEndpoints
     private readonly ILogger _logger;
     public LifeTimeCycleEndpoint(ILogger logger) => _logger = logger;
 
-    public Task InitializeAsync()
+    public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       _logger.Information($"Initialized endpoint {Assembly.GetExecutingAssembly().GetName().Version.ToString()}");
       return Task.CompletedTask;

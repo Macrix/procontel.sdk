@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProconTel.Sdk.Communications.Middlewares;
 
 namespace SimpleEndpoints
 {
@@ -23,7 +24,7 @@ namespace SimpleEndpoints
       _loggerFactory("Custom Origin").Information("Invoke constructor for endpoint IoC");
     }
 
-    public Task InitializeAsync() => Task.CompletedTask;
+    public Task InitializeAsync(IMiddlewareBuilder builder) => Task.CompletedTask;
 
     public Task TerminateAsync() => Task.CompletedTask;  
   }
