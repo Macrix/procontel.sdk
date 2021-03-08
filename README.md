@@ -1294,7 +1294,6 @@ In order to migrate to Legacy SDK perform following steps:
 * when using `ProconTel.Security.EndpointSecurity` class, make the necessary modifications described below:
   - Replace `IStatusDialogControler` with `IEndpointStatusControl`
   - Replace `EndpointSecurity` with `ISecurityService`
-  ![Example](./images/EndpointSecurityExample.png)
 
 ### Features
 All features from Sdk which requires using attributes (i.e. Custom Menu Items) or can be used only in ui context (i.e. IVirtualFileSystem, ) are available for Sdk Legacy too.
