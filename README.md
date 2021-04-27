@@ -1,7 +1,7 @@
 ---
-title: "ProconTLE SDK"
-weight: 8
-description: >
+Title: "ProconTEL SDK"
+Weight: 8
+Description: >
   Learn how to use the ProconTEL SDK
 ---
 
