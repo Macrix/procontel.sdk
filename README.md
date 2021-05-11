@@ -2,7 +2,7 @@
 Title: "ProconTEL SDK"
 Weight: 8
 Description: >
-  Learn how to use the ProconTEL SDK - [Edit this page](https://github.com/Macrix/procontel.sdk)
+  Learn how to use the ProconTEL SDK Test - [Edit this page](https://github.com/Macrix/procontel.sdk)
 ---
 
 ## Table of Contents
