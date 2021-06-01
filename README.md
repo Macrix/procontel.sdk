@@ -1,5 +1,6 @@
 ---
 Title: "ProconTEL SDK"
+github_url: "https://github.com/Macrix/procontel.sdk/edit/master/README.md"
 Weight: 8
 Description: >
   Learn how to use the ProconTEL SDK
