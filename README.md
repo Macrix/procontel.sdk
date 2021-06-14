@@ -77,27 +77,21 @@ Description: >
 
 ## 2. Compatibility matrix
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
-| *ProconTEL Engine* version | *ProconTEL SDK* version  | 
+| *ProconTEL SDK* version  | *ProconTEL Engine* major version(s) | 
 | :---:  |:---:|
-| 3.0.17 | 1.0.5 |
-| 3.0.16 | 1.0.4 |
-| 3.0.15 | 1.0.3 |
-| 3.0.14 | 1.0.2 |
-| 3.0.13 | 1.0.2 |
-| 3.0.12.2 | 1.0.1 |
-| 3.0.12.1 | 1.0.1 |
-| 3.0.12 | 1.0.1 |
-| 3.0.11 | 1.0.1 |
-| 3.0.10.1 | 1.0.0 |
-| 3.0.10 | 1.0.0 |
-| 3.0.9 | 1.0.0 |
-| 3.0.8 | 0.11.0 |
-| 3.0.7 | 0.10.0 |
-| 3.0.6 | 0.9.0 |
-| 3.0.5 | 0.8.0 |
-| 3.0.4 | 0.7.0 |
-| 3.0.3 | 0.6.0 |
-| 3.0.2 | 0.5.0 |
+| 1.0.5 | 3.0.17 - 3.0.25 |
+| 1.0.4 | 3.0.16 |
+| 1.0.3 | 3.0.15 |
+| 1.0.2 | 3.0.13 - 3.0.14 |
+| 1.0.1 | 3.0.11 - 3.0.12 |
+| 1.0.0 | 3.0.9 - 3.0.10 |
+| 0.11.0 | 3.0.8 |
+| 0.10.0 | 3.0.7 |
+| 0.9.0 | 3.0.6 |
+| 0.8.0 | 3.0.5 |
+| 0.7.0 | 3.0.4 |
+| 0.6.0 | 3.0.3 |
+| 0.5.0 | 3.0.2 |
 
 <div id='id-feature-comparison'/>
 
