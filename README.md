@@ -1239,6 +1239,7 @@ public class ExampleWebEndpoint : IEndpointLifeTimeCycle, IHandler
   }
 }
 ```
+More information about `IServiceContext` can be found in [injected services chapter](#id-injected-services-iservice-context)
 
 
 <div id='id-middlewares'/>
