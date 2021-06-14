@@ -61,9 +61,6 @@ Description: >
 13. [Middlewares](#id-middlewares)
 14. [Legacy Sdk](#id-legacy-sdk)
 15. [Testing](#id-testing)
-16. [Deployment](#id-deployment)
-    * [Github](#id-deployment-github)
-    * [GitLab](#id-deployment-gitlab)
 
 
 
@@ -197,9 +194,11 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
 <div id='id-builder-blocks-ihandler'/>
 
 * ### IHandler
-<b>IHandler</b> is common communication interface which provide receiving data from another endpoint. We can filter incoming messages by implement method `CanHandle`. 
+
+`IHandler` is common communication interface which provide receiving data from another endpoint. We can filter incoming messages by implement method `IHandler.CanHandle`. 
 Asynchronous method `HandleAsync` is responsible for processing data. <b>This execution is a blocking call (synchronous).</b> No execution will take place on the current thread until current processing returns some acknowledgement. <b>We will not process new messages until the current processing is completed.</b>
 We support few acknowledgement types : Ack, Retry, Reject. Handler implementation has to return acknowledgement (mandatory), but sender can ignore it (obligatory).
+
 ```csharp
   [EndpointMetadata(Name = "Handler", SupportedRoles = SupportedRoles.Subscriber)]
   public class HandlerEndpoint : IHandler
@@ -220,7 +219,8 @@ We support few acknowledgement types : Ack, Retry, Reject. Handler implementatio
 <div id='id-builder-blocks-icommand-handler'/>
 
 * ### ICommandHandler
-Interface <b>ICommandHandler</b> support handling messages from Status Control Component. Processing approach is similar like in [IHandler](#id-builder-blocks-ihandler).
+Interface `ICommandHandler` support handling messages from Status Control Component. Processing approach is similar like in [IHandler](#id-builder-blocks-ihandler).
+
 ```csharp
   [EndpointMetadata(Name = "CommandHandler", SupportedRoles = SupportedRoles.None)]
   public class CommandHandlerEndpoint : ICommandHandler
@@ -239,7 +239,9 @@ Interface <b>ICommandHandler</b> support handling messages from Status Control C
 <div id='id-builder-blocks-iconfiguration-command-handler'/>
 
 * ### IConfigurationCommandHandler
-Interface <b>IConfigurationCommandHandler</b> support handling messages from Configuration Dialog Component. Configuration Command Handler mechanism will soon be deprecated.
+
+Interface `IConfigurationCommandHandler` support handling messages from Configuration Dialog Component. Configuration Command Handler mechanism will soon be deprecated.
+
 ```csharp
   [Obsolete("Configuration Command Handler mechanism will soon be deprecated.")]
   [EndpointMetadata(Name = "ConfigurationCommandHandler", SupportedRoles = SupportedRoles.None)]
@@ -259,7 +261,9 @@ Interface <b>IConfigurationCommandHandler</b> support handling messages from Con
 <div id='id-builder-blocks-ionline-configuration-update'/>
 
 * ### IOnlineConfigurationUpdate
-Interface <b>IOnlineConfigurationUpdate</b> support observe configuration changed notification. To read current configuration version use <b>IConfigurationReader</b> service injection.  
+
+Interface `IOnlineConfigurationUpdate` support observe configuration changed notification. To read current configuration version use `IConfigurationReader` service injection.
+
 ```csharp
   [EndpointMetadata(Name = "OnlineConfigurationUpdate", SupportedRoles = SupportedRoles.None)]
   public class OnlineConfigurationUpdateEndpoint : IOnlineConfigurationUpdate
@@ -283,7 +287,9 @@ Interface <b>IOnlineConfigurationUpdate</b> support observe configuration change
 <div id='id-builder-blocks-ionline-upgrade-life-time-cycle'/>
 
 * ### IOnlineUpgradeLifetimeCycle
-Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plugin process and the ability to act when they occur.
+
+Interface `IOnlineUpgradeLifetimeCycle` support visibility into upgrade plugin process and the ability to act when they occur.
+
 ```csharp
   [EndpointMetadata(Name = "OnlineUpgradeLifetimeCycle", SupportedRoles = SupportedRoles.None)]
   public class OnlineUpgradeLifetimeCycleEndpoint : IOnlineUpgradeLifetimeCycle
@@ -308,7 +314,8 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
 <div id='id-builder-blocks-iavatars-insight'/>
 
 * ### IAvatarsInsight
-<b>IAvatarInsight</b> is an interface that allows to handle avatar connection and disconnection events in avatar source endpoint.
+
+`IAvatarInsight` is an interface that allows to handle avatar connection and disconnection events in avatar source endpoint.
 
 ```csharp
   [EndpointMetadata(Name = "Avatar Insight Endpoint", SupportedRoles = SupportedRoles.None)]
@@ -338,7 +345,9 @@ Interface <b>IOnlineUpgradeLifetimeCycle</b> support visibility into upgrade plu
 <div id='id-builder-blocks-ifilehandler'/>
 
 * ### IFileHandler
-Interface <b>IFileHandler</b> allows handling of uploaded files from client to server backend.
+
+Interface `IFileHandler` allows handling of uploaded files from client to server backend.
+
 ```csharp
   [EndpointMetadata(Name = "FileReceiver", SupportedRoles = SupportedRoles.None)]
   public class FileReceiverEndpoint : IFileHandler
@@ -360,7 +369,9 @@ Interface <b>IFileHandler</b> allows handling of uploaded files from client to s
 <div id='id-builder-blocks-iauthorization'/>
 
 * ### IAuthorization
-Interface <b>IAuthorization</b> provide authorization mechanism.
+
+Interface `IAuthorization` provide authorization mechanism.
+
 ```csharp
   [EndpointMetadata(Name = "Authorization", SupportedRoles = SupportedRoles.None)]
   public class AuthorizationEndpoint : IAuthorizationEndpoint
@@ -376,7 +387,9 @@ Interface <b>IAuthorization</b> provide authorization mechanism.
 <div id='id-builder-blocks-iauthentication'/>
 
 * ### IAuthentication
-Interface <b>IAuthentication</b> provide authentication mechanism.
+
+Interface `IAuthentication` provide authentication mechanism.
+
 ```csharp
   [EndpointMetadata(Name = "Authentication", SupportedRoles = SupportedRoles.None)]
   public class AuthenticationEndpoint : IAuthenticationEndpoint
@@ -394,7 +407,8 @@ Interface <b>IAuthentication</b> provide authentication mechanism.
 <div id='id-builder-blocks-iexportable'/>
 
 * ### IExportable
-Interface <b>IExportable</b> is used to save some custom files in exported pex file. Method `ImportContentDirectoryAsync` should be used to recreate stored files to disk, method `ExportContentDirectoryAsync` for serialize files into byte array that will be stored in pex file. 
+
+Interface `IExportable` is used to save some custom files in exported pex file. Method `ImportContentDirectoryAsync` should be used to recreate stored files to disk, method `ExportContentDirectoryAsync` for serialize files into byte array that will be stored in pex file. 
 
 ```csharp
   [EndpointMetadata(Name = "Exportable Endpoint", SupportedRoles = SupportedRoles.None)]
@@ -416,7 +430,8 @@ Interface <b>IExportable</b> is used to save some custom files in exported pex f
 <div id='id-builder-blocks-irequest-missed-content'/>
 
 * ### IRequestMissedContent
-In some cases endpoint can ask for messages that was delivered but not acknowledged, to handle that event <b>IRequestMissedContent</b> was introduced.
+
+In some cases endpoint can ask for messages that were delivered, but not acknowledged. Handling that event can be done by `IRequestMissedContent` interface.
 
 ```csharp
   [EndpointMetadata(Name = "Missing Messages Endpoint", SupportedRoles = SupportedRoles.Both)]
@@ -441,7 +456,8 @@ In some cases endpoint can ask for messages that was delivered but not acknowled
 <div id='id-builder-blocks-irequest-last-content'/>
 
 * ### IRequestLastContent
-In some cases endpoint can ask for last sent messages in channel, to handle that event <b>IRequestLastContent</b> was introduced.
+
+In some cases endpoint can ask for last sent messages in channel, to handle that event `IRequestLastContent` was introduced.
 
 ```csharp
   [EndpointMetadata(Name = "Last Messages Endpoint", SupportedRoles = SupportedRoles.Both)]
@@ -467,7 +483,7 @@ In some cases endpoint can ask for last sent messages in channel, to handle that
 
 ## 6. Injected services
 
-ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in endpoint constructor. In ProconTEL naming conventions this interfaces called <b>services</b>.
+ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in endpoint constructor. In ProconTEL naming conventions these interfaces are called <b>services</b>.
 
 ```csharp
   [EndpointMetadata(Name = "Rich", SupportedRoles = SupportedRoles.Provider)]
@@ -537,7 +553,9 @@ Feature in progress
 <div id='id-injected-services-iservice-context'/>
 
 * ### IServiceContext
-Service provide access to implementation of internal services from procontel engine.
+
+Service provide allows access to implementation of internal services registred by ProconTEL Engine and registered by endpoint. For more details see [IoC](#id-ioc).
+
 ```csharp
   [EndpointMetadata(Name = "IoC", SupportedRoles = SupportedRoles.Provider)]
   public class IoCEndpoint : IEndpointLifeTimeCycle
@@ -588,6 +606,7 @@ public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorr
  ```   
 
 In case of send stream between endpoint and UI status control can be used method `NotifyUI` from `INotificationService`:
+
 ```csharp
 _notificationService.NotifyUI($"status information message body", streamInstance, StreamCallbackDelegate);
 ``` 
@@ -626,7 +645,9 @@ public async Task DisplayStatusAsync(object statusInformation)
 <div id='id-providers-imessage-metadata-provider'/>
 
 * ### IMessageMetadataProvider
-Interface <b>IMessageMetadataProvider</b> provide mechanism to define runtime mutable list of sending message metadata.
+
+Interface `IMessageMetadataProvider` provide mechanism to define runtime mutable list of sending message metadata.
+
 ```csharp
   public class MessageMetadataProviderEndpoint : IMessageMetadataProvider
   {
@@ -636,7 +657,6 @@ Interface <b>IMessageMetadataProvider</b> provide mechanism to define runtime mu
     }
   }
 ```
-
 
 <div id='id-attributes'/>
 
@@ -938,7 +958,7 @@ public class MenuItemAction : IMenuItemAction
 
 <div id='id-injected-services-ui-components' />
 
-## 11. Injected services for ui components
+## 11. Injected services for UI components
 
 ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in control or provider constructor. In ProconTEL naming conventions this interfaces called <b>services</b>.
 
@@ -1139,7 +1159,86 @@ See [IStreamingService](#id-injected-services-istreamingservice-context)
 
 ## 12. IoC
 
-ProconTEL engine offers access to implementation of internal services. Described mechanism is deliver by service <b>IServiceContext</b>.
+ProconTEL Engine offers access to implementation of internal services. Described mechanism is deliver by service `IServiceContext` and allows to resolve any service that was previosly registered. What is also possible is that endpoint can register it's own custom services. This is possible by implementing a static method in endpoint class with following signature `Configure(IApplicationBuilder)`.
+
+Service `IApplicationBuilder` allows registering custom services implementation under specified interfaces. It is possible to register service to be resolved to just one single instance with method `IApplicationBuilder.UseInstance<TImplementation>(TImplementation)` or `IApplicationBuilder.UseInstance<TImplementation, TInterface>(TImplementation)`.
+
+Example belows shows how to register custom service into ProconTEL IoC and resolve it along with other ProconTEL services.
+
+```csharp
+[EndpointMetadata(Name = "Example IoC endpoint", SupportedRoles = SupportedRoles.Provider)]
+public class ExampleIoCEndpoint
+{
+  public static void Configure(IApplicationBuilder builder)
+  {
+    builder.Use<DatabaseService, IDatabaseReaderService>();
+    builder.Use<ConfigurationDeserializer, IConfigurationDeserializer>();
+  }
+
+  private readonly ILogger _logger;
+  private readonly IDatabaseReaderService _databaseService;
+
+  // let ProocnTEL IoC resolve required services including custom ones
+  public ExampleIoCEndpoint(ILogger logger, IDatabaseReaderService databaseService)
+  {
+    _logger = logger;
+    _databaseService = databaseService;
+  }
+}
+
+class DatabaseService : IDatabaseReaderService
+{
+  private readonly ILogger _logger;
+  private readonly IDatabaseServiceConfiguration _configuration;
+
+  // let ProocnTEL IoC resolve required services for custom service
+  public DatabaseService(IConfigurationDeserializer configurationDeserializer, ILogger logger)
+  {
+    _logger = logger;
+    _configuration = configurationDeserializer.Get<DatabaseAccessConfiguration, IDatabaseServiceConfiguration>();
+    
+    // TODO: establish database connection based on parameters from configuration
+  }
+}
+
+public class ConfigurationDeserializer : IConfigurationDeserializer
+{
+  private readonly IConfigurationReader _reader;
+
+  // let ProocnTEL IoC resolve required services for custom service
+  public ConfigurationDeserializer(IConfigurationReader reader) => _reader = reader;
+}
+
+```
+
+Service `IServiceContext` can be also very useful in scenario where developers would like to use their own IoC framework or when they are forced to use one, like provided by [AspNetCore DI](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-5.0). Example below shows how to combine _AspNetCore DI_ with _ProconTEL IoC_ by registering ProconTEL `ILogger` inside _AspNetCore DI_.
+
+```csharp
+public class ExampleWebEndpoint : IEndpointLifeTimeCycle, IHandler
+{
+  private IWebHost _host;
+  private readonly IServiceContext _ctx;
+
+  public ExampleWebEndpoint(IServiceContext ctx)
+  {
+    _ctx = ctx;
+  }
+
+  public Task InitializeAsync(IMiddlewareBuilder builder)
+  {
+    _host =
+      Microsoft.AspNetCore.WebHost.CreateDefaultBuilder()
+        .ConfigureServices(ioc =>
+        {
+          ioc.AddTransient(ctx => ctx.GetService<IServiceContext>().Resolve<Func<ProconTel.Sdk.Services.ILogger>>()());
+        })
+        .UseStartup<Startup>()
+        .Build();
+
+    return _host.StartAsync();
+  }
+}
+```
 
 
 <div id='id-middlewares'/>
@@ -1294,10 +1393,8 @@ In order to migrate to Legacy SDK perform following steps:
   - Replace `EndpointSecurity` with `ISecurityService`
 
 ### Features
-All features from Sdk which requires using attributes (i.e. Custom Menu Items) or can be used only in ui context (i.e. IVirtualFileSystem, ) are available for Sdk Legacy too.
+All features from Sdk which requires using attributes (i.e. Custom Menu Items) or can be used only in UI context (i.e. IVirtualFileSystem) are available for SDK Legacy too.
 
-### Features
-All features from Sdk which requires using attributes (i.e. Custom Menu Items) or can be used only in ui context (i.e. IVirtualFileSystem, ) are available for Sdk Legacy too.  
 
 <div id='id-testing'/>
 
@@ -1305,18 +1402,3 @@ All features from Sdk which requires using attributes (i.e. Custom Menu Items) o
 
 <div id='id-deployment'/>
 
-## 16. Deployment
-
-<div id='id-deployment-github'/>
-
-* ### Github
-```csharp
-
-```
-
-<div id='id-deployment-gitlab'/>
-
-* ### GitLab
-```csharp
-
-```
