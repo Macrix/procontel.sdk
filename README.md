@@ -13,7 +13,7 @@ Description: >
 3. [Feature comparison](#id-feature-comparison)
 4. [Additional features](#id-additional-features-blocks)
 5. [Builder blocks](#id-builder-blocks)
-	* [ILifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
+	* [IEndpointLifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
     * [IHandler](#id-builder-blocks-ihandler)
     * [ICommandHandler](#id-builder-blocks-icommand-handler)
     * [IConfigurationCommandHandler](#id-builder-blocks-iconfiguration-command-handler)
@@ -170,8 +170,8 @@ To create endpoint we need to decorate C# class with the `EndpointMetadata` attr
 
 <div id='id-builder-blocks-ilife-time-cycle'/>
 
-* ### ILifeTimeCycle
-A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface `ILifeTimeCycle` that provide visibility into these key life moments and the ability to act when they occur. It also allows customization of default ProconTEL input pipeline for receiving messages. For more information see [Middlewares](#id-middlewares).
+* ### IEndpointLifeTimeCycle
+A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface `IEndpointLifeTimeCycle` that provide visibility into these key life moments and the ability to act when they occur. It also allows customization of default ProconTEL input pipeline for receiving messages. For more information see [Middlewares](#id-middlewares).
 ```csharp
   [EndpointMetadata(Name = "LifeTimeCycle", SupportedRoles = SupportedRoles.Both)]
   public class LifeTimeCycleEndpoint : IEndpointLifeTimeCycle
