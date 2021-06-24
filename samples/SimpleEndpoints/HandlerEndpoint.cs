@@ -1,5 +1,6 @@
 ﻿using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
+using ProconTel.Sdk.Communications.Attributes;
 using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 namespace SimpleEndpoints
 {
   [EndpointMetadata(Name = "Handler", SupportedRoles = SupportedRoles.Subscriber)]
+  [DefaultProtocol]
   public class HandlerEndpoint : IHandler
   {
     private readonly ILogger _logger;

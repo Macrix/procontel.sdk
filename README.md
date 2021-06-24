@@ -201,6 +201,7 @@ We support few acknowledgement types : Ack, Retry, Reject. Handler implementatio
 
 ```csharp
   [EndpointMetadata(Name = "Handler", SupportedRoles = SupportedRoles.Subscriber)]
+  [DefaultProtocol]
   public class HandlerEndpoint : IHandler
   {
     private readonly ILogger _logger;
