@@ -818,8 +818,8 @@ To define Configuration UI Element binding endpoint has to be decorate with attr
     private void SendCommandToServerEndpoint_Click(object sender, EventArgs e)
     {
       txtConsole.Text = "Wait ...";
-      var result = _endpointCommandSender.SendCommandToServerEndpoint(txtCommand.Text);
-      txtConsole.Text = result.ToString();
+      var result = _endpointCommandSender.SendCommandAsync(txtCommand.Text);
+      txtConsole.Text = (result as Task<object>).Result.ToString();
     }
 ```
 In order to use more sophisticated behavior we recommend use attribute <b>ConfigurationDialogProviderAttribute</b> with own implementation of <b>IEndpointConfigurationDialogProvider</b> interface.
