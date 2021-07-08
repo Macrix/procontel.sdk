@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TelegramProperties />
+  <Items>
+    <ProjectItem xsi:type="DefinitionFile">
+      <Path>C:\projects\github\procontel.sdk\samples\TelegramHandling\TelegramDefinitions\TelegramDefinitions.xlsx</Path>
+    </ProjectItem>
+    <ProjectItem xsi:type="TypeDefinitionsFile">
+      <Path>TypeDefinitions.xml</Path>
+    </ProjectItem>
+  </Items>
+  <SelectedTelegrams>
+    <string>HeaderType</string>
+    <string>Telegram_A</string>
+    <string>Telegram_B</string>
+  </SelectedTelegrams>
+  <TypeOfProject>LOCALPROJECT</TypeOfProject>
+  <HeaderName>HeaderType</HeaderName>
+  <IDFormat>Decimal</IDFormat>
+  <FileName>TelegramDefinitions.Telegrams</FileName>
+  <DestinationFolder>.\telegrams</DestinationFolder>
+  <GrantUsers />
+  <HeaderIDType>MessageId</HeaderIDType>
+  <HeaderMessageCounterType>MessageCount</HeaderMessageCounterType>
+  <HeaderLengthType>MessageLength</HeaderLengthType>
+  <DBUser />
+  <DBPassword />
+  <DBName />
+  <CreateOnlyXmlTable>false</CreateOnlyXmlTable>
+  <CreateCompoundArrays>false</CreateCompoundArrays>
+  <ConfirmTelegramLengthFieldMissing>true</ConfirmTelegramLengthFieldMissing>
+  <SignAssemblyWithStrongName>false</SignAssemblyWithStrongName>
+  <MultitelegramsTelegramIdOffset>0</MultitelegramsTelegramIdOffset>
+  <MultitelegramsTelegramIdLength>2</MultitelegramsTelegramIdLength>
+  <GenerateBytesTranslation>true</GenerateBytesTranslation>
+</Project>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Telegram name="HeaderType" ID="" bytes="6" IsHeaderType="True" ContainsHeaderType="True" xsi:noNamespaceSchemaLocation="http://www.macrix.eu/ProconTel/BinaryXmlTranslationSchema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <element name="MessageLength" type="Short" length="2" offset="0" HeaderHint="Length" comment="header plus data" />
+  <element name="MessageId" type="Short" length="2" offset="2" HeaderHint="ID" comment="Message Id" />
+  <element name="MessageCount" type="Short" length="2" offset="4" HeaderHint="MessageCounter" comment="Message counter &#xA;[0..65535] - wrap around" />
+</Telegram>

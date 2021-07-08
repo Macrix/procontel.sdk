@@ -1,0 +1,71 @@
+<typeMapping>
+  <typeDefinition name="dateTime" xmlType="dateTime">
+    <typeInterpretation>
+      <binaryFormat>
+        <datePart name="Year" offset="0" length="4" />
+        <datePart name="Month" offset="4" length="4" />
+        <datePart name="Day" offset="8" length="4" />
+        <datePart name="Hour" offset="12" length="4" />
+        <datePart name="Minute" offset="16" length="4" />
+        <datePart name="Second" offset="20" length="4" />
+        <datePart name="Millisecond" offset="24" length="4" />
+        <datePart name="DaylightFlag" offset="28" length="4" />
+      </binaryFormat>
+    </typeInterpretation>
+  </typeDefinition>
+  <typeDefinition name="date" xmlType="dateTime">
+    <typeInterpretation>
+      <binaryFormat>
+        <datePart name="Year" offset="0" length="4" />
+        <datePart name="Month" offset="4" length="4" />
+        <datePart name="Day" offset="8" length="4" />
+        <datePart name="Hour" offset="12" length="4" />
+        <datePart name="Minute" offset="16" length="4" />
+        <datePart name="Second" offset="20" length="4" />
+        <datePart name="Millisecond" offset="24" length="4" />
+        <datePart name="DaylightFlag" offset="28" length="4" />
+      </binaryFormat>
+    </typeInterpretation>
+  </typeDefinition>
+  <typeDefinition name="time_stamp" xmlType="dateTime">
+    <typeInterpretation>
+      <binaryFormat>
+        <datePart name="Year" offset="0" length="4" />
+        <datePart name="Month" offset="4" length="4" />
+        <datePart name="Day" offset="8" length="4" />
+        <datePart name="Hour" offset="12" length="4" />
+        <datePart name="Minute" offset="16" length="4" />
+        <datePart name="Second" offset="20" length="4" />
+        <datePart name="Millisecond" offset="24" length="4" />
+        <datePart name="DaylightFlag" offset="28" length="4" />
+      </binaryFormat>
+    </typeInterpretation>
+  </typeDefinition>
+  <typeDefinition name="s7char" xmlType="string">
+    <typeInterpretation>
+      <s7charParts>
+        <s7charPart name="MaximumLength" offset="0" />
+        <s7charPart name="RealLength" offset="1" />
+      </s7charParts>
+    </typeInterpretation>
+  </typeDefinition>
+  <typeDefinition name="flag" xmlType="boolean" />
+  <typeDefinition name="char" xmlType="string" />
+  <typeDefinition name="string" xmlType="string" />
+  <typeDefinition name="int" xmlType="integer" />
+  <typeDefinition name="integer" xmlType="integer" />
+  <typeDefinition name="short" xmlType="short" />
+  <typeDefinition name="float" xmlType="float" />
+  <typeDefinition name="Long" xmlType="long" />
+  <typeDefinition name="number" xmlType="float" />
+  <typeDefinition name="dint" xmlType="integer" />
+  <typeDefinition name="real" xmlType="float" />
+  <typeDefinition name="ushort" xmlType="unsignedShort" />
+  <typeDefinition name="uint" xmlType="unsignedInt" />
+  <typeDefinition name="ulong" xmlType="unsignedLong" />
+  <typeDefinition name="PrimoString" xmlType="string" />
+  <typeDefinition name="pcsstring" xmlType="string" />
+  <typeDefinition name="opcstring" xmlType="string" />
+  <typeDefinition name="Word" xmlType="string" />
+  <typeDefinition name="binary" xmlType="base64Binary" />
+</typeMapping>
