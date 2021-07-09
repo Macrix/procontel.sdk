@@ -647,12 +647,13 @@ public async Task DisplayStatusAsync(object statusInformation)
 
 * ### IMessageMetadataProvider
 
-Interface `IMessageMetadataProvider` provide mechanism to define runtime mutable list of sending message metadata.
+Interface `IMessageMetadataProvider` provide mechanism to define runtime mutable list of sending message metadata. However, this provider should be used only in case when list of provided messages can be obtined only in runtime. In all other cases, [`MessageMetadata` attribute](#id-attributes-message-metadata) should be used, to declare provided messages in a static way.
 
 ```csharp
   public class MessageMetadataProviderEndpoint : IMessageMetadataProvider
   {
     public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
+
     public MessageMetadataProviderEndpoint() 
     {
     }
@@ -677,30 +678,36 @@ This is simple example how we can decorate endpoint class.
 <div id='id-attributes-message-metadata' />
 
 * ### MessageMetadata Attribute 
-This is simple example how we can decorate endpoint class as provider message with id `message_id`.
+
+`MessageMetadata` attribute is used to declare an information about single message that might be provided by endpoint. Multiple attributes can be used. Using `MessageMetadata` attribute is the recommended way of declaring information about messages provided by endpoint.
+
+This is simple example how we can decorate endpoint class as provider of message with ID `message_id`.
 ```csharp
-  [MessageMetadata("message_id", "message_caption")]
-  [EndpointMetadataAttribute(Name = "Empty", SupportedRoles = SupportedRoles.Both)]
-  public class EmptyEndpoint
-  {
-  }
+[MessageMetadata("message_id", "Message caption")]
+[EndpointMetadataAttribute(Name = "Empty", SupportedRoles = SupportedRoles.Both)]
+public class EmptyEndpoint
+{
+}
 ```
 
 <div id='id-attributes-message-metadata-provider' />
 
 * ### MessageMetadataProvider Attribute 
+
+In case when it is not possible to declare type of message IDs provided by endpoint in a declarative way, `MessageMetadataProvider` attribute can be used. It allows to define a provider which can execute a custom code to obtain the list of provided messages. However, it is possible to use `MessageMetadataProvider` it should be used only when required in favor of `MessageMetadata` attribute.
+
 This is simple example how we can decorate endpoint class.
 ```csharp
-  public class MessageMetadataProvider : IMessageMetadataProvider
-  {
-    public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
-  }
+public class MessageMetadataProvider : IMessageMetadataProvider
+{
+  public IEnumerable<MessageDetails> MessagesMetadata => Enumerable.Empty<MessageDetails>();
+}
 
-  [MessageMetadataProviderAttribute(typeof(MessageMetadataProvider))]
-  [EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
-  public class MessageMetadataProviderEndpoint
-  {
-  }
+[MessageMetadataProviderAttribute(typeof(MessageMetadataProvider))]
+[EndpointMetadata(Name = "MessageMetadataProvider", SupportedRoles = SupportedRoles.Provider)]
+public class MessageMetadataProviderEndpoint
+{
+}
 ```
 
 <div id='id-advanced-concepts'/>
@@ -1389,7 +1396,7 @@ In order to migrate to Legacy SDK perform following steps:
 
 * use new `_sender` variable instead of `Context` 
 * when using `XmlProtocol` or `BinaryProtocol` install ProconTEL StandardEndpoints SDK nuget package
-* add reference to `using ProconTel.Sdk.StandardEndpoints;` where it's necessar
+  - add reference to `using ProconTel.Sdk.StandardEndpoints;` where it's necessary
 * when using `ProconTel.Security.EndpointSecurity` class, make the necessary modifications described below:
   - Replace `IStatusDialogControler` with `IEndpointStatusControl`
   - Replace `EndpointSecurity` with `ISecurityService`
