@@ -14,14 +14,6 @@
             <xs:attribute name="ID" type="xs:integer" use="optional" />
           </xs:complexType>
         </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="RawBinary" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:base64Binary">
-              <xs:maxLength value="2" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="ByteValue" nillable="true" type="xs:unsignedByte" />
         <xs:element minOccurs="0" maxOccurs="1" name="Int_1Byte" nillable="true" type="xs:unsignedByte" />
         <xs:element minOccurs="0" maxOccurs="1" name="Int_2Byte" nillable="true" type="xs:short" />
         <xs:element minOccurs="0" maxOccurs="1" name="Int_4Byte" nillable="true" type="xs:integer" />
@@ -30,99 +22,9 @@
         <xs:element minOccurs="0" maxOccurs="1" name="Integer_2Byte" nillable="true" type="xs:short" />
         <xs:element minOccurs="0" maxOccurs="1" name="Integer_4Byte" nillable="true" type="xs:integer" />
         <xs:element minOccurs="0" maxOccurs="1" name="Integer_8Byte" nillable="true" type="xs:long" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Dint_1Byte" nillable="true" type="xs:unsignedByte" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Dint_2Byte" nillable="true" type="xs:short" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Dint_4Byte" nillable="true" type="xs:integer" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Dint_8Byte" nillable="true" type="xs:long" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Short_1Byte" nillable="true" type="xs:unsignedByte" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Short_2Byte" nillable="true" type="xs:short" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Short_4Byte" nillable="true" type="xs:integer" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Short_8Byte" nillable="true" type="xs:long" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Long_1Byte" nillable="true" type="xs:unsignedByte" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Long_2Byte" nillable="true" type="xs:short" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Long_4Byte" nillable="true" type="xs:integer" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Long_8Byte" nillable="true" type="xs:long" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Uint_1Byte" nillable="true" type="xs:unsignedByte" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Uint_2Byte" nillable="true" type="xs:unsignedShort" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Uint_4Byte" nillable="true" type="xs:unsignedInt" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Uint_8Byte" nillable="true" type="xs:unsignedLong" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Ulong_1Byte" nillable="true" type="xs:unsignedByte" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Ulong_2Byte" nillable="true" type="xs:unsignedShort" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Ulong_4Byte" nillable="true" type="xs:unsignedInt" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Ulong_8Byte" nillable="true" type="xs:unsignedLong" />
-        <xs:element minOccurs="0" maxOccurs="1" name="UShort_1Byte" nillable="true" type="xs:unsignedByte" />
-        <xs:element minOccurs="0" maxOccurs="1" name="UShort_2Byte" nillable="true" type="xs:unsignedShort" />
-        <xs:element minOccurs="0" maxOccurs="1" name="UShort_4Byte" nillable="true" type="xs:unsignedInt" />
-        <xs:element minOccurs="0" maxOccurs="1" name="UShort_8Byte" nillable="true" type="xs:unsignedLong" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Float_4Byte" nillable="true" type="xs:float" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Float_8Byte" nillable="true" type="xs:double" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Real_4Byte" nillable="true" type="xs:float" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Real_8Byte" nillable="true" type="xs:double" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Number_4Byte" nillable="true" type="xs:float" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Number_8Byte" nillable="true" type="xs:double" />
-        <xs:element minOccurs="0" maxOccurs="1" name="Time_stampField" nillable="true" type="dateTimeEx" />
-        <xs:element minOccurs="0" maxOccurs="1" name="DateTimeField" nillable="true" type="dateTimeEx" />
-        <xs:element minOccurs="0" maxOccurs="1" name="DateField" nillable="true" type="dateTimeEx" />
-        <xs:element minOccurs="0" maxOccurs="1" name="StringField" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:maxLength value="20" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="PrismoStringField" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:maxLength value="20" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="PcsstringField" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:maxLength value="20" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="OpcstringField" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:maxLength value="18" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="WordField" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:maxLength value="20" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="S7charField" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:maxLength value="18" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="MyChar" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:maxLength value="1" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element minOccurs="0" maxOccurs="1" name="FlagField" nillable="true" type="xs:boolean" />
       </xs:sequence>
       <xs:attribute name="Name" type="xs:string" />
       <xs:attribute name="ID" type="xs:string" use="required" />
     </xs:complexType>
   </xs:element>
-  <xs:complexType name="dateTimeEx">
-    <xs:simpleContent>
-      <xs:extension base="xs:dateTime">
-        <xs:attribute name="IsDaylightSavingTime" type="xs:boolean" />
-      </xs:extension>
-    </xs:simpleContent>
-  </xs:complexType>
 </xs:schema>

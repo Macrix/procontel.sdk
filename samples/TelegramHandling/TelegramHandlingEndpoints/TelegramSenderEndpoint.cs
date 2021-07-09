@@ -11,30 +11,19 @@ namespace SendingTelegramsEndpoint
   [EndpointMetadata(Name = "Telegram Sender", SupportedRoles = SupportedRoles.Provider)]
   // Declarative way of defining what messages (telegrams) can be send by endpoint
   [MessageMetadata(TelegramIdentifiers.TELEGRAM_A, "Telegram A")]
-  [MessageMetadata(TelegramIdentifiers.TELEGRAM_B, "Telegram A")]
+  [MessageMetadata(TelegramIdentifiers.TELEGRAM_B, "Telegram B")]
   public class TelegramSenderEndpoint : IEndpointLifeTimeCycle
   {
-    private readonly ILogger _logger;
     private readonly IMessageBus _messageBus;
 
-    public TelegramSenderEndpoint(ILogger logger, IMessageBus messageBus)
+    public TelegramSenderEndpoint(IMessageBus messageBus)
     {
-      _logger = logger;
       _messageBus = messageBus;
     }
 
     public Task InitializeAsync(IMiddlewareBuilder builder)
     {
-      Task.Factory
-        .StartNew(SendMessages)
-        .ContinueWith(result =>
-        {
-          if (result.Exception != null)
-            _logger.Error(result.Exception);
-        },
-        TaskContinuationOptions.OnlyOnFaulted);
-
-      return Task.CompletedTask;
+      return Task.Factory.StartNew(SendMessages);
     }
 
     public Task TerminateAsync()
@@ -47,13 +36,14 @@ namespace SendingTelegramsEndpoint
       for (int i = 1; i <= 10; i++)
       {
         await Task.Delay(1000);
+        
         var telegramA = new Telegram_A(true) { Integer_4Byte = i };
 
         // Assuming telegram should be received by one of ProconTEL Standard Endpoints, then
         // XML or Binary protocols should be used. In other cases, any protocol supported by receiver
         // can be used.
         await _messageBus.BroadcastAsync(TelegramIdentifiers.TELEGRAM_A, telegramA.GetXml(), new XmlProtocol());
-        //_messageBus.Broadcast(TelegramIdentifiers.TELEGRAM_A, telegramA.GetBytes(), new BinaryProtocol());
+        await _messageBus.BroadcastAsync(TelegramIdentifiers.TELEGRAM_A, telegramA.GetBytes(), new BinaryProtocol());
       }
     }
   }

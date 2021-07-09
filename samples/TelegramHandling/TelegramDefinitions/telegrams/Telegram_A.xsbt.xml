@@ -1,59 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Telegram name="Telegram_A" ID="25" bytes="383" ContainsHeaderType="True" xsi:noNamespaceSchemaLocation="http://www.macrix.eu/ProconTel/BinaryXmlTranslationSchema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Telegram name="Telegram_A" ID="25" bytes="36" ContainsHeaderType="True" xsi:noNamespaceSchemaLocation="http://www.macrix.eu/ProconTel/BinaryXmlTranslationSchema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <element name="HEAD" type="HeaderType" length="6" offset="0" count="1" comment="Header">
     <element name="MessageLength" type="Short" length="2" offset="0" count="1" comment="header plus data" />
     <element name="MessageId" type="Short" length="2" offset="2" count="1" comment="Message Id" />
     <element name="MessageCount" type="Short" length="2" offset="4" count="1" comment="Message counter &#xA;[0..65535] - wrap around" />
   </element>
-  <element name="RawBinary" type="Base64Binary" length="2" offset="6" count="1" comment="[#]" />
-  <element name="ByteValue" type="unsignedByte" length="1" offset="8" count="1" comment="[#]" />
-  <element name="Int_1Byte" type="unsignedByte" length="1" offset="9" count="1" comment="[#]" />
-  <element name="Int_2Byte" type="Short" length="2" offset="10" count="1" comment="[#]" />
-  <element name="Int_4Byte" type="int" length="4" offset="12" count="1" comment="[#]" />
-  <element name="Int_8Byte" type="long" length="8" offset="16" count="1" comment="[#]" />
-  <element name="Integer_1Byte" type="unsignedByte" length="1" offset="24" count="1" comment="[#]" />
-  <element name="Integer_2Byte" type="Short" length="2" offset="25" count="1" comment="[#]" />
-  <element name="Integer_4Byte" type="int" length="4" offset="27" count="1" comment="[#]" />
-  <element name="Integer_8Byte" type="long" length="8" offset="31" count="1" comment="[#]" />
-  <element name="Dint_1Byte" type="unsignedByte" length="1" offset="39" count="1" comment="[#]" />
-  <element name="Dint_2Byte" type="Short" length="2" offset="40" count="1" comment="[#]" />
-  <element name="Dint_4Byte" type="int" length="4" offset="42" count="1" comment="[#]" />
-  <element name="Dint_8Byte" type="long" length="8" offset="46" count="1" comment="[#]" />
-  <element name="Short_1Byte" type="unsignedByte" length="1" offset="54" count="1" comment="[#]" />
-  <element name="Short_2Byte" type="Short" length="2" offset="55" count="1" comment="[#]" />
-  <element name="Short_4Byte" type="int" length="4" offset="57" count="1" comment="[#]" />
-  <element name="Short_8Byte" type="long" length="8" offset="61" count="1" comment="[#]" />
-  <element name="Long_1Byte" type="unsignedByte" length="1" offset="69" count="1" comment="[#]" />
-  <element name="Long_2Byte" type="Short" length="2" offset="70" count="1" comment="[#]" />
-  <element name="Long_4Byte" type="int" length="4" offset="72" count="1" comment="[#]" />
-  <element name="Long_8Byte" type="long" length="8" offset="76" count="1" comment="[#]" />
-  <element name="Uint_1Byte" type="unsignedByte" length="1" offset="84" count="1" comment="[#]" />
-  <element name="Uint_2Byte" type="uShort" length="2" offset="85" count="1" comment="[#]" />
-  <element name="Uint_4Byte" type="uint" length="4" offset="87" count="1" comment="[#]" />
-  <element name="Uint_8Byte" type="ulong" length="8" offset="91" count="1" comment="[#]" />
-  <element name="Ulong_1Byte" type="unsignedByte" length="1" offset="99" count="1" comment="[#]" />
-  <element name="Ulong_2Byte" type="uShort" length="2" offset="100" count="1" comment="[#]" />
-  <element name="Ulong_4Byte" type="uint" length="4" offset="102" count="1" comment="[#]" />
-  <element name="Ulong_8Byte" type="ulong" length="8" offset="106" count="1" comment="[#]" />
-  <element name="UShort_1Byte" type="unsignedByte" length="1" offset="114" count="1" comment="[#]" />
-  <element name="UShort_2Byte" type="uShort" length="2" offset="115" count="1" comment="[#]" />
-  <element name="UShort_4Byte" type="uint" length="4" offset="117" count="1" comment="[#]" />
-  <element name="UShort_8Byte" type="ulong" length="8" offset="121" count="1" comment="[#]" />
-  <element name="Float_4Byte" type="float" length="4" offset="129" count="1" comment="[#]" />
-  <element name="Float_8Byte" type="double" length="8" offset="133" count="1" comment="[#]" />
-  <element name="Real_4Byte" type="float" length="4" offset="141" count="1" comment="[#]" />
-  <element name="Real_8Byte" type="double" length="8" offset="145" count="1" comment="[#]" />
-  <element name="Number_4Byte" type="float" length="4" offset="153" count="1" comment="[#]" />
-  <element name="Number_8Byte" type="double" length="8" offset="157" count="1" comment="[#]" />
-  <element name="Time_stampField" type="time_stamp" length="32" offset="165" count="1" comment="[#]" />
-  <element name="DateTimeField" type="datetime" length="32" offset="197" count="1" comment="[#]" />
-  <element name="DateField" type="date" length="32" offset="229" count="1" comment="[#]" />
-  <element name="StringField" type="string" length="20" offset="261" count="1" comment="[#]" />
-  <element name="PrismoStringField" type="PrimoString" length="20" offset="281" count="1" comment="[#]" />
-  <element name="PcsstringField" type="pcsstring" length="20" offset="301" count="1" comment="[#]" />
-  <element name="OpcstringField" type="opcstring" length="18" offset="321" count="1" comment="[#]" />
-  <element name="WordField" type="Word" length="20" offset="341" count="1" comment="[#]" />
-  <element name="S7charField" type="s7char" length="18" offset="361" count="1" comment="[#]" />
-  <element name="MyChar" type="char" length="1" offset="381" count="1" comment="[#]" />
-  <element name="FlagField" type="flag" length="1" offset="382" count="1" comment="[#]" />
+  <element name="Int_1Byte" type="unsignedByte" length="1" offset="6" count="1" comment="[#]" />
+  <element name="Int_2Byte" type="Short" length="2" offset="7" count="1" comment="[#]" />
+  <element name="Int_4Byte" type="int" length="4" offset="9" count="1" comment="[#]" />
+  <element name="Int_8Byte" type="long" length="8" offset="13" count="1" comment="[#]" />
+  <element name="Integer_1Byte" type="unsignedByte" length="1" offset="21" count="1" comment="[#]" />
+  <element name="Integer_2Byte" type="Short" length="2" offset="22" count="1" comment="[#]" />
+  <element name="Integer_4Byte" type="int" length="4" offset="24" count="1" comment="[#]" />
+  <element name="Integer_8Byte" type="long" length="8" offset="28" count="1" comment="[#]" />
 </Telegram>

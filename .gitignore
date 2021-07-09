@@ -261,3 +261,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+*.dll
+samples/TelegramHandling/TelegramDefinitions/telegrams/csharp/TelegramDefinitions.Telegrams.xml
