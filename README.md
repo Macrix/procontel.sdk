@@ -60,7 +60,7 @@ Description: >
 12. [IoC](#id-ioc)
 13. [Middlewares](#id-middlewares)
 14. [Legacy Sdk](#id-legacy-sdk)
-15. [Testing](#id-testing)
+15. [Standard Endpoints](#id-standard-endpoints)
 
 
 
@@ -1405,9 +1405,19 @@ In order to migrate to Legacy SDK perform following steps:
 All features from Sdk which requires using attributes (i.e. Custom Menu Items) or can be used only in UI context (i.e. IVirtualFileSystem) are available for SDK Legacy too.
 
 
-<div id='id-testing'/>
+<div id='id-standard-endpoints'/>
 
-## 15. Testing
+## 15. Standard Endpoints
 
-<div id='id-deployment'/>
+This section describes how to receive and send telegrams that are processed by _ProconTEL Standard Endpoints_.
+
+All custom definitions that are required to work with telegrams and _ProconTEL Standard Endpoints_ can be found in assembly/nuget package called `ProconTel.Sdk.StandardEndpoints`. Use this package instead of direct references to old SDK like `ProconTel.CommunicationCenter.Kernel`.
+
+### Complete example
+
+In the samples you can find a complete example of [receiving](samples/TelegramHandling/TelegramHandlingEndpoints/TelegramReceiverEndpoint.cs) and [sending](samples/TelegramHandling/TelegramHandlingEndpoints/TelegramSenderEndpoint.cs) telegrams using custom endpoints written using ProconTEL SDK. Example consits of 3 parts:
+* [Telegram definitions](samples/TelegramHandling/TelegramDefinitions) project with Excel, _Developer Studio_ project file and C# telegram classes
+* [Example telegram receiver](samples/TelegramHandling/TelegramHandlingEndpoints/TelegramReceiverEndpoint.cs)
+* [Example telegram sender](samples/TelegramHandling/TelegramHandlingEndpoints/TelegramSenderEndpoint.cs)
+
 
