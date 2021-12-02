@@ -1,4 +1,9 @@
 # Issues released in version: [3.2.0.0]
+### [PCT-2091](https://macrixsoftware.atlassian.net/browse/PCT-2091) [Description]: Release issue - writing key values to database
+### [PCT-2090](https://macrixsoftware.atlassian.net/browse/PCT-2090) [Description]: User Manager - error after adding endpoint to channel (missing dll file) 
+### [PCT-2087](https://macrixsoftware.atlassian.net/browse/PCT-2087) [Description]: Error After trying to add elements to array of 1 byte int field in telegram simulator
+### [PCT-2086](https://macrixsoftware.atlassian.net/browse/PCT-2086) [Description]: Error in displaying complex collection field when it contains complex dynamic array
+### [PCT-2077](https://macrixsoftware.atlassian.net/browse/PCT-2077) [Description]: Error  in Telegram Simulator after trying to fill with random values telegram with dynamic array of nested telegrams
 ### [PCT-2074](https://macrixsoftware.atlassian.net/browse/PCT-2074) [Description]: Publish ProconTel.Security as nuget package
 ### [PCT-2073](https://macrixsoftware.atlassian.net/browse/PCT-2073) [Description]: Fix the Event Hub connector demo application and update docs
 ### [PCT-2072](https://macrixsoftware.atlassian.net/browse/PCT-2072) [Description]: Developer Studio logs warnings of obsolete methods + message with misleading compilation result
@@ -32,6 +37,7 @@
 ### [PCT-1916](https://macrixsoftware.atlassian.net/browse/PCT-1916) [Description]: Code Review
 ### [PCT-1894](https://macrixsoftware.atlassian.net/browse/PCT-1894) [Description]: Review and analyze all non functional communication Test Cases (Phase 1)
 ### [PCT-1862](https://macrixsoftware.atlassian.net/browse/PCT-1862) [Description]: Communication does not work correctly via VPN using WCF/gRPC v.3.1.1.0
+### [PCT-1858](https://macrixsoftware.atlassian.net/browse/PCT-1858) [Description]: PO Acceptance
 ### [PCT-1851](https://macrixsoftware.atlassian.net/browse/PCT-1851) [Description]: Cannot activate avatars with non-default ports via gRPC
 ### [PCT-1808](https://macrixsoftware.atlassian.net/browse/PCT-1808) [Description]: Q4 2021 - Initial automated test framework for communication
 ### [PCT-1722](https://macrixsoftware.atlassian.net/browse/PCT-1722) [Description]: Adjust Database Telegram viewer
@@ -39,6 +45,7 @@
 ### [PCT-1720](https://macrixsoftware.atlassian.net/browse/PCT-1720) [Description]: Adjust standard endpoints UI components for telegram visualization
 ### [PCT-1719](https://macrixsoftware.atlassian.net/browse/PCT-1719) [Description]: Adjust Translator (ProconTEL Mapping)
 ### [PCT-1718](https://macrixsoftware.atlassian.net/browse/PCT-1718) [Description]: Fix avatars created by CLI in REST API
+### [PCT-1690](https://macrixsoftware.atlassian.net/browse/PCT-1690) [Description]: Flick @ 2021-07-12 | Support arrays of dynamic length in XML telegrams
 ### [PCT-1684](https://macrixsoftware.atlassian.net/browse/PCT-1684) [Description]: Communication over GRPC: prepare benchmark table with results from major versions (most important: from latest version!)
 ### [PCT-1641](https://macrixsoftware.atlassian.net/browse/PCT-1641) [Description]: WCF replacement - infrastructure
 
