@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29926.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoints", "SimpleEndpoints\SimpleEndpoints.csproj", "{5C18001C-8DA4-416C-80A7-A6E853FCFF2D}"
 EndProject
@@ -22,7 +22,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramHandlingEndpoints",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Telegram Handling", "Telegram Handling", "{08FCA028-1B77-48F3-877D-26A9FF696108}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramDefinitions", "TelegramHandling\TelegramDefinitions\TelegramDefinitions.csproj", "{43A9B17E-DD29-45BE-94A3-6590EEDF5EB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramDefinitions", "TelegramHandling\TelegramDefinitions\TelegramDefinitions.csproj", "{43A9B17E-DD29-45BE-94A3-6590EEDF5EB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebEndpoints", "WebEndpoints", "{656D3663-EC48-48DD-8D40-DD4B8052CCBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebApiEndpoint", "WebEndpoints\SimpleWebApiEndpoint\SimpleWebApiEndpoint.csproj", "{154CED1B-71B1-4228-9D5E-4700C6F048EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +62,10 @@ Global
 		{43A9B17E-DD29-45BE-94A3-6590EEDF5EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43A9B17E-DD29-45BE-94A3-6590EEDF5EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43A9B17E-DD29-45BE-94A3-6590EEDF5EB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{154CED1B-71B1-4228-9D5E-4700C6F048EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{154CED1B-71B1-4228-9D5E-4700C6F048EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{154CED1B-71B1-4228-9D5E-4700C6F048EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{154CED1B-71B1-4228-9D5E-4700C6F048EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +73,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4024FDE8-634A-40E5-B0B0-B2D5DC05F145} = {08FCA028-1B77-48F3-877D-26A9FF696108}
 		{43A9B17E-DD29-45BE-94A3-6590EEDF5EB9} = {08FCA028-1B77-48F3-877D-26A9FF696108}
+		{154CED1B-71B1-4228-9D5E-4700C6F048EC} = {656D3663-EC48-48DD-8D40-DD4B8052CCBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB05BF1B-6420-4065-999F-72CEDB178EBE}
