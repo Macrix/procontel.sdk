@@ -1,0 +1,56 @@
+ <ng-container *ngLet="cameraReady$ | withLoading | async as hasDevices"> 
+     <zxing-scanner #scanner [torch]="torchEnabled" (deviceChange)="onDeviceChange($event)"
+        (scanSuccess)="onCodeResult($event)" (scanFailure)="onScanFailure()" (scanError)="onScanError($event)"
+        [tryHarder]="tryHarder" (permissionResponse)="onHasPermission($event)"
+        (torchCompatible)="onTorchCompatible($event)"></zxing-scanner>
+
+    <div class="shade" *ngIf="hasDevices.loading">
+    <mat-spinner></mat-spinner>
+    </div>
+    <div class="shade" *ngIf="hasDevices.error">
+    <span>{{hasDevices.error}}</span>
+    </div>
+
+    <section class="results" *ngIf="scanErrorMessage">
+    <div>
+        <strong>{{ scanErrorMessage }}</strong>
+    </div>
+    </section>
+
+    <div *ngIf="hasDevices === undefined">
+    <span>{{'QRSCANNER.COULD_NOT_CHECK_FOR_DEVICES' | translate}}</span>
+    <blockquote>
+        {{'QRSCANNER.COULD_NOT_CHECK_FOR_DEVICES_HINT' | translate}}
+    </blockquote>
+    </div>
+
+    <div *ngIf="hasDevices === false">
+    <span>{{'QRSCANNER.NO_DEVICES_WERE_FOUND' | translate}}</span>
+    <blockquote>
+        {{'QRSCANNER.NO_DEVICES_WERE_FOUND_HINT' | translate}}
+    </blockquote>
+    </div>
+
+    <div *ngIf="hasPermission === false">
+    <span>{{'QRSCANNER.DENIED_CAMERA_PERMISSION' | translate}}</span>
+    </div>
+
+    <div *ngIf="hasPermission === undefined">
+    <span>{{'QRSCANNER.WAITING_FOR_PERMISSIONS' | translate}}</span>
+    <blockquote>
+        {{'QRSCANNER.DEVICE_WITHOUT_CAMERA' | translate}}
+    </blockquote>
+    </div> 
+
+    <div fxLayout="row">
+        <span style="line-height: 28px; vertical-align: middle;">{{'QRSCANNER.CONTAINER_ID' | translate}}</span>
+
+        <input  matInput type="text" [(ngModel)]="textValue" style="margin-left: 5px; font-size: 28px;" >
+
+    </div>
+    <div fxLayout="row" fxLayoutGap="10px" style="margin: 5px; justify-content: center;">
+        
+        <button fxFlex="33" mat-raised-button [disabled]="!(readByScanner)" (click)="confirm()">{{ 'QRSCANNER.CONFIRM' | translate }}</button>
+        <button fxFlex="33" mat-raised-button  (click)="close()">{{ 'QRSCANNER.CLOSE' | translate }}</button>
+    </div>
+</ng-container>

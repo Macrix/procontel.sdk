@@ -1,0 +1,33 @@
+  <div
+    fxFlex="column"
+    fxLayoutAlign="start center"
+    fxLayoutGap="10px"
+    class="header"
+  >
+    <!-- <mat-icon style="fill: black;" svgIcon="rwe_icon"></mat-icon> -->
+    <!-- <button mat-icon-button>
+      <img src="assets/icons/RWE-Nuclear_Logo_blau.png" alt="RWE Nuclear GmbH" >
+    </button> -->
+    <img  src="assets/icons/RWE-Nuclear_Logo_blau.png" alt="RWE Nuclear GmbH" style="height: 50px;" />
+    <!-- <span >{{ "HEADER.APP_NAME" | translate }}</span> -->
+    <span class="spacer"></span>
+    <div fxLayout="row" fxLayoutGap="10px" style=" align-items: center">
+      <span *ngIf="authenticationService.currentUserValue">{{authenticationService.currentUserValue?.email}}</span>
+      <button  *ngIf="authenticationService.currentUserValue" (click)="authenticationService.logout()">
+        <mat-icon svgIcon="rwe_logout"></mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon svgIcon="rwe_headermenu"></mat-icon>
+      </button>
+    </div>
+    <mat-menu #menu="matMenu" >
+      <button mat-menu-item [matMenuTriggerFor]="languages">
+        <span>{{'HEADER.LANGUAGES' | translate }}</span>
+      </button>
+    </mat-menu>
+    <mat-menu #languages="matMenu">
+      <a mat-menu-item (click)="setLang('en')">{{'HEADER.ENGLISH' | translate }}</a>
+      <a mat-menu-item (click)="setLang('de')">{{'HEADER.GERMAN' | translate }}</a>
+    </mat-menu>
+  
+  </div>

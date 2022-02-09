@@ -1,0 +1,36 @@
+{
+	"HEADER": {
+		"ENGLISH": "English",
+		"GERMAN": "German",
+		"LANGUAGES": "Languages"
+	},
+	"LOGIN": {
+		"HEADER": "Choose User"
+	},
+	"QRSCANNER": {
+		"CLOSE": "Close",
+		"CONFIRM": "Confirm",
+		"CONTAINER_ID": "Container Id:",
+		"COULD_NOT_CHECK_FOR_DEVICES": "Could not check for devices.",
+		"COULD_NOT_CHECK_FOR_DEVICES_HINT": "This may be caused by some security error.",
+		"DENIED_CAMERA_PERMISSION": "You denied the camera permission, we can't scan anything without it. 😪",
+		"DEVICE_WITHOUT_CAMERA": "If your device does not has cameras, no permissions will be asked.",
+		"NO_DEVICES_WERE_FOUND": "No devices were found.",
+		"NO_DEVICES_WERE_FOUND_HINT": "I believe your device has no media devices attached to.",
+		"WAITING_FOR_PERMISSIONS": "Waiting for permissions."
+	},
+	"RELOAD_BUTTON": {
+		"RELOAD": "Reload"
+	},
+	"USERORDER": {
+		"CANCEL": "Cancel",
+		"CONTAINER_ID": "Container Id:",
+		"CONTAINER_TYPE": "Container Type:",
+		"HEADER": "User Orders",
+		"ID": "Id:",
+		"LOCATION_FROM": "From:",
+		"LOCATION_TO": "To:",
+		"START": "Start",
+		"STATUS": "Status:"
+	}
+}

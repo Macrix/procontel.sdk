@@ -1,17 +1,12 @@
 ﻿using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.Server.Kestrel.Https.Internal;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using ProconTel.Sdk.Attributes;
-using ProconTel.Sdk.Avatars;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Messages;
-using ProconTel.Sdk.Providers;
 using ProconTel.Sdk.Services;
 using ProconTel.Sdk.UI.Attributes;
-using ProconTel.Sdk.UI.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -20,19 +15,10 @@ using WebEndpoints.WebApiEndpoint.Common;
 namespace WebEndpoints.WebApiEndpoint
 {
   [ConfigurationDialog("WebHostEndpoint", "WebHostConfigurationDialog")]
-  //[StatusControl("RWE.Nuclear.Dialogs.WebHostEndpoint", "WebHostStatusControl", EndpointStatusControlType.WinForms, true, true)]
   [EndpointMetadata(Name = "[Test] WebServer", SupportedRoles = SupportedRoles.Both)]
   [SimpleCustomProtocol]
-  //[MessageMetadataProvider(typeof(WebServerEndpoint))]
   public class WebServerEndpoint : WebHostEndpoint<Startup>, /*IMessageMetadataProvider,*/ IHandler
   {
-    //public IEnumerable<MessageDetails> MessagesMetadata => new[] {
-    //    new MessageDetails(nameof(RegisterOrderCommand), "Command - register order"),
-    //    new MessageDetails(nameof(StartOrderCommand), "Command - start  order"),
-    //    new MessageDetails(nameof(CancelOrderCommand), "Command - cancel  order")
-    //};
-
-
     private readonly WebHostConfiguration _configuration;
     private readonly IConfigurationReader _configurationReader;
     private readonly IMessageBus _messageBus;

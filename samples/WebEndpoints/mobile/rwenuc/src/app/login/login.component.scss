@@ -1,0 +1,19 @@
+
+mat-form-field {
+    width: 100%;
+  }
+
+
+
+.login-list {
+  position: sticky;
+  top: 450px;
+  //height: calc(100% - 400px);
+}
+
+.user-item {
+  flex-direction: row;
+  row-gap: 10px;
+  width: 100%;
+  font-size: large;
+}

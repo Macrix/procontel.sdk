@@ -1,0 +1,98 @@
+@use 'variables' as v;
+
+// GENERAL
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: v.$background-color;
+}
+
+.full-width {
+  width: 100%;
+}
+.header {
+  padding: 10px 20px;
+  padding-left: 7px;
+  background: v.$header-backgound-color;
+  color: v.$header-foreground-color;
+  height: 100px;
+}
+.header span {
+  font-size: x-large;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-list-item {
+  background-color: v.$item-color;
+  border: 1px solid v.$item-border-color;
+  width: auto !important;;
+  margin: 5px;
+  border-radius: 10px;
+  min-height: 80px;
+}
+
+button {
+  height: 80px;
+  min-width: 80px;
+  background-color: v.$button-active-color;
+}
+
+.mat-raised-button {
+  background-color: v.$button-active-color;
+}
+
+.dialog-header {
+  position: sticky;
+  top: 50px;    
+  margin-left: 5px;
+}
+
+// SPINNER
+mat-spinner.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: white;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #3f51b5;
+  animation: spinner 0.8s linear infinite;
+}
+
+//SHADE
+.shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

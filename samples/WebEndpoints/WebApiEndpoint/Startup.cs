@@ -16,7 +16,7 @@ namespace WebEndpoints.WebApiEndpoint
 
   public class Startup
   {
-    Type WebHostType = typeof(Microsoft.AspNetCore.WebHost);
+    readonly Type _webHostType = typeof(Microsoft.AspNetCore.WebHost);
 
     private readonly ILogger _logger;
     private readonly IRuntimeContext _runtimeContext;

@@ -1,11 +1,11 @@
 ﻿using System;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using ProconTel.Sdk.Services;
+using Microsoft.AspNetCore.Mvc;
 using ProconTel.Sdk.Communications;
+using ProconTel.Sdk.Services;
 using WebEndpoint.WebCommon.Commands;
 
-namespace WebEndpoints.WebApiEndpoint
+namespace WebEndpoints.WebApiEndpoint.Controllers
 {
   [Route("api/")]
   [ApiController]
@@ -18,7 +18,7 @@ namespace WebEndpoints.WebApiEndpoint
 
     [HttpGet]
     [Route("IsAlive")]
-    public async Task<ActionResult<string>> GetOrders()
+    public async Task<ActionResult<string>> IsAlive()
     {
       var response = $"Server is working!  {DateTime.Now}";
       return Ok(response);
@@ -26,10 +26,10 @@ namespace WebEndpoints.WebApiEndpoint
 
     [HttpGet]
     [Route("BroadcastAsync/{message}")]
-    public async Task<ActionResult<string>> GetOrders(string message)
+    public async Task<ActionResult<string>> BroadcastMessageAsync(string message)
     {
       var command = new BroadcastMessageCommand() { Message = message };
-      MessageBus.Broadcast(nameof(BroadcastMessageCommand), command, DefaultProtocol.Instance);
+      await MessageBus.BroadcastAsync(nameof(BroadcastMessageCommand), command, DefaultProtocol.Instance);
       var response = $"Message broadcasted!  {DateTime.Now}";
       return Ok(response);
     }
