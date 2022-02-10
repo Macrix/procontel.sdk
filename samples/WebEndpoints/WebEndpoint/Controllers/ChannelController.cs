@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using ProconTel.Sdk.Communications;
 using ProconTel.Sdk.Services;
@@ -21,7 +20,7 @@ namespace WebEndpoints.WebApiEndpoint.Controllers
 
     [HttpGet]
     [Route("IsAlive")]
-    public async Task<ActionResult<string>> IsAlive()
+    public ActionResult<string> IsAlive()
     {
       var response = $"Server is working!  {DateTime.Now}";
       return Ok(response);
@@ -33,7 +32,7 @@ namespace WebEndpoints.WebApiEndpoint.Controllers
     {
       var command = new BroadcastMessageCommand() { Message = message };
       await MessageBus.BroadcastAsync(nameof(BroadcastMessageCommand), command, DefaultProtocol.Instance);
-      var response = $"Message broadcasted!  {DateTime.Now}";
+      var response = $"Message send!  {DateTime.Now}";
       return Ok(response);
     }
 
@@ -43,7 +42,7 @@ namespace WebEndpoints.WebApiEndpoint.Controllers
     {
       var telegram = new SimpleTelegram() { Message = message };
       await MessageBus.BroadcastAsync(nameof(SimpleTelegram), telegram, new XmlProtocol());
-      var response = $"Telegram broadcasted!  {DateTime.Now}";
+      var response = $"Telegram send!  {DateTime.Now}";
       return Ok(response);
     }
   }

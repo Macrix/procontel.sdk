@@ -1,26 +1,19 @@
 ﻿using System;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.AspNetCore.Server.Kestrel.Https.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
-using ProconTel.Sdk.UI.Attributes;
-using WebEndpoints.WebApiEndpoint.Common;
 using WebEndpoints.WebApiEndpoint.Protocols;
 
 namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
-  [ConfigurationDialog("WebHostEndpoint", "WebHostConfigurationDialog")]
   [EndpointMetadata(Name = "[Test] WebServer", SupportedRoles = SupportedRoles.Both)]
   [SimpleCustomProtocol]
-  public class WebServerEndpoint : WebHostEndpoint<Startup>, /*IMessageMetadataProvider,*/ IHandler
+  public class WebServerEndpoint : WebHostEndpoint<Startup>, IHandler
   {
-    private readonly WebHostConfiguration _configuration;
     private readonly IConfigurationReader _configurationReader;
     private readonly IMessageBus _messageBus;
 
@@ -30,11 +23,6 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
     {
       _configurationReader = configurationReader;
       _messageBus = messageBus;
-
-      _configuration = _configurationReader.ReadAndJsonDeserialize<WebHostConfiguration>(
-        (ex) => Logger.Error("Configuration deserialization failed.", ex));
-
-      Urls = (_configuration.Urls.Any()) ? _configuration.Urls.ToArray() : null;
     }
 
     protected override void ConfigureServices(IServiceCollection ioc)
@@ -42,44 +30,6 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
       base.ConfigureServices(ioc);
       ioc.AddTransient(ctx => _configurationReader);
       ioc.AddTransient(ctx => _messageBus);
-    }
-    protected override void SetKestrelOptions(KestrelServerOptions options)
-    {
-      if (_configuration.UseHttps)
-      {
-        X509Certificate2 cert = null;
-        try
-        {
-          if (_configuration.SSLFromFile)
-          {
-            //todo
-          }
-          else
-          {
-            cert = CertificateLoader.LoadFromStoreCert(
-                      _configuration.SSLSubject, _configuration.SSLStoreName,
-                      StoreLocation.LocalMachine,
-                      allowInvalid: true);
-          }
-        }
-        catch (Exception ex)
-        {
-          Logger.Error("Read SSL certificate failed.", ex);
-        }
-
-        if (cert != null)
-        {
-          options.ConfigureHttpsDefaults(listenOptions =>
-          {
-            // certificate is an X509Certificate2
-            listenOptions.ServerCertificate = cert;
-          });
-        }
-        else
-        {
-          Logger.Information("HTTPS will be not used.");
-        }
-      }
     }
 
     public bool CanHandle(string messageId, ICorrelationContext context = null)

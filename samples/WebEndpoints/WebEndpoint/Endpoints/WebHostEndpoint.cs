@@ -13,8 +13,8 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
   public abstract class WebHostEndpoint<TStartup> : IEndpointLifeTimeCycle where TStartup : class
   {
-    protected IWebHost _host;
-    private string[] _defaultUrls = new[] { "http://*:5000" };
+    protected IWebHost Host;
+    private readonly string[] _defaultUrls = new[] { "http://*:5000" };
     public string[] Urls { get; protected set; }
 
     protected ILogger Logger { get; private set; }
@@ -37,22 +37,15 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
     {
       var urls = Urls ?? _defaultUrls;
       Logger.Information($"Start initialize web host, urls = { string.Join(", ", urls.ToArray()) } ");
-      _host = Microsoft.AspNetCore.WebHost
+      Host = Microsoft.AspNetCore.WebHost
         .CreateDefaultBuilder()
         .UseContentRoot(Path.GetDirectoryName(typeof(WebHostEndpoint<>).Assembly.Location))
-        .ConfigureServices(ioc =>
-        {
-          ConfigureServices(ioc);
-        })
-        .UseKestrel(options =>
-        {
-          SetKestrelOptions(options);
-        })
+        .ConfigureServices(ConfigureServices)
         .UseStartup<TStartup>()
         .UseUrls(urls)
         .Build();
       
-      return _host.StartAsync();
+      return Host.StartAsync();
     }
 
     protected virtual void ConfigureServices(IServiceCollection ioc)
@@ -61,16 +54,12 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
       ioc.AddTransient(ctx => _runtimeContextFactory());
     }
 
-    protected virtual void SetKestrelOptions(KestrelServerOptions options)
-    {
-    }
-
     public Task TerminateAsync()
     {
       Logger.Information($"Start terminating web host");
-      if (_host != null)
+      if (Host != null)
       {
-        return _host.StopAsync();
+        return Host.StopAsync();
       }
       return Task.CompletedTask;
     }
