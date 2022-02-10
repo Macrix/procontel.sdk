@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
-using WebEndpoints.WebApiEndpoint.Protocols;
 
 namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
   [EndpointMetadata(Name = "[Test] WebServer", SupportedRoles = SupportedRoles.Both)]
-  [SimpleCustomProtocol]
   public class WebServerEndpoint : WebHostEndpoint<Startup>, IHandler
   {
     private readonly IConfigurationReader _configurationReader;

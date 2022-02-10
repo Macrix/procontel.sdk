@@ -1,20 +1,20 @@
 body {
-    background-color: #303030;
-    color: #ffffff;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 40px;   
+  background-color: #303030;
+  color: #ffffff;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 40px;
 }
 
-.description{
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 20px;
+.description {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 20px;
 }
 
-#currentTime{
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 40px;
+#currentTime {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 40px;
 }
 
-.container{
-    width:1000px;
+.container {
+  width: 1000px;
 }
