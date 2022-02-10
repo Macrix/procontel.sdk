@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using ProconTel.Sdk.Communications;
 using ProconTel.Sdk.Services;
+using ProconTel.Sdk.StandardEndpoints;
+using ProconTel.shortbasic;
 using WebEndpoints.WebApiEndpoint.Commands;
 
 namespace WebEndpoints.WebApiEndpoint.Controllers
@@ -25,12 +28,22 @@ namespace WebEndpoints.WebApiEndpoint.Controllers
     }
 
     [HttpGet]
-    [Route("BroadcastAsync/{message}")]
-    public async Task<ActionResult<string>> BroadcastMessageAsync(string message)
+    [Route("BroadcastMessageInChannel/{message}")]
+    public async Task<ActionResult<string>> BroadcastMessageInChannel(string message)
     {
       var command = new BroadcastMessageCommand() { Message = message };
       await MessageBus.BroadcastAsync(nameof(BroadcastMessageCommand), command, DefaultProtocol.Instance);
       var response = $"Message broadcasted!  {DateTime.Now}";
+      return Ok(response);
+    }
+
+    [HttpGet]
+    [Route("BroadcastSimpleTelegramInChannel/{message}")]
+    public async Task<ActionResult<string>> BroadcastSimpleTelegramInChannel(string message)
+    {
+      var telegram = new SimpleTelegram() { Message = message };
+      await MessageBus.BroadcastAsync(nameof(SimpleTelegram), telegram, new XmlProtocol());
+      var response = $"Telegram broadcasted!  {DateTime.Now}";
       return Ok(response);
     }
   }

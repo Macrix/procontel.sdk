@@ -23,6 +23,8 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
     <PackageReference Include="ProconTel.Endpoint.Extensions.WebHost" Version="1.0.5" />
+    <PackageReference Include="ProconTel.Mapping" Version="1.1.2" />
+    <PackageReference Include="ProconTel.Mapping.BinaryXmlTranslator" Version="1.1.2" />
     <PackageReference Include="ProconTel.Sdk.StandardEndpoints" Version="1.0.5" />
     <PackageReference Include="ProconTel.Sdk.UI" Version="1.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.2.3" />

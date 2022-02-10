@@ -2,17 +2,22 @@
 using System.Threading.Tasks;
 using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
+using ProconTel.Sdk.Communications.Attributes;
 using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
+using ProconTel.Sdk.StandardEndpoints;
+using ProconTel.shortbasic;
 using WebEndpoints.WebApiEndpoint.Commands;
 
 namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
   [EndpointMetadata(Name = "[Test] Receiver Endpoint", SupportedRoles = SupportedRoles.Subscriber)]
+  [SupportsXmlProtocol]
+  [DefaultProtocol]
   public class ReceiverEndpoint : IHandler
   {
     private readonly ILogger _logger;
-    private int _counter = 1;
+    private int _receivedTelegramCounter = 1;
 
     public ReceiverEndpoint(ILogger logger)
     {
@@ -35,6 +40,9 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
           case BroadcastMessageCommand broadcastMessageCommand:
             ProcessBroadcastMessageCommand(broadcastMessageCommand);
             break;
+          case SimpleTelegram simpleTelegram:
+            ProcessSimpleTelegram(simpleTelegram); 
+            break;
         }
       }
       catch (Exception ex)
@@ -47,9 +55,15 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
 
     private void ProcessBroadcastMessageCommand(BroadcastMessageCommand command)
     {
-      _logger.Warning($"Received telegram number {_counter} " +
+      _logger.Warning($"Received message " +
                       $"with ID {nameof(BroadcastMessageCommand)} {command.Message}");
-      _counter++;
+    }
+
+    private void ProcessSimpleTelegram(SimpleTelegram command)
+    {
+      _logger.Warning($"Received telegram {_receivedTelegramCounter} " +
+                      $"with ID {nameof(BroadcastMessageCommand)} {command.GetXml()}");
+      _receivedTelegramCounter++;
     }
   }
 }
