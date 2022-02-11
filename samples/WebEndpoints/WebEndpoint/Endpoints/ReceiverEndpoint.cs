@@ -7,7 +7,6 @@ using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
 using ProconTel.Sdk.StandardEndpoints;
 using ProconTel.shortbasic;
-using WebEndpoints.WebApiEndpoint.Commands;
 
 namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
@@ -37,9 +36,6 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
       {
         switch (message)
         {
-          case BroadcastMessageCommand broadcastMessageCommand:
-            ProcessBroadcastMessageCommand(broadcastMessageCommand);
-            break;
           case SimpleTelegram simpleTelegram:
             ProcessSimpleTelegram(simpleTelegram); 
             break;
@@ -53,16 +49,10 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
       return Task.FromResult(new Acknowledgement());
     }
 
-    private void ProcessBroadcastMessageCommand(BroadcastMessageCommand command)
-    {
-      _logger.Warning($"Received message " +
-                      $"with ID {nameof(BroadcastMessageCommand)} {command.Message}");
-    }
-
     private void ProcessSimpleTelegram(SimpleTelegram command)
     {
       _logger.Warning($"Received telegram {_receivedTelegramCounter} " +
-                      $"with ID {nameof(BroadcastMessageCommand)} {command.GetXml()}");
+                      $"with ID {nameof(SimpleTelegram)} {command.GetXml()}");
       _receivedTelegramCounter++;
     }
   }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using ProconTel.Sdk.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Converters;
 using Microsoft.OpenApi.Models;
@@ -10,14 +9,6 @@ namespace WebEndpoints.WebApiEndpoint
 
   public class Startup
   {
-    private readonly ILogger _logger;
-    private readonly IRuntimeContext _runtimeContext;
-    public Startup(ILogger logger, IRuntimeContext runtimeContext, IConfigurationReader configurationReader)
-    {
-      _logger = logger;
-      _runtimeContext = runtimeContext;
-    }
-
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvcCore()
