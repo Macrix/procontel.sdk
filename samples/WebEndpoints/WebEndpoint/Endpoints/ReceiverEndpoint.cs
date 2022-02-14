@@ -34,10 +34,10 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
         return Task.FromResult(new Acknowledgement());
       try
       {
-        switch (message)
+        switch (messageId)
         {
-          case SimpleTelegram simpleTelegram:
-            ProcessSimpleTelegram(simpleTelegram); 
+          case nameof(SimpleTelegram):
+            ProcessSimpleTelegram(message.ToString()); 
             break;
         }
       }
@@ -49,10 +49,11 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
       return Task.FromResult(new Acknowledgement());
     }
 
-    private void ProcessSimpleTelegram(SimpleTelegram command)
+    private void ProcessSimpleTelegram(string message)
     {
+      var telegram = SimpleTelegram.Create(message);
       _logger.Warning($"Received telegram {_receivedTelegramCounter} " +
-                      $"with ID {nameof(SimpleTelegram)} {command.GetXml()}");
+                      $"with ID {nameof(SimpleTelegram)} {telegram.GetXml()}");
       _receivedTelegramCounter++;
     }
   }

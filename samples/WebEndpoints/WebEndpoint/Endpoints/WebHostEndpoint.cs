@@ -1,46 +1,45 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Communications.Middlewares;
 using ProconTel.Sdk.Services;
 
 namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
-  public abstract class WebHostEndpoint<TStartup> : IEndpointLifeTimeCycle where TStartup : class
+  [EndpointMetadata(Name = "[Test] WebServer", SupportedRoles = SupportedRoles.Both)]
+  public class WebHostEndpoint : IEndpointLifeTimeCycle
   {
     protected IWebHost Host;
     private readonly string[] _defaultUrls = new[] { "http://*:5000" };
     public string[] Urls { get; protected set; }
 
-    protected ILogger Logger { get; private set; }
-    protected IRuntimeContext RuntimeContext { get; private set; }
-    private readonly Func<ILogger> _loggerFactory;
-    private readonly Func<IRuntimeContext> _runtimeContextFactory;
-   
+    protected ILogger _logger { get; private set; }
+    private readonly IRuntimeContext _runtimeContext;
+    private readonly IMessageBus _messageBus;
 
     public WebHostEndpoint(
-      Func<ILogger> loggerFactory,
-      Func<IRuntimeContext> runtimeContextFactory)
+     ILogger logger,
+      IRuntimeContext runtimeContext,
+      IMessageBus messageBus)
     {
-      _loggerFactory = loggerFactory;
-      _runtimeContextFactory = runtimeContextFactory;
-      Logger = loggerFactory();
-      RuntimeContext = runtimeContextFactory();
+      _logger = logger;
+      _runtimeContext = runtimeContext;
+      _messageBus = messageBus;
     }
 
     public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       var urls = Urls ?? _defaultUrls;
-      Logger.Information($"Start initialize web host, urls = { string.Join(", ", urls.ToArray()) } ");
+      _logger.Information($"Start initialize web host, urls = { string.Join(", ", urls.ToArray()) } ");
       Host = Microsoft.AspNetCore.WebHost
         .CreateDefaultBuilder()
-        .UseContentRoot(Path.GetDirectoryName(typeof(WebHostEndpoint<>).Assembly.Location))
+        .UseContentRoot(Path.GetDirectoryName(typeof(WebHostEndpoint).Assembly.Location))
         .ConfigureServices(ConfigureServices)
-        .UseStartup<TStartup>()
+        .UseStartup<Startup>()
         .UseUrls(urls)
         .Build();
       
@@ -49,13 +48,14 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
 
     protected virtual void ConfigureServices(IServiceCollection ioc)
     {
-      ioc.AddTransient(ctx => _loggerFactory());
-      ioc.AddTransient(ctx => _runtimeContextFactory());
+      ioc.AddTransient(ctx => _logger);
+      ioc.AddTransient(ctx => _runtimeContext);
+      ioc.AddTransient(ctx => _messageBus);
     }
 
     public Task TerminateAsync()
     {
-      Logger.Information($"Start terminating web host");
+      _logger.Information($"Start terminating web host");
       if (Host != null)
       {
         return Host.StopAsync();

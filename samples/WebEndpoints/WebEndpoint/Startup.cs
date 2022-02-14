@@ -30,12 +30,10 @@ namespace WebEndpoints.WebApiEndpoint
       });
      
       services.AddSpaStaticFiles(options => { options.RootPath = "WebApp"; });
-
-      services.AddSignalR();
       
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "MOBILE API", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rest API", Version = "v1" });
       });
       services.AddSwaggerGenNewtonsoftSupport();
     }
@@ -45,7 +43,7 @@ namespace WebEndpoints.WebApiEndpoint
       app.UseCors("CorsPolicy");
 
       app.UseSwagger();
-      app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "MOBILE API V1"); });
+      app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rest API V1"); });
 
       app.UseSpaStaticFiles();
 
