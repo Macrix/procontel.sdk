@@ -13,9 +13,10 @@ namespace WebEndpoints.WebApiEndpoint.Controllers
   public class ChannelController : ControllerBase
   {
     private IMessageBus MessageBus { get; }
-
     public ChannelController(IMessageBus messageBus)
-      => (MessageBus) = (messageBus);
+    {
+      MessageBus = messageBus;
+    }
 
     [HttpGet]
     [Route("IsAlive")]
@@ -29,24 +30,28 @@ namespace WebEndpoints.WebApiEndpoint.Controllers
     [Route("BroadcastTelegram")]
     public async Task<ActionResult<string>> BroadcastTelegram([FromBody] string xmlAsString)
     {
-      string message = string.Empty;
+      string message;
       try
       {
         xmlAsString = System.Web.HttpUtility.HtmlDecode(xmlAsString);
         var xmlDoc = XDocument.Parse(xmlAsString);
 
-        if (xmlDoc != null)
+        if (xmlDoc.Root != null)
         {
           await MessageBus.BroadcastAsync(nameof(SimpleTelegram), xmlAsString, new XmlProtocol());
-          message = $"Telegram send!  {DateTime.Now}";
+          message = "Telegram send!";
+        }
+        else
+        {
+          message = "XML is empty!";
         }
       }
       catch (Exception ex)
       {
-        message = $"Wrong xml content. {DateTime.Now} {ex.Message}";
+        message = $"Wrong xml content. {ex.Message}";
       }
 
-      return Ok(message);
+      return Ok($"{message} {DateTime.Now}");
     }
   }
 }

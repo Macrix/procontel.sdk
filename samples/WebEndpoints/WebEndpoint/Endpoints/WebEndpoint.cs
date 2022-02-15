@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -6,22 +7,25 @@ using Microsoft.Extensions.DependencyInjection;
 using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Communications.Middlewares;
+using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
+using ProconTel.Sdk.StandardEndpoints;
 
 namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
   [EndpointMetadata(Name = "[Test] WebServer", SupportedRoles = SupportedRoles.Both)]
-  public class WebHostEndpoint : IEndpointLifeTimeCycle
+  [SupportsXmlProtocol]
+  public class WebEndpoint : IEndpointLifeTimeCycle, IHandler
   {
     protected IWebHost Host;
     private readonly string[] _defaultUrls = new[] { "http://*:5000" };
     public string[] Urls { get; protected set; }
 
-    protected ILogger _logger { get; private set; }
+    private readonly ILogger _logger;
     private readonly IRuntimeContext _runtimeContext;
     private readonly IMessageBus _messageBus;
 
-    public WebHostEndpoint(
+    public WebEndpoint(
      ILogger logger,
       IRuntimeContext runtimeContext,
       IMessageBus messageBus)
@@ -37,7 +41,7 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
       _logger.Information($"Start initialize web host, urls = { string.Join(", ", urls.ToArray()) } ");
       Host = Microsoft.AspNetCore.WebHost
         .CreateDefaultBuilder()
-        .UseContentRoot(Path.GetDirectoryName(typeof(WebHostEndpoint).Assembly.Location))
+        .UseContentRoot(Path.GetDirectoryName(typeof(WebEndpoint).Assembly.Location))
         .ConfigureServices(ConfigureServices)
         .UseStartup<Startup>()
         .UseUrls(urls)
@@ -61,6 +65,18 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
         return Host.StopAsync();
       }
       return Task.CompletedTask;
+    }
+
+    public bool CanHandle(string messageId, ICorrelationContext context = null)
+    {
+      return true;
+    }
+
+    public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context = null)
+    {
+      _logger.Information($"{nameof(WebEndpoint)} Received message with ID = {messageId} " +
+                          $"with content: {Environment.NewLine}{message}");
+      return Task.FromResult(new Acknowledgement());
     }
   }
 }
