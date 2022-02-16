@@ -10,27 +10,30 @@ Description: >
 
 1. [Quick introduction](#quick-introduction)
 2. [Web endpoint settings](#endpoint-settings)
-3. [MVC Controller & dependency injection](#mvc-controller-dependency-injection)
+3. [Dependency injection](#dependency-injection)
 4. [Hosting static files](#hosting-static-files)
-5. [Broadcasting messages using http request](#broadcasting-messages)
+5. [Accessing ProconTEL communication from ASP.NET Core Controller](#broadcasting-messages)
  
  <div id='quick-introduction'/>
+
 ## 1. Quick introduction
 
-Using ProconTEL, you can create an application that will provide communication between endpoints using HTTP request (Rest API). You can also use ProconTEL endpoint to host static files. The instruction describes how to solve the main issues with setup and hosting.
-The presented code snippets are from an example that can be downloaded from the location: 
-[`sample\WebEndpoints`](https://github.com/Macrix/procontel.sdk/samples/WebEndpoints)
+Using ProconTEL it is possible to create an application that will expose REST API using HTTP/HTTPS protocol and additionally host static web application (like _Angular_ or _React_ single page application). This instruction describes example based on _Microsoft ASP.NET_ for setting REST API and simple static content files serving as web application.
+
+Due to ProconTEL version currently based on _.NET Framework 4.7.2_, thid example is based on _Microsoft ASP.NET Core_ version **2.2**. This is currently the highest supported version.
+[sample\WebEndpoint](WebEndpoint/)
 
 <div id='endpoint-settings'/>
+
 ## 2. Web endpoint settings
 
-The `WebEndpoint` is responsible for configuring and starting the WEB service. For this purpose, endpoint inherits from the `IEndpointLifeTimeCycle` interface which implements the `InitializeAsync` method. The `InitializeAsync` method is executing while the endpoint is activated. The consequently method will configure and lunch the WEB service. 
+The `WebEndpoint` is responsible for configuring and starting the web service. For this purpose, endpoint implements `IEndpointLifeTimeCycle` interface which defines the `InitializeAsync` method. The `InitializeAsync` method is executing while the endpoint is activated. The consequently method will configure and lunch the web service.
 
-The endpoint implementation:
+The endpoint declaration:
 ```csharp
     public class WebHostEndpoint : IEndpointLifeTimeCycle
 ```
-The WEB service configuration:
+The web service configuration:
 ```csharp
     public Task InitializeAsync(IMiddlewareBuilder builder)
     {
@@ -55,12 +58,15 @@ The WEB service configuration:
     }
 ```
 
-<div id='mvc-controller-dependency-injection'/>
-## 3. MVC Controller & dependency injection
+<div id='dependency-injection'/>
 
-It is possible to pass references to the controller using dependency injection. However, the dependency will not be resolved automatically. For this purpose, it is necessary to indicate in the configuration which dependencies can be injected into the controller. The example below shows how to inject a reference into the MessageBus service to broadcast messages in channel. 
+## 3. Dependency injection
 
-Configuration of dependency injection
+_Microsoft ASP.NET_ is using it's own dependency injection container, which can be easily extended with basic ProconTEL services. Later those services can be injected into controllers.
+
+Below example shows how to register ProconTEL `IMessageBus` and `ILogger` into _ASP.NET_ DI container.
+
+Configuration of dependency injection:
 ```csharp
     protected virtual void ConfigureServices(IServiceCollection ioc)
     {
@@ -69,7 +75,7 @@ Configuration of dependency injection
       ioc.AddTransient(ctx => _messageBus);
     }
 ```
-Configuration of MVC controller
+Configuration of MVC controller:
 ```csharp
   [ApiController]
   [Route("api/[controller]")]
@@ -86,9 +92,10 @@ Configuration of MVC controller
 ```
 
 <div id='hosting-static-files'/>
+
 ## 4. Hosting static files
 
-It is possible to use the ProconTEL plugin to host static websites. For this purpose, the service `AddSpaStaticFiles` has been defined in the `Startup` class. Be able to display the page while installing the plugin, configure the path that contains the files. To publish your static files, follow the steps below:
+It is possible to use the ProconTEL plugin to host static websites. For this purpose, the service `AddSpaStaticFiles` has been defined in the `Startup` class. Static files of web application need to be added with ProconTEL plugin installation step. Example below shows how to configure ProconTEL endpoint to server static files.
 
 - In the `Startup` class, set the name of the folder where the files will be located. In the example below, this is a folder named `WebApp`. 
 ```csharp
@@ -105,8 +112,9 @@ services.AddSpaStaticFiles(options => { options.RootPath = "WebApp"; });
 - Then add an endpoint to the channel or pool and run it. 
 
 <div id='broadcasting-messages'/>
-## 5. Broadcasting messages using http request
 
-The web endpoint may allow you to communicate with other endpoints in the channel. An example of communication with other endpoints in the channel is presented below:
+## 5. Accessing ProconTEL communication from ASP.NET Core Controller
+
+The web endpoint may allow you to communicate with other ProconTEL endpoints. An example of communication with other ProconTEL endpoints is presented below:
 
 ![Additional Directory](./assets/CommunicationInChannel.png)
