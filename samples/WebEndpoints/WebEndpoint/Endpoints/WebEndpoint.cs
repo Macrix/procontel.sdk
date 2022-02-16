@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -7,15 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Communications.Middlewares;
-using ProconTel.Sdk.Messages;
 using ProconTel.Sdk.Services;
-using ProconTel.Sdk.StandardEndpoints;
 
 namespace WebEndpoints.WebApiEndpoint.Endpoints
 {
   [EndpointMetadata(Name = "[Test] WebServer", SupportedRoles = SupportedRoles.Both)]
-  [SupportsXmlProtocol]
-  public class WebEndpoint : IEndpointLifeTimeCycle, IHandler
+  public class WebEndpoint : IEndpointLifeTimeCycle
   {
     protected IWebHost Host;
     private readonly string[] _defaultUrls = new[] { "http://*:5000" };
@@ -65,18 +61,6 @@ namespace WebEndpoints.WebApiEndpoint.Endpoints
         return Host.StopAsync();
       }
       return Task.CompletedTask;
-    }
-
-    public bool CanHandle(string messageId, ICorrelationContext context = null)
-    {
-      return true;
-    }
-
-    public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context = null)
-    {
-      _logger.Information($"{nameof(WebEndpoint)} Received message with ID = {messageId} " +
-                          $"with content: {Environment.NewLine}{message}");
-      return Task.FromResult(new Acknowledgement());
     }
   }
 }

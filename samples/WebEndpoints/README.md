@@ -21,7 +21,6 @@ Description: >
 Using ProconTEL it is possible to create an application that will expose REST API using HTTP/HTTPS protocol and additionally host static web application (like _Angular_ or _React_ single page application). This instruction describes example based on _Microsoft ASP.NET_ for setting REST API and simple static content files serving as web application.
 
 Due to ProconTEL version currently based on _.NET Framework 4.7.2_, thid example is based on _Microsoft ASP.NET Core_ version **2.2**. This is currently the highest supported version.
-[sample\WebEndpoint](WebEndpoint/)
 
 <div id='endpoint-settings'/>
 
