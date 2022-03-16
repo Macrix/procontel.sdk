@@ -1036,6 +1036,10 @@ public partial class WpfStatusControl : UserControl, IEndpointStatusControl
     }
 }
 ```
+Data stored by this interface can be found in 
+```
+...\AppData\Local\Macrix\ProconTEL\{Version Number}\EndpointStatus
+```
 
 <div id='id-ui-components-injected-services-isecurity-service'/>
 
