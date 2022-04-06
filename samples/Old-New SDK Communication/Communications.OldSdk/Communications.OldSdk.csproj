@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <LangVersion>9.0</LangVersion>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Communications.OldSdk</AssemblyName>
+    <RootNamespace>Communications.OldSdk</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Procontel.CommunicationCenter.Kernel" Version="3.3.5" />
+    <PackageReference Include="ProconTel.Logging" Version="3.3.5" />
+    <PackageReference Include="ProconTel.CommunicationCenter.Utilities" Version="3.3.5" />
+    <PackageReference Include="ProconTel.Sdk" Version="1.0.5" />
+    <PackageReference Include="ProconTel.Streaming" Version="3.3.5" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+</Project>

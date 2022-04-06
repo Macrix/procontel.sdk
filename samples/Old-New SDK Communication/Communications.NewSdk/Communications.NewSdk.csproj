@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <Version>1.1.0</Version>
+    <AssemblyName>Communications.NewSdk</AssemblyName>
+    <RootNamespace>Communications.NewSdk</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.14.3" />
+    <PackageReference Include="ProconTel.Sdk" Version="1.0.5" />
+    <PackageReference Include="ProconTel.Sdk.StandardEndpoints" Version="1.0.5" />
+    <PackageReference Include="ProconTel.Sdk.UI" Version="1.0.5" />
+    <PackageReference Include="ProconTel.Utilities" Version="1.0.0.1" />
+  </ItemGroup>
+
+</Project>
