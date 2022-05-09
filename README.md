@@ -49,6 +49,7 @@ Description: >
 10. [UI Components](#id-ui-components)
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
+    * [Updating a status of control](#id-ui-update-status-control)
     * [Custom Menu Items](#id-ui-custom-menu-items)
 11. [Injected services for UI Components](#id-injected-services-ui-components)
     * [IConfigurationWriter](#id-ui-components-injected-services-iconfiguration-writer)
@@ -910,7 +911,7 @@ Status control has to implement interface <b>IEndpointStatusControl</b>.
 
 In order to use more sophisticated behavior we recommend use attribute <b>StatusControlProviderAttribute</b> with own implementation of <b>IEndpointStatusControlProvider</b> interface.
 
-<div id='id-ui-custom-menu-items' />
+<div id='id-ui-update-status-control' />
 
 * ### Updating a status of control
 
@@ -923,6 +924,8 @@ In <b>InvokeIfNotBusy</b> mode of invocation all registered methods are stored i
 In <b>InvokeAlways</b> mode the methods are registered in a queue, so there is no chance to replace anything, it also means that all of the registered methods have to be executed eventually. In this case, background task is executing methods one by one without any waiting.
 
 The <b>UpdateStatusControl</b> is using both of the <b>SmartMethodInvoker</b> modes, the indicator is a flag <b>ensureDelivery</b>. It basically means that if the flag is set to true, the InvokeAlways policy is used, and the <b>InvokeIfNotBusy</b> in opposite case. The standard delay in <b>InvokeIfNotBusy</b> mode can be changed in <b>ServerConfigurationManager</b> in section <b>Administration Service</b> in field <b>Callback Delay</b>.
+
+<div id='id-ui-custom-menu-items' />
 
 * ### Custom Menu Items
 Procontel.Sdk provide feature for endpoint to have own custom menu item, with own icon and list of children item.
