@@ -912,6 +912,18 @@ In order to use more sophisticated behavior we recommend use attribute <b>Status
 
 <div id='id-ui-custom-menu-items' />
 
+* ### Updating a status of control
+
+In many cases status control can pretend to work with a delay or be not responding at all, this is connected with a way of calling updates on the endpoint side. To update status control we are using <b>NotifyUI</b> method which is only a facade for WCF update status methods. To make it more sufficient, there is a tool called <b>SmartMethodInvoker</b> which is helping to manage all calls.
+
+The <b>SmartMethodInvoker</b> is a tool which registers all calls and runs them in the background task. The way of execution depends on <b>InvokePolicy</b> settings, there are two options <b>InvokeIfNotBusy</b> and <b>InvokeAlways</b>. The type of policy is passed in constructor and is immutable during object life. All synchronization work is done in the background.
+
+In <b>InvokeIfNotBusy</b> mode of invocation all registered methods are stored in dictionary, the value is just a method itself and the key is given during registration. In the meantime, the background task is executing all registered methods in a few steps. The first step is to take all available (already registered) methods. The second one is about calling all of them one by one. The last step is to wait a given period of time before it starts the whole process again from the first step. Because only executing task is waiting and registration is available at this time, there is possibility to register a new bunch of methods. It also means that some of them can be replaced without being called in case of usage of the same key many times.
+
+In <b>InvokeAlways</b> mode the methods are registered in a queue, so there is no chance to replace anything, it also means that all of the registered methods have to be executed eventually. In this case, background task is executing methods one by one without any waiting.
+
+The <b>UpdateStatusControl</b> is using both of the <b>SmartMethodInvoker</b> modes, the indicator is a flag <b>ensureDelivery</b>. It basically means that if the flag is set to true, the InvokeAlways policy is used, and the <b>InvokeIfNotBusy</b> in opposite case. The standard delay in <b>InvokeIfNotBusy</b> mode can be changed in <b>ServerConfigurationManager</b> in section <b>Administration Service</b> in field <b>Callback Delay</b>.
+
 * ### Custom Menu Items
 Procontel.Sdk provide feature for endpoint to have own custom menu item, with own icon and list of children item.
 
