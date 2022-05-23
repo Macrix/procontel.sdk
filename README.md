@@ -291,6 +291,7 @@ Interface `IOnlineConfigurationUpdate` support observe configuration changed not
 * ### IOnlineUpgradeLifetimeCycle
 
 Interface `IOnlineUpgradeLifetimeCycle` support visibility into upgrade plugin process and the ability to act when they occur.
+The plugin has to possess a .NET strong name(add key.snk to your soultion).
 
 ```csharp
   [EndpointMetadata(Name = "OnlineUpgradeLifetimeCycle", SupportedRoles = SupportedRoles.None)]
