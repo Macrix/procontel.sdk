@@ -77,7 +77,9 @@ Description: >
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL SDK* version  | *ProconTEL Engine* major version(s) | 
 | :---:  |:---:|
-| 1.0.5 | 3.0.17 - 3.1.0 |
+| 1.0.7-preview1 | 3.4.1 not released yet |
+| 1.0.6 | 3.4.0 RC |
+| 1.0.5 | 3.0.17 - 3.3.8 |
 | 1.0.4 | 3.0.16 |
 | 1.0.3 | 3.0.15 |
 | 1.0.2 | 3.0.13 - 3.0.14 |
@@ -180,6 +182,12 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
     public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       _logger.Information("Initialize");
+      return Task.CompletedTask;
+    }
+
+    public Task AfterActivateAsync()
+    {
+      _logger.Information("After Activate");
       return Task.CompletedTask;
     }
 
