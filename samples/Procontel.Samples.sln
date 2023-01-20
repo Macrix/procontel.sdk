@@ -26,7 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramDefinitions", "Tele
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiEndpoint", "WebEndpoints\WebEndpoint\WebApiEndpoint.csproj", "{D76899D3-FDFB-4DDE-BDE1-3191ABFD7DD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Client.Legacy", "Api.Client.Legacy\Api.Client.Legacy.csproj", "{C42227AE-B5BC-4759-9F7A-9EF934DFF270}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Client.Legacy", "Api.Client.Legacy\Api.Client.Legacy.csproj", "{C42227AE-B5BC-4759-9F7A-9EF934DFF270}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndpointViewerWPF", "EndpointViewerWPF\EndpointViewerWPF.csproj", "{CBA298DC-0265-4BE5-9495-927B33940CD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +72,10 @@ Global
 		{C42227AE-B5BC-4759-9F7A-9EF934DFF270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C42227AE-B5BC-4759-9F7A-9EF934DFF270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C42227AE-B5BC-4759-9F7A-9EF934DFF270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA298DC-0265-4BE5-9495-927B33940CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA298DC-0265-4BE5-9495-927B33940CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA298DC-0265-4BE5-9495-927B33940CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA298DC-0265-4BE5-9495-927B33940CD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
