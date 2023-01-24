@@ -59,8 +59,9 @@ Description: >
     * [Streaming](#id-ui-components-injected-istreamingservice)
 11. [IoC](#id-ioc)
 12. [Middlewares](#id-middlewares)
-13. [Legacy Sdk](#id-legacy-sdk)
-14. [Standard Endpoints](#id-standard-endpoints)
+13. [Using ProconTel API with SDK](#id-api-with-sdk)
+14. [Legacy Sdk](#id-legacy-sdk)
+15. [Standard Endpoints](#id-standard-endpoints)
 
 
 
@@ -1307,9 +1308,98 @@ public async Task InitializeAsync(IMiddlewareBuilder builder)
 ```
 
 
+<div id='id-api-with-sdk'/>
+
+## 13. Using ProconTel API with SDK
+
+ProconTel SDK may be used together with ProconTel API. It may be needed e.g. to use `MessageLoggerClient`.
+To use it, API dll's need to be referenced manually from the ProconTel installation folder (e.g. `C:\Program Files\Macrix\ProconTEL\{Version Number}\Client\`):
+- <b>ProconTel.CommunicationCenter.Administration.Api.dll</b>
+- <b>ProconTel.CommunicationCenter.Kernel.dll</b>
+- <b>ProconTel.Logging.dll</b>
+
+Depend on the API feature used, some other libraries may be required. E.g. `MessageLoggerClient` require `ProconTel.CommunicationCenter.Administration.dll`, `ProconTel.Mapping.dll` and `ProconTel.Mapping.BinaryXmlTranslator.dll`.
+Compiler will throw an error during code editing or building explaining what library is missing:
+```
+CS0012	The type 'RemoteManagerBase' is defined in an assembly that is not referenced. You must add a reference to assembly 'ProconTel.CommunicationCenter.Administration, Version=3.3.8.5, Culture=neutral, PublicKeyToken=43b2a5dae6e35ee1'.
+```
+
+### Example: use SDK with MessageLoggerClient from API
+```csharp
+using System.Threading.Tasks;
+using ProconTel.CommunicationCenter.Administration.Api.MessageLogger;
+using ProconTel.CommunicationCenter.Kernel;
+using ProconTel.Logging;
+using ProconTel.Sdk.Attributes;
+using ProconTel.Sdk.Builders;
+using ProconTel.Sdk.Communications.Middlewares;
+using ProconTel.Sdk.Services;
+using ProconTel.Sdk.StandardEndpoints;
+
+namespace ProconTelSDKwithAPI
+{
+  [SupportsXmlProtocol]
+  [EndpointMetadata(Name = "SDK with API", SupportedRoles = ProconTel.Sdk.Attributes.SupportedRoles.Provider)]
+  public class ProconTelSDKwithAPIEndpoint : IEndpointLifeTimeCycle
+  {
+    private readonly ILogger _logger;
+    private readonly IMessageBus _bus;
+    private MessageLoggerClient _logClient;
+
+    public ProconTelSDKwithAPIEndpoint(ILogger logger, IMessageBus bus)
+    {
+      _logger = logger;
+      _bus = bus;
+    }
+
+    public Task InitializeAsync(IMiddlewareBuilder builder)
+    {
+      #region Use API here
+
+      _logClient = new MessageLoggerClient(9000);
+      _logClient.Connect();
+
+      ReceiverMessagesFilter messageFilter = new ReceiverMessagesFilter() { Severities = new MessageSeverity[] { MessageSeverity.Fatal, MessageSeverity.Error } };
+      _logClient.EnableMessagesListener(messageFilter);
+      _logClient.MessageReceived += OnLogMessageReceived;
+
+      #endregion
+
+      Task.Factory.StartNew(async () =>
+      {
+        var telegram = new Telegram(true);
+        string telegramXml = telegram.GetXml();
+        await _bus.BroadcastAsync(telegram.ID, telegramXml, new ProconTel.Sdk.StandardEndpoints.XmlProtocol());
+        _logger.Information($"Send telegram: {telegramXml}");
+      });
+
+      return Task.CompletedTask;
+    }
+
+    public Task AfterActivateAsync()
+    {
+      return Task.CompletedTask;
+    }
+
+    public Task TerminateAsync()
+    {
+      return Task.CompletedTask;
+    }
+
+    private void OnLogMessageReceived(object sender, LogMessageEventArgs e)
+    {
+      // Process e.Message
+    }
+  }
+}
+```
+
+Please note that some class names may be ambiguous between SDK and API, like `SupportedRoles` and `XmlProtocol` in example above. API classes should be used only for API code. Ensure SDK classes are used elsewhere.
+
+
 <div id='id-legacy-sdk'/>
 
-## 13. Legacy Sdk
+## 14. Legacy Sdk
 
 ### Migration
 
@@ -1379,7 +1469,7 @@ All features from Sdk which requires using attributes (i.e. Custom Menu Items) o
 
 <div id='id-standard-endpoints'/>
 
-## 14. Standard Endpoints
+## 15. Standard Endpoints
 
 This section describes how to receive and send telegrams that are processed by _ProconTEL Standard Endpoints_.
 
