@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
 using System.Windows;
@@ -17,7 +16,6 @@ namespace EndpointViewerWPF
   public partial class StatusBar : Controls.UserControl, IEndpointStatusControl
   {
     private readonly IEndpointCommandSender _sender;
-
     internal IHost hostService;
 
     public StatusBar(IEndpointCommandSender sender)
@@ -39,13 +37,13 @@ namespace EndpointViewerWPF
 
     public Task OnStatusControlShownAsync()
     {
-      hostService.DisplayStatus("Test", "Test Status Bar", ImageToByteArray(Image.FromFile("pack://application:,,,/assets/green.png")));
+      hostService.DisplayStatus("Test", "Test Status Bar", ImageToByteArray(Properties.Resources.green));
       return Task.CompletedTask;
     }
 
     private void UpdateStatusBar(object sender, RoutedEventArgs routedEventArgs)
     {
-      hostService.DisplayStatus("Test", "Test updated!", ImageToByteArray(Image.FromFile("pack://application:,,,/assets/red.png")));
+      hostService.DisplayStatus("Test", "Test updated!", ImageToByteArray(Properties.Resources.red));
     }
 
     private void DeleteStatusBar(object sender, RoutedEventArgs routedEventArgs)
