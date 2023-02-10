@@ -19,6 +19,12 @@ namespace SimpleEndpoints
       return Task.CompletedTask;
     }
 
+    public Task AfterActivateAsync()
+    {
+      _logger.Information("After activate async.");
+      return Task.CompletedTask;
+    }
+
     public Task TerminateAsync()
     {
       _logger.Information("Terminated.");

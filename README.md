@@ -10,9 +10,8 @@ Description: >
 
 1. [Quick introduction](#id-quick-introduction)
 2. [Compatibility matrix](#id-compatibility-matrix)
-3. [Feature comparison](#id-feature-comparison)
-4. [Additional features](#id-additional-features-blocks)
-5. [Builder blocks](#id-builder-blocks)
+3. [SDK major changes](#id-sdk-major-changes)
+4. [Builder blocks](#id-builder-blocks)
 	* [IEndpointLifeTimeCycle](#id-builder-blocks-ilife-time-cycle)
     * [IHandler](#id-builder-blocks-ihandler)
     * [ICommandHandler](#id-builder-blocks-icommand-handler)
@@ -26,7 +25,7 @@ Description: >
     * [IExportable](#id-builder-blocks-iexportable)
     * [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
     * [IRequestLastContent](#id-builder-blocks-irequest-last-content)
-6. [Injected services](#id-injected-services)
+5. [Injected services](#id-injected-services)
     * [ILogger](#id-injected-services-ilogger)
     * [IMessageBus](#id-injected-services-imessage-bus)
     * [IConfigurationReader](#id-injected-services-iconfiguration-reader)
@@ -38,29 +37,30 @@ Description: >
     * [IReportService](#id-injected-services-ireportservice-context)
     * [IStreamingService](#id-injected-services-istreamingservice-context)
     * [IMessageObserver](#id-injected-services-imessageobserver-context)
-7. [Providers](#id-providers)
+6. [Providers](#id-providers)
 	  * [IMessageMetadataProvider](#id-providers-imessage-metadata-provider)
-8. [Attributes](#id-attributes)
+7. [Attributes](#id-attributes)
 	  * [EndpointMetadata Attribute](#id-attributes-endpoint-metadata)
     * [MessageMetadata Attribute](#id-attributes-message-metadata)
     * [MessageMetadataProvider Attribute](#id-attributes-message-metadata-provider)
-9. [Advanced concepts](#id-advanced-concepts)
+8. [Advanced concepts](#id-advanced-concepts)
     * [Supported protocols](#id-advanced-concepts-protocols)
     * [Persistent messages](#id-advanced-concepts-persistent-messages)
-10. [UI Components](#id-ui-components)
+9. [UI Components](#id-ui-components)
     * [Configuration Dialog](#id-ui-components-configuration-dialog)
     * [Status Control](#id-ui-components-status-control)
     * [Updating a status of control](#id-ui-update-status-control)
     * [Custom Menu Items](#id-ui-custom-menu-items)
-11. [Injected services for UI Components](#id-injected-services-ui-components)
+10. [Injected services for UI Components](#id-injected-services-ui-components)
     * [IConfigurationWriter](#id-ui-components-injected-services-iconfiguration-writer)
     * [ILocalStorage](#id-ui-components-injected-services-ilocal-storage)
     * [ISecurityService](#id-ui-components-injected-services-isecurity-service)
     * [IFileUploaderService](#id-ui-components-injected-services-ifileuploaderservice)
     * [IVirtualFileSystem](#id-ui-components-injected-services-ivirtualfilesystem)
     * [Streaming](#id-ui-components-injected-istreamingservice)
-12. [IoC](#id-ioc)
-13. [Middlewares](#id-middlewares)
+11. [IoC](#id-ioc)
+12. [Middlewares](#id-middlewares)
+13. [Using ProconTel API with SDK](#id-api-with-sdk)
 14. [Legacy Sdk](#id-legacy-sdk)
 15. [Standard Endpoints](#id-standard-endpoints)
 
@@ -78,7 +78,9 @@ Description: >
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL SDK* version  | *ProconTEL Engine* major version(s) | 
 | :---:  |:---:|
-| 1.0.5 | 3.0.17 - 3.1.0 |
+| 1.0.7-preview1 | 3.4.1 |
+| 1.0.6 | 3.4.0 RC |
+| 1.0.5 | 3.0.17 - 3.3.8 |
 | 1.0.4 | 3.0.16 |
 | 1.0.3 | 3.0.15 |
 | 1.0.2 | 3.0.13 - 3.0.14 |
@@ -94,78 +96,23 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 
 <div id='id-feature-comparison'/>
 
-## 3. Feature Comparison
-Table below lists feature available in *ProconTEL Engine 2.x SDK* and compares it with features available in new SDK under *ProconTEL Engine 3.x*. Features are described with hints as it was available in *Engine 2.x*.
+## 3. SDK major changes
 
-| Feature         | Engine 2.x SDK | SDK 1.0<br>*Current*  | SDK 1.1<br>*Planned* | SDK Legacy 1.0<br>*Current* |
-| :---  |:---:|:---:|:---:|:---:|
-| Broadcast message                                                                                      | ✓ | ✓ | ✓ | ✓ | 
-| Send message                                                                                           | ✓ | ✓ | ✓ | ✓ | 
-| Attach metadata with message when broadcast/send                                                       | ✓ | ✓ | ✓ | ✓ | 
-| Handle message<br>`SubscriberStrategy.AcceptsContent()`, `SubscriberStrategy.ProcessContent()`         | ✓ | ✓ | ✓ | ✓ | 
-| Handle metadata information of received message<br>`ContentInfo`                                       | ✓ | ✓ | ✓ | ✓ |
-| Expose details of send/broadcasted messages<br>`ProviderStrategy.ProvidingContentDetails`              | ✓ | ✓ | ✓ | ✓ |
-| Handle supported protocols<br>`SubscriberStrategy.SubscribingProtocols`                                | ✓ | ✓ | ✓ | ✓ |
-| Acknowledge processed message<br>`SubscriberStrategy.AcknowledgeContent()`                             | ✓ | ✓ | ✓ | - |
-| Automatic acknowledge<br>`SubscriberStrategy.AutomaticContentAcknowledge`                              | ✓ | - | - | ✓ |
-| Life cycle mechanism<br>`ChannelEndpointBase.Initialize()`, `ChannelEndpointBase.Terminate()`          | ✓ | ✓ | ✓ | ✓ |
-| On-line upgrade<br>`ChannelEndpointBase.OnBeforeUpgrade()`, `ChannelEndpointBase.OnAfterUpgrade()`     | ✓ | ✓ | ✓ | ✓ |
-| Reading endpoint configuration<br>`ChannelEndpointBase.GetConfiguration()`                             | ✓ | ✓ | ✓ | ✓ |
-| Handle endpoint configuration changes in runtime<br>`ChannelEndpointBase.OnConfigurationUpdated()`     | ✓ | ✓ | ✓ | ✓ |
-| Logger<br>*all `Logger.Debug()`, `Logger.Error()`, etc. methods                                        | ✓ | ✓ | ✓ | ✓ |
-| ~~Custom log source location information<br>`ILogMessageOrigin` support~~                              | ✓ | - | - | - |
-| Endpoint metadata<br>`ChannelEndpointBase.Id`, `ChannelEndpointBase.CustomId`, etc.                    | ✓ | ✓ | ✓ | ✓ |
-| Endpoint type<br>`ChannelEndpointBase.ActsAsProvider`, `ChannelEndpointBase.ActsAsSubscriber`          | ✓ | ✓ | ✓ | ✓ |
-| Broadcast/Send stream in endpoint<br>`ChannelEndpointBase.BroadcastContent(Stream, StreamReleaseCallbackHandler)` | ✓ | ✓ | ✓ | - |
-| Handle stream in endpoint                                                                              | ✓ | ✓ | ✓ | - |
-| Send stream to UI status control                                                                       | ✓ | ✓ | ✓ | - |
-| Handle stream in UI status control                                                                     | ✓ | ✓ | ✓ | - |
-| Custom actions while endpoint is imported<br>`ChannelEndpointBase.ImportContentDirectory()`            | ✓ | ✓ | ✓ | ✓ |
-| Custom actions while endpoint is exported<br>`ChannelEndpointBase.ExportContentDirectory()`            | ✓ | ✓ | ✓ | ✓ |
-| Avatar connected event<br>`ChannelEndpointBase.AvatarConnected()`                                      | ✓ | ✓ | ✓ | ✓ |
-| Avatar disconnected event<br>`ChannelEndpointBase.AvatarDisconnected()`                                | ✓ | ✓ | ✓ | ✓ |
-| ~~Read and save avatars subscribed messages<br>`SubscriberStrategy.AddSubscribedContent()`~~           | ✓ | - | - | - |
-| ~~Read/save avatars configuration<br>`IEndpointConfigurationController.GetAvatarConfiguration()`~~     | ✓ | - | - | - |
-| Report custom warning<br>`ICommunicationChannel.ReportEndpointWarning()`                               | ✓ | ✓ | ✓ | ✓ |
-| Clear custom warning<br>`ICommunicationChannel.ClearEndpointWarnings()`                                | ✓ | ✓ | ✓ | ✓ |
-| `RequestLastContent()`                                                                                 | ✓ | ✓ |✓ | ✓ |
-| `RequestMissedContents()`                                                                              | ✓ | ✓ | ✓ | ✓ |
-| Configuration dialog (WinForms)                                                                        | ✓ | ✓ | ✓ | ✓ |
-| Configuration dialog provider (WinForms)                                                               | - | ✓ | ✓ | ✓ |
-| Read and store endpoint configuration in conf. dialog                                                  | ✓ | ✓ | ✓ | ✓ |
-| Send command from conf. dialog<br>`SendCommandToServerEndpoint()`                                      | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from conf. dialog                                                            | ✓ | ✓ | ✓ | ✓ |
-| Send files from conf. dialog                                                                           | ✓ | ✓ | ✓ | ✓ |
-| Conf. dialog available while endpoint is active                                                        | ✓ | ✓ | ✓ | ✓ |
-| Endpoint status control (WinForms, WPF)                                                                | ✓ | ✓ | ✓ | ✓ |
-| Send command from status control<br>`SendCommandToServerEndpoint()`                                    | ✓ | ✓ | ✓ | ✓ |
-| Notification from endpoint to status control                                                           | ✓ | ✓ | ✓ | ✓ |
-| Send files from status control                                                                         | ✓ | ✓ | ✓ | ✓ |
-| Access remote file system from status control                                                          | ✓ | ✓ | ✓ | ✓ |
-| State manager for status control                                                                       | ✓ | ✓ | ✓ | ✓ |
-| Custom menu items (exposed in *Communication Console*)                                                 | ✓ | ✓ | ✓ | ✓ |
-| `IAuthenticationEndpoint`                                                                              | ✓ | ✓ | ✓ | - |
-| `IAuthorizationEndpoint`                                                                               | ✓ | ✓ | ✓ | - |
-| After initialization method `AfterActivate()`                                                          | ✓ | - | - | ✓ |
-| ~~Custom queues definitions~~                                                                          | ✓ | - | - | - |
-| ~~Information about other endpoints available in channel<br>`ChannelSubscriberDetails`, `ChannelProviderDetails`, `ChannelProviderContentDetails`, `ChannelSubscriberIds`, `ChannelProviderIds`~~ | ✓ | - | - | - |
-| ~~Custom endpoint remove confirmation dialog<br>`ChannelEndpointBase.GetRemoveConfirmationDialog()`~~  | ✓ | - | - | - |
-| ~~Divide/merge configuration when endpoint is moved, split (avatar + endpoint) or merged (remove avatar and replace with endpoint from pool)~~ | ✓ | - | - | - |
+### SDK 1.0.7-preview1
+| Task ID | Topic | Changes |
+| :---|:---|:---|
+| PS-1223 | IReportService | Changed the type of endpointId from string to GuidId |
+| PS-1420 | WCF Encription | Merged all security features implemented in version 3.3.8.5 |
 
-<div id='id-additional-features-blocks'/>
-
-## 4. Additional features
-| Feature         | SDK version |
-| :---  |:---:|
-| Expose details of send/broadcasted messages in attribute                                               |  1.x |
-| Override services implementation                      | 1.x |
-| Asynchronous methods (`async`)                        | 0.10 |
+### SDK 1.0.6
+| Task ID | Topic | Changes |
+| :---|:---|:---|
+| PS-1230 | Legacy.Logging.Logger | Added possibility to set an instance inside the endpoint created in the new SDK |
+| PS-1254 | ICommandHandler | Added TaskCanceledException handling in HandleCommandAsync when the function returns null |
 
 <div id='id-builder-blocks'/>
 
-## 5. Builder blocks
-
-To create endpoint we need to decorate C# class with the `EndpointMetadata` attribute. To keep ProconTEL environment clear we strongly recommended to use self describing property `Name` in attribute. `ProconTEL.Sdk` delivers builder blocks which gives developer possibilities to extend endpoint functionality. To use builder block endpoint has to implement one of interfaces. Each interface represents endpoint behavior and it can be mixed freely. `EndpointMetadata` contains property `SupportedRoles` which is promise of endpoint communication posobilities.
+## 4. Builder blocks
 
 <div id='id-builder-blocks-ilife-time-cycle'/>
 
@@ -181,6 +128,12 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
     public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       _logger.Information("Initialize");
+      return Task.CompletedTask;
+    }
+
+    public Task AfterActivateAsync()
+    {
+      _logger.Information("After Activate");
       return Task.CompletedTask;
     }
 
@@ -292,6 +245,7 @@ Interface `IOnlineConfigurationUpdate` support observe configuration changed not
 * ### IOnlineUpgradeLifetimeCycle
 
 Interface `IOnlineUpgradeLifetimeCycle` support visibility into upgrade plugin process and the ability to act when they occur.
+The plugin has to possess a .NET strong name(add key.snk to your soultion).
 
 ```csharp
   [EndpointMetadata(Name = "OnlineUpgradeLifetimeCycle", SupportedRoles = SupportedRoles.None)]
@@ -484,7 +438,7 @@ In some cases endpoint can ask for last sent messages in channel, to handle that
 
 <div id='id-injected-services'/>
 
-## 6. Injected services
+## 5. Injected services
 
 ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in endpoint constructor. In ProconTEL naming conventions these interfaces are called <b>services</b>.
 
@@ -714,7 +668,7 @@ There are more features available, such as:
 
 <div id='id-providers'/>
 
-## 7. Providers
+## 6. Providers
 
 <div id='id-providers-imessage-metadata-provider'/>
 
@@ -735,7 +689,7 @@ Interface `IMessageMetadataProvider` provide mechanism to define runtime mutable
 
 <div id='id-attributes'/>
 
-## 8. Attributes
+## 7. Attributes
 
 <div id='id-attributes-endpoint-metadata'/>
 
@@ -785,7 +739,7 @@ public class MessageMetadataProviderEndpoint
 
 <div id='id-advanced-concepts'/>
 
-## 9. Advanced concepts
+## 8. Advanced concepts
 
 <div id='id-advanced-concepts-protocols'/>
 
@@ -837,7 +791,7 @@ To persist messages which are sent to an endpoint the `PersistMessage` attribute
 
 <div id='id-ui-components'/>
 
-## 10. UI Components
+## 9. UI Components
 
 We are able to bind and communicate user interface to hosted business logic.
 
@@ -1053,7 +1007,7 @@ public class MenuItemAction : IMenuItemAction
 
 <div id='id-injected-services-ui-components' />
 
-## 11. Injected services for UI components
+## 10. Injected services for UI components
 
 ProconTEL environment provide set of features available via dependency injection. To use this mechanism developer has to use appropriate interface in control or provider constructor. In ProconTEL naming conventions this interfaces called <b>services</b>.
 
@@ -1256,7 +1210,7 @@ See [IStreamingService](#id-injected-services-istreamingservice-context)
 
 <div id='id-ioc'/>
 
-## 12. IoC
+## 11. IoC
 
 ProconTEL Engine offers access to implementation of internal services. Described mechanism is deliver by service `IServiceContext` and allows to resolve any service that was previosly registered. What is also possible is that endpoint can register it's own custom services. This is possible by implementing a static method in endpoint class with following signature `Configure(IApplicationBuilder)`.
 
@@ -1343,7 +1297,7 @@ More information about `IServiceContext` can be found in [injected services chap
 
 <div id='id-middlewares'/>
 
-## 13. Middlewares
+## 12. Middlewares
 
 ProconTEL engine offers dynamic configuration for input messages pipeline. Described mechanism is deliver in `IEndpointLifeTimeCycle.InitializeAsync(IMiddlewareBuilder)` method parameter. `IMiddlewareBuilder` allows registration of custom middlewares inside ProconTEL messages pipeline. It is possible to combine it with already exisiting ProconTEL built-in middlewares or completly replace ProconTEL built-in functionality. Complete list of possible registration options is shown below.
 
@@ -1424,6 +1378,95 @@ public async Task InitializeAsync(IMiddlewareBuilder builder)
   return;
 }
 ```
+
+
+<div id='id-api-with-sdk'/>
+
+## 13. Using ProconTel API with SDK
+
+ProconTel SDK may be used together with ProconTel API. It may be needed e.g. to use `MessageLoggerClient`.
+To use it, API dll's need to be referenced manually from the ProconTel installation folder (e.g. `C:\Program Files\Macrix\ProconTEL\{Version Number}\Client\`):
+- <b>ProconTel.CommunicationCenter.Administration.Api.dll</b>
+- <b>ProconTel.CommunicationCenter.Kernel.dll</b>
+- <b>ProconTel.Logging.dll</b>
+
+Depend on the API feature used, some other libraries may be required. E.g. `MessageLoggerClient` require `ProconTel.CommunicationCenter.Administration.dll`, `ProconTel.Mapping.dll` and `ProconTel.Mapping.BinaryXmlTranslator.dll`.
+Compiler will throw an error during code editing or building explaining what library is missing:
+```
+CS0012	The type 'RemoteManagerBase' is defined in an assembly that is not referenced. You must add a reference to assembly 'ProconTel.CommunicationCenter.Administration, Version=3.3.8.5, Culture=neutral, PublicKeyToken=43b2a5dae6e35ee1'.
+```
+
+### Example: use SDK with MessageLoggerClient from API
+```csharp
+using System.Threading.Tasks;
+using ProconTel.CommunicationCenter.Administration.Api.MessageLogger;
+using ProconTel.CommunicationCenter.Kernel;
+using ProconTel.Logging;
+using ProconTel.Sdk.Attributes;
+using ProconTel.Sdk.Builders;
+using ProconTel.Sdk.Communications.Middlewares;
+using ProconTel.Sdk.Services;
+using ProconTel.Sdk.StandardEndpoints;
+
+namespace ProconTelSDKwithAPI
+{
+  [SupportsXmlProtocol]
+  [EndpointMetadata(Name = "SDK with API", SupportedRoles = ProconTel.Sdk.Attributes.SupportedRoles.Provider)]
+  public class ProconTelSDKwithAPIEndpoint : IEndpointLifeTimeCycle
+  {
+    private readonly ILogger _logger;
+    private readonly IMessageBus _bus;
+    private MessageLoggerClient _logClient;
+
+    public ProconTelSDKwithAPIEndpoint(ILogger logger, IMessageBus bus)
+    {
+      _logger = logger;
+      _bus = bus;
+    }
+
+    public Task InitializeAsync(IMiddlewareBuilder builder)
+    {
+      #region Use API here
+
+      _logClient = new MessageLoggerClient(9000);
+      _logClient.Connect();
+
+      ReceiverMessagesFilter messageFilter = new ReceiverMessagesFilter() { Severities = new MessageSeverity[] { MessageSeverity.Fatal, MessageSeverity.Error } };
+      _logClient.EnableMessagesListener(messageFilter);
+      _logClient.MessageReceived += OnLogMessageReceived;
+
+      #endregion
+
+      Task.Factory.StartNew(async () =>
+      {
+        var telegram = new Telegram(true);
+        string telegramXml = telegram.GetXml();
+        await _bus.BroadcastAsync(telegram.ID, telegramXml, new ProconTel.Sdk.StandardEndpoints.XmlProtocol());
+        _logger.Information($"Send telegram: {telegramXml}");
+      });
+
+      return Task.CompletedTask;
+    }
+
+    public Task AfterActivateAsync()
+    {
+      return Task.CompletedTask;
+    }
+
+    public Task TerminateAsync()
+    {
+      return Task.CompletedTask;
+    }
+
+    private void OnLogMessageReceived(object sender, LogMessageEventArgs e)
+    {
+      // Process e.Message
+    }
+  }
+}
+```
+
+Please note that some class names may be ambiguous between SDK and API, like `SupportedRoles` and `XmlProtocol` in example above. API classes should be used only for API code. Ensure SDK classes are used elsewhere.
 
 
 <div id='id-legacy-sdk'/>
@@ -1510,5 +1553,6 @@ In the samples you can find a complete example of [receiving](samples/TelegramHa
 * [Telegram definitions](samples/TelegramHandling/TelegramDefinitions) project with Excel, _Developer Studio_ project file and C# telegram classes
 * [Example telegram receiver](samples/TelegramHandling/TelegramHandlingEndpoints/TelegramReceiverEndpoint.cs)
 * [Example telegram sender](samples/TelegramHandling/TelegramHandlingEndpoints/TelegramSenderEndpoint.cs)
+
 
 
