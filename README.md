@@ -37,6 +37,7 @@ Description: >
     * [IServiceContext](#id-injected-services-iservice-context)
     * [IReportService](#id-injected-services-ireportservice-context)
     * [IStreamingService](#id-injected-services-istreamingservice-context)
+    * [IMessageObserver](#id-injected-services-imessageobserver-context)
 7. [Providers](#id-providers)
 	  * [IMessageMetadataProvider](#id-providers-imessage-metadata-provider)
 8. [Attributes](#id-attributes)
@@ -639,6 +640,77 @@ public async Task DisplayStatusAsync(object statusInformation)
   return Task.FromResult(new Acknowledgement());
 }
  ```
+
+
+<div id='id-injected-services-imessageobserver-context'/>
+
+ * ### IMessageObserver
+Interface IMessageObserver provide access to listening logger events. 
+
+Example usage:
+```csharp
+using System.Threading.Tasks;
+using ProconTel.Sdk.Attributes;
+using ProconTel.Sdk.Builders;
+using ProconTel.Sdk.Communications.Middlewares;
+using ProconTel.Sdk.Logger;
+using ProconTel.Sdk.Services;
+
+namespace NewSdk.Tests
+{
+  [EndpointMetadata(Name = "[TestEndpoint]", SupportedRoles = SupportedRoles.None)]
+  public class TestEndpoint : IEndpointLifeTimeCycle
+  {
+    private readonly IMessageObserver _observer;
+
+    public TestEndpoint(IMessageObserver observer)
+    {
+      _observer = observer;
+    }
+
+    public Task InitializeAsync(IMiddlewareBuilder builder)
+    {
+      // the Initialize has to be callled once before you start connection
+      _observer.Initialize(9000);
+      _observer.Connect();
+      _observer.MessageReceived += ObserverOnMessageReceived;
+      _observer.EnableMessagesListener(new ReceiverMessagesFilter()
+      {
+        Severities = new [] { MessageSeverity.Fatal, MessageSeverity.Error}
+      });
+      return Task.CompletedTask;
+    }
+
+    private void ObserverOnMessageReceived(object sender, LogMessageEventArgs e)
+    {
+      // Handle messages here
+    }
+
+    public Task TerminateAsync()
+    {
+      _observer.DisableMessagesListener();
+      _observer.MessageReceived -= ObserverOnMessageReceived;
+      _observer.Dispose(); 
+      return Task.CompletedTask;
+    }
+
+    public Task AfterActivateAsync()
+    {
+      return Task.CompletedTask;
+    }
+  }
+}
+```
+
+The first thing to use the service is to initialize instance with port number of AdministrationService (`Initialzie` method), then we are able to establish connection using `Connect` method. Next step is subscription for event `MessageReceived` which will be triggered each time when message will logged. Then we can start lsitening for events by using `EnableMessagesListener`, which take filter parameter `ReceiverMessagesFilter`. So there is possibillity to filter out some of the messages, for which event is not triggered.
+
+Closing connection and cleaning up is done in `TerminateAsync` method, so basically we starting with disabling receiving events by calling `DisableMessagesListener`, then we unsubscribe from event and finally `Dispose` instance.
+
+There are more features available, such as:
+* `UpdateMessagesListenerFilter` - it allows to change filters on active listener
+* `GetCachedMessages` - it returns cached messsages, by default cache contains up to 100k last log messages
+* There is possible to set autoconnect feature or listen on connection based events
+
 
 <div id='id-providers'/>
 
