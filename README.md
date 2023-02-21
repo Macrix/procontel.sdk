@@ -78,7 +78,9 @@ Description: >
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL SDK* version  | *ProconTEL Engine* major version(s) | 
 | :---:  |:---:|
-| 1.0.7-preview1 | 3.4.1 |
+| 1.0.9 | 3.4.2 |
+| 1.0.8 | 3.4.1.4 |
+| 1.0.7 | 3.4.1.3 |
 | 1.0.6 | 3.4.0 RC |
 | 1.0.5 | 3.0.17 - 3.3.8 |
 | 1.0.4 | 3.0.16 |
@@ -98,11 +100,21 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 
 ## 3. SDK major changes
 
-### SDK 1.0.7-preview1
+### SDK 1.0.9
+| Task ID | Topic | Changes |
+| :---|:---|:---|
+| PS-1499 | IMessageObserver | Changed the type of endpointId from string to GuidId |
+
+### SDK 1.0.8
+| Task ID | Topic | Changes |
+| :---|:---|:---|
+| PS-1545 | ILogger | Removed the warning about the logger getting overriden if the loggers have the same references |
+
+### SDK 1.0.7
 | Task ID | Topic | Changes |
 | :---|:---|:---|
 | PS-1223 | IReportService | Changed the type of endpointId from string to GuidId |
-| PS-1420 | WCF Encription | Merged all security features implemented in version 3.3.8.5 |
+| PS-1392 | SDK.UI.Configuration | Fixing subscribers editor control when used from custom configuration dialog. |
 
 ### SDK 1.0.6
 | Task ID | Topic | Changes |
