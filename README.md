@@ -25,7 +25,7 @@ Description: >
     * [IExportable](#id-builder-blocks-iexportable)
     * [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
     * [IRequestLastContent](#id-builder-blocks-irequest-last-content)
-    * [IProtocolProvider](#id-protocol-provider)
+    * [IProtocolProvider](#id-builder-blocks-iprotocol-provider)
 5. [Injected services](#id-injected-services)
     * [ILogger](#id-injected-services-ilogger)
     * [IMessageBus](#id-injected-services-imessage-bus)
