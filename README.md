@@ -459,7 +459,8 @@ Interface `IProtocolProvider` provides a mechanism to support a dynamic list of 
   {
     public Task<IEnumerable<IProtocol>> GetProtocolsAsync()
     {
-      return Task.FromResult(Enumerable.Empty<IProtocol>());
+      List<IProtocol> protocols = new List<IProtocol>{ DefaultProtocol.Instance, new XmlProtocol(), new BinaryProtocol() };
+      return Task.FromResult(protocols as IEnumerable<IProtocol>);
     }
   }
 ```
