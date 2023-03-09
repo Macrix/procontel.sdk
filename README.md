@@ -25,6 +25,7 @@ Description: >
     * [IExportable](#id-builder-blocks-iexportable)
     * [IRequestMissedContent](#id-builder-blocks-irequest-missed-content)
     * [IRequestLastContent](#id-builder-blocks-irequest-last-content)
+    * [IProtocolProvider](#id-protocol-provider)
 5. [Injected services](#id-injected-services)
     * [ILogger](#id-injected-services-ilogger)
     * [IMessageBus](#id-injected-services-imessage-bus)
@@ -443,6 +444,23 @@ In some cases endpoint can ask for last sent messages in channel, to handle that
     {
          _logger.Information("requestingEndpointId endpoint asked for messages with contentsIds sent by providerId");    
         return Task.CompletedTask;
+    }
+  }
+```
+
+<div id='id-builder-blocks-iprotocol-provider'/>
+
+* ### IProtocolProvider
+
+Interface `IProtocolProvider` provides a mechanism to support a dynamic list of protocols for cases when list of protocols can be changed in runtime.
+
+```csharp
+  public class ProtocolProviderEndpoint : IProtocolProvider
+  {
+    public Task<IEnumerable<IProtocol>> GetProtocolsAsync()
+    {
+      List<IProtocol> protocols = new List<IProtocol>{ DefaultProtocol.Instance, new XmlProtocol(), new BinaryProtocol() };
+      return Task.FromResult(protocols as IEnumerable<IProtocol>);
     }
   }
 ```
