@@ -637,7 +637,8 @@ namespace NewSdk.Tests
     public Task InitializeAsync(IMiddlewareBuilder builder)
     {
       // the Initialize has to be callled once before you start connection
-      _observer.Initialize(9000);
+      if (!_observer.IsInitialized)
+        _observer.Initialize(9000);
       _observer.Connect();
       _observer.MessageReceived += ObserverOnMessageReceived;
       _observer.EnableMessagesListener(new ReceiverMessagesFilter()
