@@ -15,12 +15,10 @@ namespace EndpointViewerWPF
   /// </summary>
   public partial class StatusBar : Controls.UserControl, IEndpointStatusControl
   {
-    private readonly IEndpointCommandSender _sender;
     internal IHost hostService;
 
     public StatusBar(IEndpointCommandSender sender)
     {
-      _sender = sender;
       InitializeComponent();
       hostService = ServiceLocator.Instance.GetService<IHost>();
     }
@@ -37,27 +35,25 @@ namespace EndpointViewerWPF
 
     public Task OnStatusControlShownAsync()
     {
-      hostService.DisplayStatus("Test", "Test Status Bar", ImageToByteArray(Properties.Resources.green));
+      hostService?.DisplayStatus("Test", "Test Status Bar", ImageToByteArray(Properties.Resources.green));
       return Task.CompletedTask;
     }
 
     private void UpdateStatusBar(object sender, RoutedEventArgs routedEventArgs)
     {
-      hostService.DisplayStatus("Test", "Test updated!", ImageToByteArray(Properties.Resources.red));
+      hostService?.DisplayStatus("Test", "Test updated!", ImageToByteArray(Properties.Resources.red));
     }
 
     private void DeleteStatusBar(object sender, RoutedEventArgs routedEventArgs)
     {
-      hostService.DisplayStatus("Test", null, null);
+      hostService?.DisplayStatus("Test", null, null);
     }
 
     private byte[] ImageToByteArray(Image imageIn)
     {
-      using (var ms = new MemoryStream())
-      {
-        imageIn.Save(ms, imageIn.RawFormat);
-        return ms.ToArray();
-      }
+      using MemoryStream ms = new();
+      imageIn.Save(ms, imageIn.RawFormat);
+      return ms.ToArray();
     }
 
   }
