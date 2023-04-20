@@ -7,6 +7,7 @@ using ProconTel.IoC;
 using ProconTel.Sdk.UI.Models;
 using ProconTel.Sdk.UI.Services;
 using Controls = System.Windows.Controls;
+using System.Linq;
 
 namespace EndpointViewerWPF
 {
@@ -41,7 +42,12 @@ namespace EndpointViewerWPF
 
     private void UpdateStatusBar(object sender, RoutedEventArgs routedEventArgs)
     {
-      hostService?.DisplayStatus("Test", "Test updated!", ImageToByteArray(Properties.Resources.red));
+      Parallel.ForEach(Enumerable.Range(0, 25), async number =>
+      {
+        hostService?.DisplayStatus($"Test{number % 2}", $"Test updated!{number}", ImageToByteArray(Properties.Resources.red));
+        hostService.SetTitle("asdd");
+        await Task.Delay(1000);
+      });
     }
 
     private void DeleteStatusBar(object sender, RoutedEventArgs routedEventArgs)
