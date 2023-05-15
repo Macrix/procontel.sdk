@@ -79,6 +79,7 @@ Description: >
 As SDK version may change, we provide SDK compatibility matrix which shows which SDK versions is supported by which *ProconTEL Engine*.
 | *ProconTEL SDK* version  | *ProconTEL Engine* major version(s) | 
 | :---:  |:---:|
+| 1.0.10 | 3.4.3 |
 | 1.0.9 | 3.4.2 |
 | 1.0.8 | 3.4.1.4 |
 | 1.0.7 | 3.4.1.3 |
@@ -100,6 +101,11 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 <div id='id-feature-comparison'/>
 
 ## 3. SDK major changes
+
+### SDK 1.0.10
+| Task ID | Topic | Changes |
+| :---|:---|:---|
+| PS-1556 | All interfaces | Replace async methods with synchronous implementation |
 
 ### SDK 1.0.9
 | Task ID | Topic | Changes |
@@ -138,22 +144,19 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
     private readonly ILogger _logger;
     public LifeTimeCycleEndpoint(ILogger logger) => _logger = logger;
 
-    public Task InitializeAsync(IMiddlewareBuilder builder)
+    public void Initialize(IMiddlewareBuilder builder)
     {
       _logger.Information("Initialize");
-      return Task.CompletedTask;
     }
 
-    public Task AfterActivateAsync()
+    public void AfterActivate()
     {
       _logger.Information("After Activate");
-      return Task.CompletedTask;
     }
 
-    public Task TerminateAsync()
+    public void Terminate()
     {
       _logger.Information("Terminate");
-      return Task.CompletedTask;
     }
   }
 
@@ -164,7 +167,7 @@ A endpoint has a lifecycle managed by ProconTEL. ProconTEL.Sdk offers interface 
 * ### IHandler
 
 `IHandler` is common communication interface which provide receiving data from another endpoint. We can filter incoming messages by implement method `IHandler.CanHandle`. 
-Asynchronous method `HandleAsync` is responsible for processing data. <b>This execution is a blocking call (synchronous).</b> No execution will take place on the current thread until current processing returns some acknowledgement. <b>We will not process new messages until the current processing is completed.</b>
+Method `Handle` is responsible for processing data. <b>This execution is a blocking call (synchronous).</b> No execution will take place on the current thread until current processing returns some acknowledgement. <b>We will not process new messages until the current processing is completed.</b>
 We support few acknowledgement types : Ack, Retry, Reject. Handler implementation has to return acknowledgement (mandatory), but sender can ignore it (obligatory).
 
 ```csharp
@@ -177,10 +180,10 @@ We support few acknowledgement types : Ack, Retry, Reject. Handler implementatio
 
     public bool CanHandle(string messageId, ICorrelationContext context = null) => true;
 
-    public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context)
+    public Acknowledgement Handle(string messageId, object message, ICorrelationContext context)
     {
       _logger.Information($"Received id: {messageId}, message: {message}");
-      return Task.FromResult<Acknowledgement>(new Ack());
+      return new Ack();
     }
   }
 ```
@@ -197,10 +200,10 @@ Interface `ICommandHandler` support handling messages from Status Control Compon
     private readonly ILogger _logger;
     public CommandHandlerEndpoint(ILogger logger) => _logger = logger;
 
-    public Task<object> HandleCommandAsync(object command, ICorrelationContext context = null)
+    public object HandleCommand(object command, ICorrelationContext context = null)
     {
       _logger.Information($"Received command: {command}");
-      return Task.FromResult<object>("Done");
+      return "Done";
     }
   }
 ```
@@ -219,10 +222,10 @@ Interface `IConfigurationCommandHandler` support handling messages from Configur
     private readonly ILogger _logger;
     public ConfigurationCommandHandlerEndpoint(ILogger logger) => _logger = logger;
 
-    public Task<object> HandleConfigurationCommandAsync(object command, ICorrelationContext context = null)
+    public object HandleConfigurationCommand(object command, ICorrelationContext context = null)
     {
       _logger.Information($"Execute command {command}");
-      return Task.FromResult<object>("Done");
+      return "Done";
     }
   }
 ```
@@ -245,10 +248,9 @@ Interface `IOnlineConfigurationUpdate` support observe configuration changed not
       _configurationReader = configurationReader;
     }
 
-    public Task ConfigurationChangedAsync()
+    public void ConfigurationChanged()
     {
       _logger.Information($"Configuration was changed. Current values: {_configurationReader.GetConfiguration()})");
-      return Task.CompletedTask;
     }
   }
 ```
@@ -271,13 +273,12 @@ The plugin has to possess a .NET strong name(add key.snk to your soultion).
       _logger = logger;
       _runtimeContext = runtimeContext;
     }
-    public Task AfterUpgradeAsync()
+    public void AfterUpgrade()
     {
       _logger.Information($"Update endpoint finished (id: {_runtimeContext.MetadataContext.Id})");
-      return Task.CompletedTask;
     }
 
-    public Task<bool> CanUpgradeAsync() => Task.FromResult(true);
+    public bool CanUpgrade() => true;
   }
 ```
 
@@ -298,16 +299,14 @@ The plugin has to possess a .NET strong name(add key.snk to your soultion).
       Logger = logger;
     }
 
-    public Task AvatarConnectedAsync(IAvatarConfiguration avatarConfiguration)
+    public void AvatarConnected(IAvatarConfiguration avatarConfiguration)
     {
       Logger.Information($"Avatar has been connected");
-      return Task.CompletedTask;
     }
 
-    public Task AvatarDisconnectedAsync(IAvatarConfiguration avatarConfiguration)
+    public void AvatarDisconnected(IAvatarConfiguration avatarConfiguration)
     {
       Logger.Information($"Avatar has been disconnected");
-      return Task.CompletedTask;
     }
   }
 ```
@@ -329,10 +328,10 @@ Interface `IFileHandler` allows handling of uploaded files from client to server
       _logger = logger;
     }
 
-    public Task<object> HandleFileAsync(IUploadedFiles uploadedFiles)
+    public object HandleFile(IUploadedFiles uploadedFiles)
     {
-      _logger.Information($"Execute {nameof(HandleFileAsync)}. Uploaded files: {String.Join(",", uploadedFiles.TransferedFiles)}.");
-      return Task.FromResult(new object());
+      _logger.Information($"Execute {nameof(HandleFile)}. Uploaded files: {String.Join(",", uploadedFiles.TransferedFiles)}.");
+      return new object();
     }
 ```
 
@@ -378,18 +377,18 @@ Interface `IAuthentication` provide authentication mechanism.
 
 * ### IExportable
 
-Interface `IExportable` is used to save some custom files in exported pex file. Method `ImportContentDirectoryAsync` should be used to recreate stored files to disk, method `ExportContentDirectoryAsync` for serialize files into byte array that will be stored in pex file. 
+Interface `IExportable` is used to save some custom files in exported pex file. Method `ImportContentDirectory` should be used to recreate stored files to disk, method `ExportContentDirectory` for serialize files into byte array that will be stored in pex file. 
 
 ```csharp
   [EndpointMetadata(Name = "Exportable Endpoint", SupportedRoles = SupportedRoles.None)]
   public class ExportableEndpoint : IExportable
   {
-     public async Task ImportContentDirectoryAsync(byte[] directory)
+    public ImportContentDirectory(byte[] directory)
     {
       /// Recreate files from byte array
     }
 
-    public Task<byte[]> ExportContentDirectoryAsync()
+    public byte[] ExportContentDirectory()
     {
       /// Serialize files into byte array
     } 
@@ -414,10 +413,9 @@ In some cases endpoint can ask for messages that were delivered, but not acknowl
       _logger = logger;
     }
 
-    public Task ProcessMissedContentsRequestAsync(string subscriberId, IEnumerable<string> contentIds, DateTime? startingDateTime)
+    public void ProcessMissedContentsRequest(string subscriberId, IEnumerable<string> contentIds, DateTime? startingDateTime)
     {
-      _logger.Information("SubscribedId endpoint asked for messages with contentsIds sent from startingDateTime up to now");
-      return Task.CompletedTask;
+      _logger.Information("SubscribedId endpoint asked for messages with contentsIds sent from startingDateTime up to now");  
     }
   }
 
@@ -440,10 +438,9 @@ In some cases endpoint can ask for last sent messages in channel, to handle that
       _logger = logger;
     }
 
-    public Task OnRequestLastContentReceivedAsync(string requestingEndpointId, string providerId, params string[] contentIds)
+    public void OnRequestLastContentReceived(string requestingEndpointId, string providerId, params string[] contentIds)
     {
          _logger.Information("requestingEndpointId endpoint asked for messages with contentsIds sent by providerId");    
-        return Task.CompletedTask;
     }
   }
 ```
@@ -457,10 +454,10 @@ Interface `IProtocolProvider` provides a mechanism to support a dynamic list of 
 ```csharp
   public class ProtocolProviderEndpoint : IProtocolProvider
   {
-    public Task<IEnumerable<IProtocol>> GetProtocolsAsync()
+    public IEnumerable<IProtocol> GetProtocols()
     {
       List<IProtocol> protocols = new List<IProtocol>{ DefaultProtocol.Instance, new XmlProtocol(), new BinaryProtocol() };
-      return Task.FromResult(protocols as IEnumerable<IProtocol>);
+      return protocols as IEnumerable<IProtocol>;
     }
   }
 ```
@@ -545,7 +542,7 @@ Service provide allows access to implementation of internal services registred b
 
 ```csharp
   [EndpointMetadata(Name = "IoC", SupportedRoles = SupportedRoles.Provider)]
-  public class IoCEndpoint : IEndpointLifeTimeCycle
+  public class IoCEndpoint 
   {
     private readonly Func<string, ILogger> _loggerFactory;
     private readonly IServiceContext _serviceContext;
@@ -556,10 +553,7 @@ Service provide allows access to implementation of internal services registred b
       _loggerFactory = _serviceContext.Resolve<Func<string, ILogger>>();
       _loggerFactory("Custom Origin").Information("Invoke constructor for endpoint IoC");
     }
-
-    public Task InitializeAsync() => Task.CompletedTask;
-
-    public Task TerminateAsync() => Task.CompletedTask; 
+  }
 ```
 
 <div id='id-injected-services-ireportservice-context'/>
@@ -581,14 +575,14 @@ The stream can be send by corresponding version of `IMessageBus` methods `Send` 
 ```
  The stream passed to the method is not send itself, but the stream is registered and stored in procontel backend and available for everybody that know a stream id. The received message object should be cast to IStreamDescriptor to recognise whether the message contains stream or no:
  ```csharp
-public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context = null)
+public Acknowledgement Handle(string messageId, object message, ICorrelationContext context = null)
   {
     if (message is IStreamDescriptor descriptor)
     {
       // get stream using IStreamingService instance and a stream id
       _stream = _streamingService.GetStream(descriptor.StreamId);
     }
-    return Task.FromResult(new Acknowledgement());
+    return new Acknowledgement();
   }
  ```   
 
@@ -597,21 +591,20 @@ In case of send stream between endpoint and UI status control can be used method
 ```csharp
 _notificationService.NotifyUI($"status information message body", streamInstance, StreamCallbackDelegate);
 ``` 
-then `DisplayStatusAsync` from `IEndpointStatusControl` will be called with `IStreamDescriptor` as parameter:
+then `DisplayStatus` from `IEndpointStatusControl` will be called with `IStreamDescriptor` as parameter:
  ```csharp 
-public async Task DisplayStatusAsync(object statusInformation)
+public void DisplayStatus(object statusInformation)
 {
   if (statusInformation is IStreamDescriptor descriptor)
   {
     // get stream using IStreamingService instance and a stream id
     _stream = _streamingService.GetStream(descriptor.StreamId);
   }   
-  return Task.FromResult(new Acknowledgement());
 }
  ```
  Original message body can be obtained by accessing to `Data` property of `IStreamDescriptor<T>` and it's necessary to use a reflection:
  ```csharp
- public async Task DisplayStatusAsync(object statusInformation)
+public void DisplayStatus(object statusInformation)
 {
   if (statusInformation != null)
   {
@@ -621,7 +614,6 @@ public async Task DisplayStatusAsync(object statusInformation)
       var originalMessageBody = type.GetProperty(nameof(StreamDescriptor<object>.Data))?.GetValue(statusInformation);
     }
   }
-  return Task.FromResult(new Acknowledgement());
 }
  ```
 
@@ -633,7 +625,6 @@ Interface IMessageObserver provide access to listening logger events.
 
 Example usage:
 ```csharp
-using System.Threading.Tasks;
 using ProconTel.Sdk.Attributes;
 using ProconTel.Sdk.Builders;
 using ProconTel.Sdk.Communications.Middlewares;
@@ -652,7 +643,7 @@ namespace NewSdk.Tests
       _observer = observer;
     }
 
-    public Task InitializeAsync(IMiddlewareBuilder builder)
+    public void Initialize(IMiddlewareBuilder builder)
     {
       // the Initialize has to be callled once before you start connection
       if (!_observer.IsInitialized)
@@ -663,7 +654,6 @@ namespace NewSdk.Tests
       {
         Severities = new [] { MessageSeverity.Fatal, MessageSeverity.Error}
       });
-      return Task.CompletedTask;
     }
 
     private void ObserverOnMessageReceived(object sender, LogMessageEventArgs e)
@@ -671,17 +661,15 @@ namespace NewSdk.Tests
       // Handle messages here
     }
 
-    public Task TerminateAsync()
+    public void Terminate()
     {
       _observer.DisableMessagesListener();
       _observer.MessageReceived -= ObserverOnMessageReceived;
       _observer.Dispose(); 
-      return Task.CompletedTask;
     }
 
-    public Task AfterActivateAsync()
+    public void AfterActivate()
     {
-      return Task.CompletedTask;
     }
   }
 }
@@ -689,7 +677,7 @@ namespace NewSdk.Tests
 
 The first thing to use the service is to initialize instance with port number of AdministrationService (`Initialzie` method), then we are able to establish connection using `Connect` method. Next step is subscription for event `MessageReceived` which will be triggered each time when message will logged. Then we can start lsitening for events by using `EnableMessagesListener`, which take filter parameter `ReceiverMessagesFilter`. So there is possibillity to filter out some of the messages, for which event is not triggered.
 
-Closing connection and cleaning up is done in `TerminateAsync` method, so basically we starting with disabling receiving events by calling `DisableMessagesListener`, then we unsubscribe from event and finally `Dispose` instance.
+Closing connection and cleaning up is done in `Terminate` method, so basically we starting with disabling receiving events by calling `DisableMessagesListener`, then we unsubscribe from event and finally `Dispose` instance.
 
 There are more features available, such as:
 * `UpdateMessagesListenerFilter` - it allows to change filters on active listener
@@ -812,10 +800,10 @@ To persist messages which are sent to an endpoint the `PersistMessage` attribute
 
     public bool CanHandle(string messageId, ICorrelationContext context = null) => true;
 
-    public Task<Acknowledgement> HandleAsync(string messageId, object message, ICorrelationContext context = null)
+    public Acknowledgement Handle(string messageId, object message, ICorrelationContext context = null)
     {
       _logger.Information($"Received id: {messageId}, message: {message}");
-      return Task.FromResult<Acknowledgement>(new Ack());
+      return new Ack();
     }
   }
 ```
@@ -883,8 +871,8 @@ To define Configuration UI Element binding endpoint has to be decorate with attr
     private void SendCommandToServerEndpoint_Click(object sender, EventArgs e)
     {
       txtConsole.Text = "Wait ...";
-      var result = _endpointCommandSender.SendCommandAsync(txtCommand.Text);
-      txtConsole.Text = (result as Task<object>).Result.ToString();
+      var result = _endpointCommandSender.SendCommand(txtCommand.Text);
+      txtConsole.Text = result.ToString();
     }
 ```
 In order to use more sophisticated behavior we recommend use attribute <b>ConfigurationDialogProviderAttribute</b> with own implementation of <b>IEndpointConfigurationDialogProvider</b> interface.
@@ -918,7 +906,7 @@ To define Configuration UI Element binding endpoint has to be decorate with attr
       _runtimeContext = runtimeContext;
     }
 
-    public Task<object> HandleCommandAsync(object command, ICorrelationContext context = null)
+    public object HandleCommand(object command, ICorrelationContext context = null)
     {
       _logger.Information($"Received command from status control {command}");
       switch (command)
@@ -927,7 +915,7 @@ To define Configuration UI Element binding endpoint has to be decorate with attr
         case "notify": _runtimeContext.NotificationService.NotifyUI($"Notify from { _runtimeContext.MetadataContext.Caption} ", false); break;
         default: throw new NotSupportedException($"Command {command} is not supported.");
       }
-      return Task.FromResult<object>("Done");
+      return "Done";
     }
   }
 ```
@@ -956,7 +944,7 @@ Status control has to implement interface <b>IEndpointStatusControl</b>.
       txtConsole.Text = "Running...";
       try
       {
-        var result = _sender.SendCommandToServerEndpoint(txtCommand.Text);
+        var result = _sender.SendCommand(txtCommand.Text);
         txtConsole.Text = result.ToString();
       }
       catch (Exception ex)
@@ -1026,11 +1014,9 @@ public class MenuItemAction : IMenuItemAction
     this.metadataContext = metadataContext;
     this.command = command;
   }
-  public Task ExecuteAsync()
+  public void Execute()
   {
     new MyDialog(writer, reader).ShowDialog();
-
-    return Task.CompletedTask;
   }
 }
 ```
@@ -1171,7 +1157,7 @@ public partial class FileUploadConfigurationDialog : Form
     var result = openFileDialog1.ShowDialog();
     if(result == DialogResult.OK)
     {
-      await _fileTransfer.UploadFilesAsync(new[] { new FileDescriptor() { Location = openFileDialog1.FileName } });
+      await _fileTransfer.UploadFiles(new[] { new FileDescriptor() { Location = openFileDialog1.FileName } });
 
     }
     DialogResult = DialogResult.OK;
@@ -1189,20 +1175,20 @@ Service provides information about the roots, folders and files available on the
 public interface IVirtualFileSystem
 {
   /// Returns name of referencing file system.
-  Task<string> GetFileSystemNameAsync();
+  string GetFileSystemName();
   /// Returns an array of roots existing in referencing file 
-  Task<IRootInfo[]> GetRootsAsync();
+  IRootInfo[] GetRoots();
   /// Returns an array of directories existing in referencing file system.
-  Task<IVirtualDirectoryInfo[]> GetDirectoriesAsync(IVirtualDirectoryInfo parent);
+  IVirtualDirectoryInfo[] GetDirectories(IVirtualDirectoryInfo parent);
   /// Returns an array of files existing in referencing file system.
-  Task<IVirtualFileInfo[]> GetFilesAsync(IVirtualDirectoryInfo parent, 
+  IVirtualFileInfo[] GetFiles(IVirtualDirectoryInfo parent, 
   string pattern);
   /// Returns whether a file under specified path exists.
-  Task<bool> FileExistsAsync(string path);
+  bool FileExists(string path);
   /// Returns whether a directory under specified path exists.
-  Task<bool> DirectoryExistsAsync(string path);
+  bool DirectoryExists(string path);
   /// Creates directory.
-  Task<bool> CreateDirectoryAsync(string path);
+  bool CreateDirectory(string path);
 }
 
 ```
@@ -1223,11 +1209,11 @@ public partial class VirtualFileSystemStatusControl : UserControl, IEndpointStat
 
   public void OnStatusControlShown(){}
 
-  public async void DisplayStatus(object statusInformation)
+  public void DisplayStatus(object statusInformation)
   {
     string filePath = @"C:\testDirectory\test.txt";
     string directoryPath = @"c:\testDirectory";
-    var roots = await _virtualFileSystem.GetRootsAsync();
+    var roots = _virtualFileSystem.GetRoot();
   }
 }
 ```
@@ -1298,17 +1284,12 @@ public class ConfigurationDeserializer : IConfigurationDeserializer
 Service `IServiceContext` can be also very useful in scenario where developers would like to use their own IoC framework or when they are forced to use one, like provided by [AspNetCore DI](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-5.0). Example below shows how to combine _AspNetCore DI_ with _ProconTEL IoC_ by registering ProconTEL `ILogger` inside _AspNetCore DI_.
 
 ```csharp
-public class ExampleWebEndpoint : IEndpointLifeTimeCycle, IHandler
+public class ExampleWebEndpoint : IEndpointLifeTimeCycle
 {
   private IWebHost _host;
-  private readonly IServiceContext _ctx;
+  private CancellationTokenSource _cts = new();
 
-  public ExampleWebEndpoint(IServiceContext ctx)
-  {
-    _ctx = ctx;
-  }
-
-  public Task InitializeAsync(IMiddlewareBuilder builder)
+  public void Initialize(IMiddlewareBuilder builder)
   {
     _host =
       Microsoft.AspNetCore.WebHost.CreateDefaultBuilder()
@@ -1319,7 +1300,12 @@ public class ExampleWebEndpoint : IEndpointLifeTimeCycle, IHandler
         .UseStartup<Startup>()
         .Build();
 
-    return _host.StartAsync();
+    _host.StartAsync(_cts.Token);
+  }
+
+  public void Terminate()
+  {
+    _cts.Cancel();
   }
 }
 ```
@@ -1330,7 +1316,7 @@ More information about `IServiceContext` can be found in [injected services chap
 
 ## 12. Middlewares
 
-ProconTEL engine offers dynamic configuration for input messages pipeline. Described mechanism is deliver in `IEndpointLifeTimeCycle.InitializeAsync(IMiddlewareBuilder)` method parameter. `IMiddlewareBuilder` allows registration of custom middlewares inside ProconTEL messages pipeline. It is possible to combine it with already exisiting ProconTEL built-in middlewares or completly replace ProconTEL built-in functionality. Complete list of possible registration options is shown below.
+ProconTEL engine offers dynamic configuration for input messages pipeline. Described mechanism is deliver in `IEndpointLifeTimeCycle.Initialize(IMiddlewareBuilder)` method parameter. `IMiddlewareBuilder` allows registration of custom middlewares inside ProconTEL messages pipeline. It is possible to combine it with already exisiting ProconTEL built-in middlewares or completly replace ProconTEL built-in functionality. Complete list of possible registration options is shown below.
 
 ```csharp
   public interface IMiddlewareBuilder
@@ -1351,10 +1337,10 @@ ProconTEL engine offers dynamic configuration for input messages pipeline. Descr
 
 ### Example: adding interceptor middleware
 
-Below example shows how to add additional middleware into existing in ProconTEL. Notice, method `next()` is necessary in each middleware. In code example you see additional logging added before and after message will be processed in `IHandler.HandleAsync()` method.
+Below example shows how to add additional middleware into existing in ProconTEL. Notice, method `next()` is necessary in each middleware. In code example you see additional logging added before and after message will be processed in `IHandler.Handle()` method.
 
 ```csharp
-public async Task InitializeAsync(IMiddlewareBuilder builder)
+public void Initialize(IMiddlewareBuilder builder)
 {
   builder.UseDefaultDeserializeMiddleware();
   builder.UseDefaultDeserializeMetadataMiddleware();
@@ -1370,8 +1356,6 @@ public async Task InitializeAsync(IMiddlewareBuilder builder)
     await next();
   });
   builder.UseDefaultAcknowledgementMiddleware();
-
-  return;
 }
 ```
 
@@ -1380,7 +1364,7 @@ public async Task InitializeAsync(IMiddlewareBuilder builder)
 Below example shows how to completely replace ProconTEL built-in middlewares. Notice, that still method `next()` is necessary. Code example, stores all incoming messages into database and because there is no other middleware registered, handling will be finished.
 
 ```csharp
-public async Task InitializeAsync(IMiddlewareBuilder builder)
+public void Initialize(IMiddlewareBuilder builder)
 {
   builder.UseMiddleware(async (request, next) =>
   {
@@ -1406,7 +1390,6 @@ public async Task InitializeAsync(IMiddlewareBuilder builder)
   if (!_databaseService.IsStorageTableAvailable())
     throw new Exception("Database table is not available.");
 
-  return;
 }
 ```
 
@@ -1429,7 +1412,6 @@ CS0012	The type 'RemoteManagerBase' is defined in an assembly that is not refere
 
 ### Example: use SDK with MessageLoggerClient from API
 ```csharp
-using System.Threading.Tasks;
 using ProconTel.CommunicationCenter.Administration.Api.MessageLogger;
 using ProconTel.CommunicationCenter.Kernel;
 using ProconTel.Logging;
@@ -1455,7 +1437,7 @@ namespace ProconTelSDKwithAPI
       _bus = bus;
     }
 
-    public Task InitializeAsync(IMiddlewareBuilder builder)
+    public void Initialize(IMiddlewareBuilder builder)
     {
       #region Use API here
 
@@ -1476,17 +1458,14 @@ namespace ProconTelSDKwithAPI
         _logger.Information($"Send telegram: {telegramXml}");
       });
 
-      return Task.CompletedTask;
     }
 
-    public Task AfterActivateAsync()
+    public void AfterActivate()
     {
-      return Task.CompletedTask;
     }
 
-    public Task TerminateAsync()
+    public void Terminate()
     {
-      return Task.CompletedTask;
     }
 
     private void OnLogMessageReceived(object sender, LogMessageEventArgs e)
@@ -1541,13 +1520,6 @@ In order to migrate to Legacy SDK perform following steps:
     {
       InitializeComponent();
       _sender = sender;
-    }
-    ```
-  - replace `IEndpointStatusControl` methods with async version, example
-    ```csharp
-    public Task OnStatusControlHiddenAsync()
-    {
-      return Task.CompletedTask;
     }
     ```
 
