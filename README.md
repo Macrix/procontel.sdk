@@ -105,6 +105,7 @@ As SDK version may change, we provide SDK compatibility matrix which shows which
 ### SDK 1.0.10
 | Task ID | Topic | Changes |
 | :---|:---|:---|
+| PS-1214 | IMetadataContext | Add information about endpoint isolation |
 | PS-1556 | All interfaces | Replace async methods with synchronous implementation |
 
 ### SDK 1.0.9
